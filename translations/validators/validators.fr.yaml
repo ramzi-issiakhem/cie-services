@@ -1,0 +1,7 @@
+event:
+    type:
+        integer: Veuillez enter un nombre
+        string: Veuillez entrer du texte
+        object:
+            product: Veuillez selectionner un des produits
+            school : Veuillez selectionner une des écoles

@@ -4,10 +4,13 @@ namespace App\Entity;
 
 use App\Repository\EventRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Asserts;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=EventRepository::class)
+ * @UniqueEntity("name")
  */
 class Event
 {
@@ -29,12 +32,22 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Type(
+     *     type="string",
+     *     message="event.type.string"
+     * )
      */
     private $name;
+
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Type(
+     *     type="object",
+     *     message="event.type.object.product"
+     * )
+     * @Assert\NotNull
      */
     private $product;
 
@@ -44,11 +57,23 @@ class Event
 
     /**
      * @ORM\Column(type="integer")
+     *
+     * @Assert\Type(
+     *     type="integer",
+     *     message="event.type.integer"
+     * )
+     * @Assert\NotNull
      */
+
     private $price;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(
+     *     type="integer",
+     *     message="event.type.integer"
+     * )
+     * @Assert\NotNull
      */
     private $reservations;
 
@@ -56,31 +81,55 @@ class Event
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Type(
+     *     type="string",
+     *     message="event.type.string"
+     * )
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(
+     *     type="integer",
+     *     message="event.type.integer"
+     * )
+     * @Assert\NotNull
      */
     private $reservation_places;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(
+     *     type="integer",
+     *     message="event.type.integer"
+     * )
+     * @Assert\NotNull
      */
     private $state;
 
     /**
      * @ORM\ManyToOne(targetEntity=School::class, inversedBy="events")
+     * @Assert\Type(
+     *     type="object",
+     *     message="event.type.object.school"
+     * )
+     * @Assert\NotNull
      */
     private $school;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan("today")
+     * @Assert\NotNull
      */
+
     private $event_datetime;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThan("today")
+     * @Assert\NotNull
      */
     private $deadline_date;
 

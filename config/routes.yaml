@@ -25,7 +25,7 @@ contact:
 
 
 user.profile:
-     path: /{_locale}/{slug}
+     path: /{_locale}/profile/{slug}
      controller: App\Controller\UserController::profile
      requirements:
           _locale: en|fr|ar
@@ -40,7 +40,7 @@ user.register:
 
 user.login:
      path: /{_locale}/login
-     controller: App\Controller\UserController::login
+     controller: App\Controller\SecurityController::login
      requirements:
           _locale: en|fr|ar
           default: fr

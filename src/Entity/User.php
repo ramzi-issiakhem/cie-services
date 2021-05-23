@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User extends  AbstractLocalisation implements UserInterface
+class User extends  AbstractLocalisation implements UserInterface,\Serializable
 {
     /**
      * @ORM\Id
@@ -102,7 +103,7 @@ class User extends  AbstractLocalisation implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_ADMIN';
 
         return array_unique($roles);
     }
@@ -221,5 +222,32 @@ class User extends  AbstractLocalisation implements UserInterface
     }
 
 
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->name,
+            $this->email,
+            $this->password,
+            $this->related_school,
+            $this->scholar_level,
+            $this->mobile_phone,
+            $this->birthday_date
 
+        ]);
+    }
+
+    public function unserialize($data)
+    {
+         list(
+            $this->id,
+            $this->name,
+            $this->email,
+            $this->password,
+            $this->related_school,
+            $this->scholar_level,
+            $this->mobile_phone,
+            $this->birthday_date
+            ) = unserialize($data,['allowed_classes' => false]);
+    }
 }
