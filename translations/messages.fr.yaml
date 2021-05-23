@@ -1,0 +1,18 @@
+user:
+    login: Connexion
+    register: Enregistrement
+    logout: Se Déconnecter
+    profile: Profil
+admin:
+    panel: Panel Admin
+
+navbar:
+    home: Acceuil
+    contact: Nous-Contacter
+    aboutus: Qui Sommes-Nous
+    en: Anglais
+    fr: Francais
+    ar: Arabe
+    language: Langue
+    brand:
+        name: Afak-El Moustakbil

@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'admin' %}
+
+{% block title %} Panel Admin - Event {% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="current-tab" data-bs-toggle="tab" data-bs-target="#current" type="button" role="tab" aria-controls="home" aria-selected="true">{% trans %} events.state.current {% endtrans %}</button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="confirmed-tab" data-bs-toggle="tab" data-bs-target="#confirmed" type="button" role="tab" aria-controls="profile" aria-selected="false">{% trans %} events.state.confirmation.confirmed {% endtrans %}</button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="waiting-tab" data-bs-toggle="tab" data-bs-target="#waiting" type="button" role="tab" aria-controls="contact" aria-selected="false">{% trans %} events.state.confirmation.waiting {% endtrans %}</button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="finished-tab" data-bs-toggle="tab" data-bs-target="#finished" type="button" role="tab" aria-controls="contact" aria-selected="false">{% trans %} events.state.finished {% endtrans %}</button>
+        </li>
+    </ul>
+
+    <a href="{{ path('admin.event.create') }}" class="btn btn-primary">{% trans %} events.create {% endtrans %}</a>
+        <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="current" role="tabpanel" aria-labelledby="current-tab">
+            {% for event in still_events %}
+
+                {{ include('pages/admin/_card.html.twig',{event:event}) }}
+
+            {% endfor %}
+
+        </div>
+        <div class="tab-pane fade" id="confirmed" role="tabpanel" aria-labelledby="confirmed-tab">
+            {% for event in confirmed_events %}
+                    {{ include('pages/admin/_card.html.twig',{event:event}) }}
+            {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="waiting" role="tabpanel" aria-labelledby="waiting-tab">
+            {% for event in waiting_events %}
+                    {{ include('pages/admin/_card.html.twig',{event:event}) }}
+            {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="finished" role="tabpanel" aria-labelledby="finished-tab">
+            {% for event in finished_events %}
+
+                <{{ include('pages/admin/_card.html.twig',{event:event}) }}
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
