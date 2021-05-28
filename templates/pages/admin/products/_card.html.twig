@@ -1,0 +1,25 @@
+
+{% trans_default_domain 'admin' %}
+
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row no-gutters">
+
+        <div class="col-md-4">
+            <img src="{{ asset('uploads/products/' ~ product.logo) }}" class="card-img" alt="logo">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                {# TODO Translate Labels in [Product] Card #}
+                <h5 class="card-title"> {% trans %} products.name {% endtrans %} :  {{ product.formattedName }}</h5>
+                <p class="card-text"> {% trans %} products.description {% endtrans %} : {{ product.formattedDescription |nl2br }} </p>
+                <a href="{{ path('admin.product.edit',{'id': product.id,'slug' : product.slug }) }}" class="btn btn-warning">{% trans %} products.edit {% endtrans %}</a>
+
+                <form method="post" action="{{ path('admin.product.remove',{id: product.id}) }}" onsubmit="return confirm('Are you sure ?')">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ product.id) }}">
+                    <button class="btn btn-danger">{{ 'products.remove'|trans }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,10 @@
 {
+    "alexpechkarev/geometry-library": {
+        "version": "1.0.2"
+    },
+    "alexpechkarev/google-maps": {
+        "version": "8.0"
+    },
     "cocur/slugify": {
         "version": "v4.0.0"
     },
@@ -106,6 +112,39 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.4"
     },
+    "illuminate/collections": {
+        "version": "v8.43.0"
+    },
+    "illuminate/config": {
+        "version": "v8.43.0"
+    },
+    "illuminate/contracts": {
+        "version": "v8.43.0"
+    },
+    "illuminate/macroable": {
+        "version": "v8.43.0"
+    },
+    "illuminate/support": {
+        "version": "v8.43.0"
+    },
+    "jbroadway/urlify": {
+        "version": "1.2.2-stable"
+    },
+    "jms/metadata": {
+        "version": "2.5.0"
+    },
+    "jms/serializer": {
+        "version": "3.12.3"
+    },
+    "jms/serializer-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "384cec52df45f3bfd46a09930d6960a58872b268"
+        }
+    },
     "laminas/laminas-code": {
         "version": "4.3.0"
     },
@@ -118,6 +157,9 @@
     "monolog/monolog": {
         "version": "2.2.0"
     },
+    "nesbot/carbon": {
+        "version": "2.48.1"
+    },
     "nikic/php-parser": {
         "version": "v4.10.5"
     },
@@ -129,6 +171,9 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "1.4.0"
+    },
+    "phpstan/phpdoc-parser": {
+        "version": "0.5.4"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -144,6 +189,12 @@
     },
     "psr/log": {
         "version": "1.1.4"
+    },
+    "psr/simple-cache": {
+        "version": "1.0.1"
+    },
+    "scienta/doctrine-json-functions": {
+        "version": "4.3.0"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
@@ -532,6 +583,12 @@
     },
     "twig/twig": {
         "version": "v3.3.2"
+    },
+    "voku/portable-ascii": {
+        "version": "1.5.6"
+    },
+    "voku/stop-words": {
+        "version": "2.0.1"
     },
     "webmozart/assert": {
         "version": "1.10.0"

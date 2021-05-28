@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+{% trans_default_domain 'forms' %}
+
+{% block body %}
+
+    <div class="container mt-4">
+
+        <form method="post">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security')  }}</div>
+            {% endif %}
+
+
+
+            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+            <div class="form-group">
+                <label for="username">Email</label>
+                <input  value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
+
+
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> {% trans %} forms.users.remember {% endtrans %}
+                </label>
+            </div>
+
+
+            <button class="btn btn-lg btn-primary" type="submit">
+                {% trans %}  forms.users.login   {% endtrans %}
+            </button>
+
+        </form>
+    </div>
+
+{% endblock %}

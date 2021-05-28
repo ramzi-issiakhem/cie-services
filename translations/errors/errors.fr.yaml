@@ -1,0 +1,5 @@
+errors:
+    auth:
+        credentials:
+              empty: Informations non valides ou vides
+        token: Token errone

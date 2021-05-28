@@ -3,15 +3,52 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
+use phpDocumentor\Reflection\Types\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity("email")
  */
-class User extends  AbstractLocalisation implements UserInterface,\Serializable
+class User extends AbstractLocalisation implements UserInterface
 {
+    const SCHOOLAR_LEVEL = [
+        0 => "levels.section.little",
+        1 => "levels.section.middle",
+        2 => "levels.section.big",
+        3 => "levels.primary.one",
+        4 => "levels.primary.two",
+        5 => "levels.primary.three",
+        6 => "levels.primary.four",
+        7 => "levels.primary.five",
+        8 => "levels.secondary.one",
+        9 => "levels.secondary.two",
+        10 => "levels.secondary.three",
+        11 => "levels.secondary.four",
+        12 => "levels.high.one",
+        13 => "levels.high.two",
+        14 => "levels.high.three",
+    ];
+
+   /* const ROLES = [
+        "roles.superadministrator" => ["ROLE_SUPER_ADMIN","ROLE_ADMIN","ROLE_MODERATOR"],
+        "roles.administrator" => ["ROLE_ADMIN","ROLE_MODERATOR"],
+        "roles.moderator" => ["ROLE_MODERATOR","ROLE_USER"] ,
+        "roles.user" => ["ROLE_USER"],
+    ];*/
+
+    const ROLES = [
+        "roles.superadministrator" => "ROLE_SUPER_ADMIN",
+        "roles.administrator" => "ROLE_ADMIN",
+        "roles.moderator" => "ROLE_MODERATOR" ,
+        "roles.user" => "ROLE_USER",
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -21,6 +58,9 @@ class User extends  AbstractLocalisation implements UserInterface,\Serializable
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(
+     *     message="user.type.email"
+     * )
      */
     private $email;
 
@@ -30,17 +70,20 @@ class User extends  AbstractLocalisation implements UserInterface,\Serializable
     private $roles = [];
 
     /**
+     * @ORM\Column(type="string", length=255)
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @Assert\NotCompromisedPassword(
+     *     message="user.type.password.compromised"
+     *  )
      */
     private $password;
 
-
-
-
-
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex(
+     *     pattern="/\d{9}/",
+     *     message="user.type.regex.mobilephone"
+     * )
      */
     private $mobile_phone;
 
@@ -51,6 +94,10 @@ class User extends  AbstractLocalisation implements UserInterface,\Serializable
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(
+     *     type="integer",
+     *     message="user.type.integer"
+     * )
      */
     private $scholar_level;
 
@@ -58,14 +105,49 @@ class User extends  AbstractLocalisation implements UserInterface,\Serializable
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      */
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=School::class, inversedBy="users")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer")
+     * @Assert\Type(
+     *     type="integer",
+     *     message="user.type.integer"
+     * )
+     */
+    private $type;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="users")
+     * @Assert\Valid
      */
     private $related_school;
+
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="related_school")
+     * @Assert\Valid
+     */
+    private $users;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="school")
+     * @Assert\Valid
+     */
+    private $events;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $logo;
+
+
+    public function __construct()
+    {
+
+        $this->users = new ArrayCollection();
+        $this->events = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -93,7 +175,7 @@ class User extends  AbstractLocalisation implements UserInterface,\Serializable
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->name;
     }
 
     /**
@@ -102,8 +184,7 @@ class User extends  AbstractLocalisation implements UserInterface,\Serializable
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_ADMIN';
+
 
         return array_unique($roles);
     }
@@ -209,45 +290,140 @@ class User extends  AbstractLocalisation implements UserInterface,\Serializable
         return $this;
     }
 
-    public function getRelatedSchool(): ?School
+    public function slugify() : string {
+        $slug = new Slugify();
+        return $slug->slugify($this->name);
+    }
+
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
+    public function setType(int $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getRelatedSchool(): ?self
     {
         return $this->related_school;
     }
 
-    public function setRelatedSchool(?School $related_school): self
+    public function setRelatedSchool(?self $related_school): self
     {
         $this->related_school = $related_school;
 
         return $this;
     }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function getUsers(): ArrayCollection
+    {
+        return $this->users;
+    }
 
+    public function addUser(self $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setRelatedSchool($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(self $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getRelatedSchool() === $this) {
+                $user->setRelatedSchool(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getEvents(): ArrayCollection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->setSchool($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getSchool() === $this) {
+                $event->setSchool(null);
+            }
+        }
+
+        return $this;
+    }
     public function serialize()
     {
+
         return serialize([
             $this->id,
             $this->name,
-            $this->email,
-            $this->password,
-            $this->related_school,
-            $this->scholar_level,
-            $this->mobile_phone,
-            $this->birthday_date
+            $this->password]);
 
-        ]);
     }
 
     public function unserialize($data)
     {
-         list(
+
+        return  list (
             $this->id,
             $this->name,
-            $this->email,
-            $this->password,
-            $this->related_school,
-            $this->scholar_level,
-            $this->mobile_phone,
-            $this->birthday_date
-            ) = unserialize($data,['allowed_classes' => false]);
+            $this->password
+            ) =  unserialize($data,['allowed_classes' => false]);
+    }
+
+    public function getLogo(): ?string
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(string $logo): self
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        $slug = new Slugify();
+        return $slug->slugify($this->name);
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormattedSchoolarLevel(): string
+    {
+        return self::SCHOOLAR_LEVEL[$this->scholar_level];
     }
 }

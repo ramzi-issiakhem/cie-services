@@ -4,16 +4,55 @@ namespace App\DataFixtures;
 
 use App\Entity\Event;
 use App\Entity\Product;
-use App\Entity\School;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class EventFixtures extends Fixture
 {
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
 
+        $school = new User();
+        $etudiant = new User();
+
+        $school->setEmail("test@test.com")
+            ->setPassword($this->encoder->encodePassword($school,"test"))
+            ->setMobilePhone("0558")
+            ->setName("Itkane")
+            ->setBirthdayDate(new  \DateTime())
+            ->setLocality("cherga")
+            ->setCountry("Algeria")
+            ->setType(0)
+            ->setAdress("Rue Hassnaoui")
+            ->setLng(54.0);
+        $school->setLat(58.0);
+
+
+        $etudiant = $school;
+        $etudiant->setRelatedSchool($school)
+            ->setPassword($this->encoder->encodePassword($etudiant,"test"))
+            ->setType(1)
+            ->setScholarLevel(5);
+        $manager->persist($school);
+        $manager->persist($etudiant);
+
+
+        /*
+         * Creating events and products
+         */
         for ($i = 1; $i < 15 ; $i++) {
             $event = new Event();
             $product = new Product();
@@ -26,18 +65,7 @@ class EventFixtures extends Fixture
 
             $date = new \DateTime();
 
-            $school = new School();
-            $school->setName("El Itkane")
-                ->setAdress(" ")
-                ->setEmail($i)
-                ->setMobilePhone("05515")
-                ->setPassword("dsqd")
-                ->setCountry("dd")
-                ->setLocality(" d ")
-                ->setLng(0.5);
 
-
-            $school->setLat(0.5);
 
 
             $event->setName("Nom d'un evenement")
@@ -52,10 +80,11 @@ class EventFixtures extends Fixture
                 ->setEventDateTime($date);
 
             $manager->persist($event);
-            $manager->persist($school);
             $manager->persist($product);
 
         }
+
+
 
 
         $manager->flush();

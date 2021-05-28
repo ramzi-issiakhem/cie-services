@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\EventRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Intl\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -38,6 +39,15 @@ class Event
      * )
      */
     private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Type(
+     *     type="string",
+     *     message="event.type.string"
+     * )
+     */
+    private $nameAr;
 
 
     /**
@@ -86,7 +96,25 @@ class Event
      *     message="event.type.string"
      * )
      */
-    private $description;
+    private $descriptionAr;
+
+    /**
+     * @ORM\Column(type="text")
+     * @Assert\Type(
+     *     type="string",
+     *     message="event.type.string"
+     * )
+     */
+    private $descriptionFr;
+
+    /**
+     * @ORM\Column(type="text")
+     * @Assert\Type(
+     *     type="string",
+     *     message="event.type.string"
+     * )
+     */
+    private $descriptionEn;
 
     /**
      * @ORM\Column(type="integer")
@@ -108,15 +136,7 @@ class Event
      */
     private $state;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=School::class, inversedBy="events")
-     * @Assert\Type(
-     *     type="object",
-     *     message="event.type.object.school"
-     * )
-     * @Assert\NotNull
-     */
-    private $school;
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -132,6 +152,12 @@ class Event
      * @Assert\NotNull
      */
     private $deadline_date;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $school;
 
 
 
@@ -232,17 +258,6 @@ class Event
         return $this;
     }
 
-    public function getSchool(): ?School
-    {
-        return $this->school;
-    }
-
-    public function setSchool(?School $school): self
-    {
-        $this->school = $school;
-
-        return $this;
-    }
 
     public function getEventDateTime(): ?\DateTimeInterface
     {
@@ -268,9 +283,101 @@ class Event
         return $this;
     }
 
+    public function getSchool(): ?User
+    {
+        return $this->school;
+    }
 
+    public function setSchool(?User $school): self
+    {
+        $this->school = $school;
 
+        return $this;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getNameAr()
+    {
+        return $this->nameAr;
+    }
 
+    /**
+     * @param mixed $nameAr
+     */
+    public function setNameAr($nameAr): void
+    {
+        $this->nameAr = $nameAr;
+    }
+
+    public function  getFormattedName() {
+        $locale = Locale::getDefault();
+        if (($locale == 'fr') || ($locale == 'en')) {
+            return $this->name;
+        } else {
+            return $this->nameAr;
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescriptionAr()
+    {
+        return $this->descriptionAr;
+    }
+
+    /**
+     * @param mixed $descriptionAr
+     */
+    public function setDescriptionAr($descriptionAr): void
+    {
+        $this->descriptionAr = $descriptionAr;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescriptionFr()
+    {
+        return $this->descriptionFr;
+    }
+
+    /**
+     * @param mixed $descriptionFr
+     */
+    public function setDescriptionFr($descriptionFr): void
+    {
+        $this->descriptionFr = $descriptionFr;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescriptionEn()
+    {
+        return $this->descriptionEn;
+    }
+
+    /**
+     * @param mixed $descriptionEn
+     */
+    public function setDescriptionEn($descriptionEn): void
+    {
+        $this->descriptionEn = $descriptionEn;
+    }
+
+        public function getFormattedDescription() {
+            $locale = Locale::getDefault();
+            switch ($locale) {
+                case 'en':
+                    return $this->descriptionEn;
+                case 'ar':
+                    return $this->descriptionAr;
+                default:
+                    return $this->descriptionFr;
+            }
+        }
 
 }

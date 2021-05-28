@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'admin' %}
+
+{% block title %} Panel Admin - Event {% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+
+
+    <div class="row">
+        {{ include('pages/admin/navigation_box.html.twig') }}
+        <div class="col col-md-10">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link " id="schools-tab" data-bs-toggle="tab" data-bs-target="#schools" type="button" role="tab" aria-controls="home" aria-selected="true">{% trans %} users.state.schools {% endtrans %}</button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="students-tab" data-bs-toggle="tab" data-bs-target="#students" type="button" role="tab" aria-controls="profile" aria-selected="false">{% trans %} users.state.students {% endtrans %}</button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="admins-tab" data-bs-toggle="tab" data-bs-target="#admins" type="button" role="tab" aria-controls="contact" aria-selected="false">{% trans %} users.state.admins {% endtrans %}</button>
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="tab-content" id="myTabContent">
+
+        <div class="tab-pane fade" id="students" role="tabpanel" aria-labelledby="students-tab">
+            {% for user in students_users %}
+                {{ include('pages/admin/users/_card.html.twig',{user:user}) }}
+            {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="admins" role="tabpanel" aria-labelledby="admins-tab">
+            {% for user in admins_users %}
+                {{ include('pages/admin/users/_card.html.twig',{user:user}) }}
+            {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="schools" role="tabpanel" aria-labelledby="schools-tab">
+            {% for user in schools_users %}
+                {{ include('pages/admin/users/_card.html.twig',{user:user}) }}
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}

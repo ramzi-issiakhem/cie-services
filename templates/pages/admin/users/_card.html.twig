@@ -1,0 +1,31 @@
+
+{% trans_default_domain 'admin' %}
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row no-gutters">
+
+        <div class="col-md-4">
+            <img src="{{ asset('uploads/products/' ~ user.logo) }}" class="card-img" alt="...">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h3 class="card-title"> {% trans %} users.name {% endtrans %} :  {{ user.name }}</h3>
+                <h5 class="card-title"> {% trans %} users.email {% endtrans %} :  {{ user.email }}</h5>
+                {% if user.type == 1 %}
+                    <p class="card-text"> {% trans %} users.birthday_date {% endtrans %} : {{ user.birthdayDate |date("d/m/Y") }} </p>
+
+                    <p class="card-text"> {% trans %} users.schoolar_level {% endtrans %} :  {{ user.formattedSchoolarLevel|trans([],'types') }}  </p>
+                {% endif %}
+
+                <p class="card-text"><small class="text-muted">{% trans %} users.mobile_phone {% endtrans %} : 0{{ user.mobilePhone }} </small></p>
+
+                <a href="{{ path('admin.user.edit',{'id': user.id, 'slug': user.slug }) }}" class="btn btn-warning">{% trans %} users.edit {% endtrans %}</a>
+
+                <form method="post" action="{{ path('admin.user.remove',{id: user.id}) }}" onsubmit="return confirm('Are you sure ?')">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ user.id) }}">
+                    <button class="btn btn-danger">{{ 'users.remove'|trans }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Admin-Produits {% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    <div class="mt-4 mb-4">
+    <a href="{{ path('admin.product.create') }}" class="btn btn-primary">{% trans from 'admin' %} products.create {% endtrans %}</a>
+    </div>
+
+    <div class="row">
+        {{ include('pages/admin/navigation_box.html.twig') }}
+
+        <div class="col col-md-8">
+            {% for product in products %}
+                {{ include('pages/admin/products/_card.html.twig',{product:product}) }}
+            {% endfor %}
+        </div>
+
+    </div>
+
+
+{% endblock %}

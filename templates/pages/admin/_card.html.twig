@@ -4,12 +4,12 @@
     <div class="row no-gutters">
 
         <div class="col-md-4">
-            <img src="..." class="card-img" alt="...">
+            <img src="{{ asset('uploads/products/' ~ event.product.logo) }}" class="card-img" alt="...">
         </div>
         <div class="col-md-8">
             <div class="card-body">
                 <h4 class="card-title"> {% trans %} events.school.name {% endtrans %} :  {{ event.school.name }}</h4>
-                <h5 class="card-title"> {% trans %} events.name {% endtrans %} :  {{ event.name }}</h5>
+                <h5 class="card-title"> {% trans %} events.name {% endtrans %} :  {{ event.formattedName }}</h5>
                 <p class="card-text"> {% trans %} events.limit.event_date {% endtrans %} : {{ event.eventDateTime |date("d/m/Y") }} </p>
                 <p class="card-text"> {% trans %} events.limit.deadline_date {% endtrans %} : {{ event.DeadLineDate  |date("d/m/Y") }} </p>
                 <p class="card-text"><small class="text-muted">{% trans %} events.reservations {% endtrans %} : {{ event.reservationPlaces }} </small></p>

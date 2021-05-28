@@ -36,6 +36,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
@@ -63,5 +65,43 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getOneOrNullResult()
         ;
     }
-    */
+            */
+
+        public function getAllSchoolsUsers()
+        {
+            $role = "USER";
+
+            return $this->createQueryBuilder('u')
+                ->andWhere('u.type = 0')
+                ->andWhere('JSON_CONTAINS(u.roles, :role) = 1')
+                ->setParameter('role', '"ROLE_' . $role . '"')
+                ->getQuery()
+                ->getResult();
+
+        }
+
+        public function getAllStudentsUsers()
+        {
+            $role = "USER";
+
+            return $this->createQueryBuilder('u')
+                ->andWhere('u.type = 1')
+                ->andWhere('JSON_CONTAINS(u.roles, :role) = 1')
+                ->setParameter('role', '"ROLE_' . $role . '"')
+                ->getQuery()
+                ->getResult();
+        }
+
+        public function getAllAdminsUsers()
+        {
+            $role = "USER";
+
+
+            return $this->createQueryBuilder('u')
+                ->andWhere('JSON_CONTAINS(u.roles, :role) = 0')
+                ->setParameter('role', '"ROLE_' . $role . '"')
+                ->getQuery()
+                ->getResult();
+        }
+
 }

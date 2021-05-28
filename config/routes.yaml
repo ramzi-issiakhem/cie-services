@@ -7,7 +7,8 @@ home:
      controller: App\Controller\HomeController::home
      requirements:
           _locale: en|fr|ar
-          default: fr
+     defaults:
+          _locale: fr
 
 aboutus:
      path: /{_locale}/about-us
@@ -26,17 +27,29 @@ contact:
 
 user.profile:
      path: /{_locale}/profile/{slug}
-     controller: App\Controller\UserController::profile
+     controller: App\Controller\SecurityController::profile
      requirements:
           _locale: en|fr|ar
-          default: fr
+     defaults:
+          _locale: fr
 
 user.register:
-     path: /{_locale}/register
-     controller: App\Controller\UserController::register
+     path: /{_locale}/register/{type}
+     controller: App\Controller\SecurityController::register
      requirements:
           _locale: en|fr|ar
-          default: fr
+          type: 0|1
+     defaults:
+          _locale: fr
+          type: 0
+
+user.register.choice:
+     path: /{_locale}/register/choice
+     controller: App\Controller\SecurityController::registerChoice
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
 
 user.login:
      path: /{_locale}/login
@@ -44,6 +57,15 @@ user.login:
      requirements:
           _locale: en|fr|ar
           default: fr
+     methods: GET|POST
+
+
+user.logout:
+     path: /{_locale}/logout
+     defaults:
+          _locale: fr
+     requirements:
+          _locale: en|fr|ar
 
 user.edit:
      path: /{_locale}/{slug}/edit
@@ -82,6 +104,71 @@ admin.event.create:
      requirements:
           _locale: en|fr|ar
 
+
+admin.users.show:
+     path: /{_locale}/admin/users/show
+     controller: App\Controller\Admin\AdminUsersController::show
+     requirements:
+          _locale: en|fr|ar
+
+admin.user.edit:
+     path: /{_locale}/admin/user/{id}/{slug}
+     controller: App\Controller\Admin\AdminUsersController::edit
+     methods:  GET|POST
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+admin.user.edit.password:
+     path: /{_locale}/admin/user/{id}/{slug}/password
+     controller: App\Controller\Admin\AdminUsersController::editPassword
+     methods:  GET|POST
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
+admin.user.remove:
+     path: /{_locale}/admin/user/{id}
+     controller: App\Controller\Admin\AdminUsersController::remove
+     methods: DELETE
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
+admin.products.show:
+     path: /{_locale}/admin/products/show
+     controller: App\Controller\Admin\AdminProductsController::show
+     requirements:
+          _locale: en|fr|ar
+
+admin.product.edit:
+     path: /{_locale}/admin/product/{id}/{slug}
+     controller: App\Controller\Admin\AdminProductsController::edit
+     methods:  GET|POST
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
+
+admin.product.remove:
+     path: /{_locale}/admin/product/{id}
+     controller: App\Controller\Admin\AdminProductsController::remove
+     methods: DELETE
+     requirements:
+          _locale: en|fr|ar
+          id : '\d+'
+
+
+admin.product.create:
+     path: /{_locale}/admin/product/create
+     controller: App\Controller\Admin\AdminProductsController::create
+     requirements:
+          _locale: en|fr|ar
+
+admin.analytics:
+     path: /{_locale}/admin/analytics
+     controller: App\Controller\Admin\AdminAnalyticsController::index
+     requirements:
+          _locale: en|fr|ar
 
 admin.users.create:
      path: /{_locale}/admin/users/create

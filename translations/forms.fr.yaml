@@ -1,12 +1,37 @@
 forms:
-  name: Nom
+  logo: Logo du Produit
+  coverimage: Photo de Couverture
+  images: Images de Présentation
+  roles: Roles
+  name:
+    fr: Nom en Latin
+    ar: Nom en Arabe
   price: Prix
-  description: Description
+  description:
+    fr: Description en Francais
+    en: Description en Anglais
+    ar: Description en Arabe
   product: Produit
   school: Ecole
+  email: Email
+  password: Mot De passe
+  mobilephone: Numero de telephone
+  username: Nom D'utilisateur
+  birthday: Date D'anniversaire
+  schoolarlevel: Niveau Scolaire
+  relatedschool: Etablissement Affilié
 
   event:
     reservation_places: Places disponibles
     state: Etat Actuel
     date: Date de L'evenement
     deadline: Date De DeadLine
+
+  users:
+    change:
+      password: Changer le Mot De Passe
+    remember: Me Rappeler
+    login: Connecter
+    type:
+        professional: Compte Professionel
+        personnal: Compte Personnel

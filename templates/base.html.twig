@@ -39,13 +39,21 @@
                                 <li><a class="dropdown-item" href="{{ path('home',{'_locale' : 'en'}) }}">{% trans %} navbar.en {% endtrans %}</a></li>
                             </ul>
                         </div>
-                    <a class="nav-link active" href=""> {% trans %} user.profile {% endtrans %}</a>
 
-                    <a class="nav-link active " href="{{ path('user.login') }}"> {% trans %} user.login {% endtrans %}</a>
-                    <a class="nav-link active" href="{{ path('user.register') }}"> {% trans %} user.register {% endtrans %}</a>
 
-                    <a class="nav-link active" href="{{ path('admin.events.show') }}"> {% trans %} admin.panel {% endtrans %}</a>
 
+                    {% if is_granted('ROLE_MODERATOR') %}
+                        <a class="nav-link active" href="{{ path('admin.events.show') }}"> {% trans %} admin.panel {% endtrans %}</a>
+                    {% endif %}
+
+                    {% if app.user %}
+                        <a class="nav-link active" href=""> {% trans %} user.profile {% endtrans %}</a>
+                        <a class="nav-link active" href="{{ path('user.logout') }}"> {% trans %} user.logout {% endtrans %}</a>
+                    {% else  %}
+                        <a class="nav-link active " href="{{ path('user.login') }}"> {% trans %} user.login {% endtrans %}</a>
+                        <a class="nav-link active" href="{{ path('user.register.choice') }}"> {% trans %} user.register {% endtrans %}</a>
+
+                    {% endif %}
 
                 </div>
             </div>

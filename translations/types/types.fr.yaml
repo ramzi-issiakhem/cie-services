@@ -1,0 +1,31 @@
+levels:
+    section:
+        little: Petite Section
+        middle: Moyenne Section
+        big:    Grande Section
+    primary:
+      one:  1 ere Annee Primaire
+      two:   2 eme Annee Primaire
+      three: 3 eme Annee Primaire
+      four: 4 eme Annee Primaire
+      five: 5 eme Annee Primaire
+    secondary:
+        one: 1 ere Annee College
+        two: 2 eme Annee College
+        three: 3 eme Annee College
+        four: 4 eme Annee College
+    high:
+        one: 1 ere Annee Lycée
+        two: 2 eme Annee Lycée
+        three:   3 eme Annee Lycée
+    other: Autre
+    categories:
+      primary: Primaire
+      section: Classe Preparatoire
+      secondary: College
+      high: Lycée
+roles:
+    administrator: Administrateur
+    superadministrator: Super Administrateur
+    moderator: Moderateur
+    user: Utilisateur

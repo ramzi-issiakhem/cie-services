@@ -22,3 +22,43 @@ events:
         edit: Evenement edite avec succes
         remove: Evenement supprime avec succes
         create: Evenement creer avec succes
+
+
+products:
+    edit: Editer le produit
+    remove: Supprimer le produit
+    name: Nom du produit
+    description: Description
+    create: Creer un produit
+    success:
+        create: Produit crée avec succes
+        remove: Produit supprimé avec Succes
+        edit: Produit Edite avec succes
+
+nav:
+    events: Evenements
+    users: Utilisateurs
+    products: Produits
+    analytics: Analytics
+
+
+users:
+    change:
+        password: Changer le mot de passe
+    name: Nom d'utilisateur
+    email: Email
+    birthday_date: Dtae d'anniversaire
+    related_school: Etablissement affilié
+    schoolar_level: Niveau de Scolarité
+    mobile_phone: Numéro de Telephone
+    remove: Supprimer l'utilisateur
+    edit: Editer l'utilisateur
+    create: Créer un utilisateur
+    success:
+        create: Utilisateur crée avec succes
+        remove: Utilisateur supprimé avec Succes
+        edit: Utilisateur Edite avec succes
+    state:
+        schools: Les Etablissements
+        students: Les Eleves
+        admins: Utilisateurs Admins
