@@ -7,6 +7,7 @@ use App\Form\EventType;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -26,23 +27,28 @@ class AdminEventsController extends  AbstractController {
      */
     private $translator;
 
+
     public function __construct(EventRepository $repository,EntityManagerInterface $em,TranslatorInterface  $translator)
             {
                 $this->repository = $repository;
                 $this->em = $em;
                 $this->translator = $translator;
+
             }
 
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function show() {
+    public function show(Request $request,PaginatorInterface $paginator) {
 
-                $still_events = $this->repository->findAllByState(0,'ASC');
-                $waiting_events = $this->repository->findAllByState(1,'ASC');
-                $confirmed_events = $this->repository->findAllByState(2,'ASC');
-                $finished_events = $this->repository->findAllByState(3,'ASC');
+                $page = $request->get('page',1);
+                $still_events = $paginator->paginate($this->repository->findAllByState(0,'ASC'),$page,3);
+                $waiting_events = $paginator->paginate($this->repository->findAllByState(1,'ASC'),$page,3);
+                $confirmed_events = $paginator->paginate($this->repository->findAllByState(2,'ASC'),$page,3);
+                $finished_events = $paginator->paginate($this->repository->findAllByState(3,'ASC'),$page,3);
+
+
 
 
                 return $this->render('pages/admin/admin.events.show.html.twig',[
@@ -57,6 +63,7 @@ class AdminEventsController extends  AbstractController {
 
 
             public function edit(Event $event,Request $request) {
+
                 $form = $this->createForm(EventType::class,$event);
                 $form->handleRequest($request);
 
@@ -64,7 +71,6 @@ class AdminEventsController extends  AbstractController {
                     $this->em->flush();
                     $this->addFlash('success',$this->translator->trans('events.success.edit',[],'admin'));
                     return $this->redirectToRoute('admin.events.show');
-
                 }
 
                 return $this->render('pages/admin/admin.event.edit.html.twig',[

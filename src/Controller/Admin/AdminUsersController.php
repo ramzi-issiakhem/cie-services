@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -152,11 +153,15 @@ class AdminUsersController extends  AbstractController {
 
     }
 
-    public function show() {
+    public function show(Request $request,PaginatorInterface $paginator) {
 
-        $students = $this->repository->getAllStudentsUsers();
-        $schools = $this->repository->getAllSchoolsUsers();
-        $admins = $this->repository->getAllAdminsUsers();
+        $page = $request->get('page',1);
+        $students = $paginator->paginate($this->repository->getAllStudentsUsers(),$page,3);
+        $schools = $paginator->paginate($this->repository->getAllSchoolsUsers(),$page,3);
+        $admins = $paginator->paginate($this->repository->getAllAdminsUsers(),$page,3);
+
+
+
 
         return $this->render('pages/admin/users/admin.users.show.html.twig',[
             'students_users' => $students,

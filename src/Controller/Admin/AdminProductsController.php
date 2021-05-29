@@ -87,28 +87,25 @@ class AdminProductsController extends AbstractController {
 
     public function edit(Product $product,Request $request) {
 
-        $product->setLogo(
-            new File($this->getParameter('products_directory').'/'.$product->getLogo())
-        );
-        $product->setCoverImage(
-            new File($this->getParameter('products_directory').'/'.$product->getCoverImage())
-        );
-
-//        $array = $product->getImages();
-//        $final_array = [];
-//        $index =0;
-//        foreach ($array as $image) {
-//            array_push($final_array,new File($this->getParameter('products_directory').'/'.($product->getImages())[$index]));
-//            $index = $index + 1;
-//        }
 
 
         $form = $this->createForm(ProductType::class,$product);
         $form->handleRequest($request);
 
         if ( $form->isSubmitted() && $form->isValid()) {
+            // TODO Regler probleme upload files
 
+            $logoImage = $form->get('logo')->getData();
+            $coverImage = $form->get('cover_image')->getData();
+            $images = $form->get('images')->getData();
 
+            $logoImage = $this->moveUploadedImages([$logoImage]);
+            $coverImage = $this->moveUploadedImages([$coverImage]);
+            $images = $this->moveUploadedImages($images);
+
+            $product->setLogo($logoImage[0]) ;
+            $product->setCoverImage($coverImage[0]) ;
+            $product->setImages($images) ;
 
 
 

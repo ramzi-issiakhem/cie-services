@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -71,13 +72,12 @@ class EventRepository extends ServiceEntityRepository
 //            ->getResult();
 //    }
 
-    public function findAllByState(int $state,String $order)
+    public function findAllByState(int $state,String $order) :Query
     {
         return $this->createQueryBuilder('e')
             ->orderBy("e.event_datetime",$order)
             ->where('e.state = :etat')
             ->setParameter('etat', $state)
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
     }
 }

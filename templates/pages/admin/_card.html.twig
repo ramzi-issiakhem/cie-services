@@ -1,26 +1,36 @@
 
 {% trans_default_domain 'admin' %}
-<div class="card mb-3" style="max-width: 540px;">
-    <div class="row no-gutters">
-
-        <div class="col-md-4">
-            <img src="{{ asset('uploads/products/' ~ event.product.logo) }}" class="card-img" alt="...">
-        </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <h4 class="card-title"> {% trans %} events.school.name {% endtrans %} :  {{ event.school.name }}</h4>
-                <h5 class="card-title"> {% trans %} events.name {% endtrans %} :  {{ event.formattedName }}</h5>
-                <p class="card-text"> {% trans %} events.limit.event_date {% endtrans %} : {{ event.eventDateTime |date("d/m/Y") }} </p>
-                <p class="card-text"> {% trans %} events.limit.deadline_date {% endtrans %} : {{ event.DeadLineDate  |date("d/m/Y") }} </p>
-                <p class="card-text"><small class="text-muted">{% trans %} events.reservations {% endtrans %} : {{ event.reservationPlaces }} </small></p>
-                <a href="{{ path('admin.event.edit',{'id': event.id}) }}" class="btn btn-warning">{% trans %} events.edit {% endtrans %}</a>
-
-                <form method="post" action="{{ path('admin.event.remove',{id: event.id}) }}" onsubmit="return confirm('Are you sure ?')">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ event.id) }}">
-                    <button class="btn btn-danger">{{ 'events.remove'|trans }}</button>
-                </form>
-            </div>
-        </div>
+<div class="card" style="width: 18rem;">
+    <img src="{{ asset('uploads/products/' ~ event.product.logo) }}" class="card-img-top" alt="logo">
+    <div class="card-body">
+        <h5 class="card-title">  {% trans %} events.school.name {% endtrans %} :  {{ event.school.name }}</h5>
+{#        <h5 class="card-title">  {% trans %} events.name {% endtrans %} :  {{ event.formattedName }}</h5>#}
+        <p class="card-text"> {{ (event.formattedDescription |length > 50 ? event.formattedDescription|slice(0, 140) ~ '...' : event.formattedDescription )|nl2br }}</p>
     </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            {% trans %} events.limit.event_date {% endtrans %} : {{ event.eventDateTime |date("d/m/Y") }}
+        </li>
+        <li class="list-group-item">
+            {% trans %} events.limit.deadline_date {% endtrans %} : {{ event.DeadLineDate  |date("d/m/Y") }}
+        </li>
+
+        <li class="list-group-item">
+            <small class="text-muted">{% trans %} events.reservations {% endtrans %} : {{ event.reservationPlaces }} </small>
+        </li>
+
+        <li class="list-group-item">
+            <a href="{{ path('admin.event.edit',{'id': event.id}) }}" class="btn btn-warning container-fluid mb-2">{% trans %} events.edit {% endtrans %}</a>
+            <form method="post" action="{{ path('admin.event.remove',{id: event.id}) }}" onsubmit="return confirm('Are you sure ?')">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ event.id) }}">
+                <button class="btn btn-danger container-fluid">{{ 'events.remove'|trans }}</button>
+            </form>
+
+        </li>
+
+    </ul>
 </div>
+
+
+

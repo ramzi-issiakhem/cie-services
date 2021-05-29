@@ -33,14 +33,14 @@ class ProductType extends AbstractType
             ->add('logo',FileType::class,[
                 'required' => true,
                 'multiple' => false,
-                'mapped' => true,
-                "label" => 'forms.logo'
+                'mapped' => false,
+                "label" => 'forms.logo',
 
             ])
             ->add('cover_image',FileType::class,[
                 'required' => true,
                 'multiple' => false,
-                'mapped' => true,
+                'mapped' => false,
                 "label" => 'forms.coverimage'
 
             ])

@@ -8,53 +8,73 @@
         <div class="alert alert-success">{{ message }}</div>
     {% endfor %}
 
+    {% set count_user = (students_users|length) %}
+    {% set count_schools = (schools_users|length) %}
 
-
-    <div class="row">
-        {{ include('pages/admin/navigation_box.html.twig') }}
-        <div class="col col-md-10">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link " id="schools-tab" data-bs-toggle="tab" data-bs-target="#schools" type="button" role="tab" aria-controls="home" aria-selected="true">{% trans %} users.state.schools {% endtrans %}</button>
-                </li>
-
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="students-tab" data-bs-toggle="tab" data-bs-target="#students" type="button" role="tab" aria-controls="profile" aria-selected="false">{% trans %} users.state.students {% endtrans %}</button>
-                </li>
-
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="admins-tab" data-bs-toggle="tab" data-bs-target="#admins" type="button" role="tab" aria-controls="contact" aria-selected="false">{% trans %} users.state.admins {% endtrans %}</button>
-                </li>
-
-
-            </ul>
-        </div>
+    <div class="mt-4 mb-4 text-center">
+        <div class="fs-bold">Etudiants actifs : {{ count_user }}</div>
+        <div class="fs-bold">Ecoles actifs : {{ count_schools }}</div>
     </div>
 
+    <div class="row mb-0">
+        {{ include('pages/admin/navigation_box.html.twig') }}
+
+            <div class="col col-md-10">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link " id="schools-tab" data-bs-toggle="tab" data-bs-target="#schools" type="button" role="tab" aria-controls="home" aria-selected="true">{% trans %} users.state.schools {% endtrans %}</button>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="students-tab" data-bs-toggle="tab" data-bs-target="#students" type="button" role="tab" aria-controls="profile" aria-selected="false">{% trans %} users.state.students {% endtrans %}</button>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="admins-tab" data-bs-toggle="tab" data-bs-target="#admins" type="button" role="tab" aria-controls="contact" aria-selected="false">{% trans %} users.state.admins {% endtrans %}</button>
+                    </li>
 
 
+                </ul>
+            </div>
+    </div>
 
+    <div class="row ">
+        <div class="col-md-2" ></div>
+        <div class="col-md-10 tab-content" id="myTabContent">
 
+            <div class="tab-pane fade" id="students" role="tabpanel" aria-labelledby="students-tab">
+                <div class="row">
 
+                    {% for user in students_users %}
+                        <div class="col-md-4">
+                    {{ include('pages/admin/users/_card.html.twig',{user:user}) }}
+                    </div>
+                    {% endfor %}
 
-
-    <div class="tab-content" id="myTabContent">
-
-        <div class="tab-pane fade" id="students" role="tabpanel" aria-labelledby="students-tab">
-            {% for user in students_users %}
-                {{ include('pages/admin/users/_card.html.twig',{user:user}) }}
-            {% endfor %}
-        </div>
-        <div class="tab-pane fade" id="admins" role="tabpanel" aria-labelledby="admins-tab">
-            {% for user in admins_users %}
-                {{ include('pages/admin/users/_card.html.twig',{user:user}) }}
-            {% endfor %}
-        </div>
-        <div class="tab-pane fade" id="schools" role="tabpanel" aria-labelledby="schools-tab">
-            {% for user in schools_users %}
-                {{ include('pages/admin/users/_card.html.twig',{user:user}) }}
-            {% endfor %}
+                </div>
+            </div>
+            <div class="tab-pane fade" id="admins" role="tabpanel" aria-labelledby="admins-tab">
+                <div class="row">
+                {% for user in admins_users %}
+                <div class="col-md-3 me-1 mb-1">
+                    {{ include('pages/admin/users/_card.html.twig',{user:user}) }}
+                </div>
+                {% endfor %}
+            </div>
+            </div>
+            <div class="tab-pane fade" id="schools" role="tabpanel" aria-labelledby="schools-tab">
+                    <div class="row align-self-stretch">
+                    {% for user in schools_users %}
+                        <div class="col-md-4 me-4 mb-4">
+                            {{ include('pages/admin/users/_card.html.twig',{user:user}) }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="navigation">
+                    {{ knp_pagination_render(schools_users) }}
+                </div>
+            </div>
         </div>
     </div>
 

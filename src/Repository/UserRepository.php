@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -67,7 +68,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
             */
 
-        public function getAllSchoolsUsers()
+        public function getAllSchoolsUsers(): Query
         {
             $role = "USER";
 
@@ -75,12 +76,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->andWhere('u.type = 0')
                 ->andWhere('JSON_CONTAINS(u.roles, :role) = 1')
                 ->setParameter('role', '"ROLE_' . $role . '"')
-                ->getQuery()
-                ->getResult();
+                ->getQuery();
 
         }
 
-        public function getAllStudentsUsers()
+        public function getAllStudentsUsers() :Query
         {
             $role = "USER";
 
@@ -88,11 +88,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->andWhere('u.type = 1')
                 ->andWhere('JSON_CONTAINS(u.roles, :role) = 1')
                 ->setParameter('role', '"ROLE_' . $role . '"')
-                ->getQuery()
-                ->getResult();
+                ->getQuery();
         }
 
-        public function getAllAdminsUsers()
+        public function getAllAdminsUsers() : Query
         {
             $role = "USER";
 
@@ -100,8 +99,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             return $this->createQueryBuilder('u')
                 ->andWhere('JSON_CONTAINS(u.roles, :role) = 0')
                 ->setParameter('role', '"ROLE_' . $role . '"')
-                ->getQuery()
-                ->getResult();
+                ->getQuery();
         }
 
 }

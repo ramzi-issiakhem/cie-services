@@ -1,31 +1,49 @@
 
 {% trans_default_domain 'admin' %}
-<div class="card mb-3" style="max-width: 540px;">
-    <div class="row no-gutters">
+<div class="col-md-3">
 
-        <div class="col-md-4">
-            <img src="{{ asset('uploads/products/' ~ user.logo) }}" class="card-img" alt="...">
-        </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <h3 class="card-title"> {% trans %} users.name {% endtrans %} :  {{ user.name }}</h3>
-                <h5 class="card-title"> {% trans %} users.email {% endtrans %} :  {{ user.email }}</h5>
-                {% if user.type == 1 %}
-                    <p class="card-text"> {% trans %} users.birthday_date {% endtrans %} : {{ user.birthdayDate |date("d/m/Y") }} </p>
 
-                    <p class="card-text"> {% trans %} users.schoolar_level {% endtrans %} :  {{ user.formattedSchoolarLevel|trans([],'types') }}  </p>
-                {% endif %}
+<div class="card " style="width: 18rem;">
+    <img src="{{ asset('uploads/users/' ~ user.logo) }}" class="card-img-top" alt="logo">
+    <div class="card-body">
+        <h5 class="card-title">    {{ user.name }}</h5>
+        <span class="card-title">  {{ user.email }}</span>
 
-                <p class="card-text"><small class="text-muted">{% trans %} users.mobile_phone {% endtrans %} : 0{{ user.mobilePhone }} </small></p>
-
-                <a href="{{ path('admin.user.edit',{'id': user.id, 'slug': user.slug }) }}" class="btn btn-warning">{% trans %} users.edit {% endtrans %}</a>
-
-                <form method="post" action="{{ path('admin.user.remove',{id: user.id}) }}" onsubmit="return confirm('Are you sure ?')">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ user.id) }}">
-                    <button class="btn btn-danger">{{ 'users.remove'|trans }}</button>
-                </form>
-            </div>
-        </div>
     </div>
+
+    <ul class="list-group list-group-flush">
+
+        {% if user.type == 1 %}
+        <li class="list-group-item">
+            <p class="card-text"> <span class="fw-bold"> {% trans %} users.birthday_date {% endtrans %} : </span> {{ user.birthdayDate |date("d/m/Y") }} </p>
+        </li>
+        <li class="list-group-item">
+            <p class="card-text"> <span class="fw-bold"> {% trans %} users.schoolar_level {% endtrans %} : </span>  {{ user.formattedSchoolarLevel|trans([],'types') }}  </p>
+        </li>
+
+        {% endif %}
+
+{#        <li class="list-group-item">#}
+{#            <span class="fw-bold"> {% trans %} users.mobile_phone {% endtrans %} : </span> <small class="text-muted"> 0{{ user.mobilePhone }} </small>#}
+{#        </li>#}
+
+
+
+        <li class="list-group-item">
+
+            <a href="{{ path('admin.user.edit',{'id': user.id, 'slug': user.slug }) }}" class="btn btn-warning container-fluid mb-2">{% trans %} users.edit {% endtrans %}</a>
+
+
+            <form method="post" action="{{ path('admin.user.remove',{id: user.id}) }}" onsubmit="return confirm('Are you sure ?')">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ user.id) }}">
+            <button class="btn container-fluid btn-danger">{{ 'users.remove'|trans }}</button>
+            </form>
+
+        </li>
+
+    </ul>
 </div>
+
+</div>
+
