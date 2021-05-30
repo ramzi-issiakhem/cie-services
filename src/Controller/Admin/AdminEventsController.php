@@ -3,6 +3,8 @@
 namespace  App\Controller\Admin;
 
 use App\Entity\Event;
+use App\Entity\EventSearch;
+use App\Form\EventSearchType;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -42,20 +44,20 @@ class AdminEventsController extends  AbstractController {
      */
     public function show(Request $request,PaginatorInterface $paginator) {
 
+                $search = new EventSearch();
+                $form_search = $this->createForm(EventSearchType::class,$search);
+                $form_search->handleRequest($request);
+
+
                 $page = $request->get('page',1);
-                $still_events = $paginator->paginate($this->repository->findAllByState(0,'ASC'),$page,3);
-                $waiting_events = $paginator->paginate($this->repository->findAllByState(1,'ASC'),$page,3);
-                $confirmed_events = $paginator->paginate($this->repository->findAllByState(2,'ASC'),$page,3);
-                $finished_events = $paginator->paginate($this->repository->findAllByState(3,'ASC'),$page,3);
+                $events = $paginator->paginate($this->repository->findAllByState($search),$page,3);
 
 
 
 
                 return $this->render('pages/admin/admin.events.show.html.twig',[
-                    'still_events' => $still_events,
-                    'waiting_events' => $waiting_events,
-                    'confirmed_events' => $confirmed_events,
-                    'finished_events' => $finished_events
+                    'events' => $events,
+                    'search_form' => $form_search->createView()
                 ]);
 
             }

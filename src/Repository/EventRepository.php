@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Event;
+use App\Entity\EventSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -72,12 +73,38 @@ class EventRepository extends ServiceEntityRepository
 //            ->getResult();
 //    }
 
-    public function findAllByState(int $state,String $order) :Query
+    public function findAllByState(EventSearch $search) :Query
     {
-        return $this->createQueryBuilder('e')
-            ->orderBy("e.event_datetime",$order)
-            ->where('e.state = :etat')
-            ->setParameter('etat', $state)
-            ->getQuery();
+        $query = $this->createQueryBuilder('e');
+
+        if ($search->getEventDatetime()) {
+            $date = $search->getEventDatetime();
+            $query->andWhere('e.event_datetime < :val_event')
+                ->setParameter('val_event',$date);
+        }
+
+        if ($search->getState()) {
+            $state = $search->getState();
+            $query->andWhere('e.state = :val_state')
+                ->setParameter('val_state',$state);
+        }
+        if ($search->getDeadlineDate()) {
+            $deadline = $search->getDeadlineDate();
+            $query->andWhere('e.deadline_date < :val_deadline')
+            ->setParameter('val_deadline',$deadline);
+        }
+
+        if ($search->getSchool()) {
+            $id_school = $search->getSchool()->getId();
+            $query->andWhere('e.school = :val_school')
+                ->setParameter('val_school',$id_school);
+        }
+
+        if ($search->getProduct()) {
+            $id_product = $search->getProduct()->getId();
+            $query->andWhere('e.product = :val_product')
+                ->setParameter('val_product',$id_product);
+        }
+        return $query->getQuery();
     }
 }

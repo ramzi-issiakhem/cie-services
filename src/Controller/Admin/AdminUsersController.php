@@ -4,6 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Controller\SecurityController;
 use App\Entity\User;
+use App\Entity\UserSearch;
+use App\Form\UserSearchType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -100,7 +102,7 @@ class AdminUsersController extends  AbstractController {
                                 'label' => 'forms.birthday'
                             ])
                          ->add('scholar_level', ChoiceType::class, [
-                                    'choices' => $this->getSchoolarChoices(),
+                                    'choices' => array_flip(User::SCHOOLAR_LEVEL),
                                     'choice_translation_domain' => "types",
                                     'label' => 'forms.schoolarlevel',
                                     'group_by' => function ($choice, $key, $value) {
@@ -155,18 +157,20 @@ class AdminUsersController extends  AbstractController {
 
     public function show(Request $request,PaginatorInterface $paginator) {
 
+        $search = new UserSearch();
+        $form = $this->createForm(UserSearchType::class,$search);
         $page = $request->get('page',1);
-        $students = $paginator->paginate($this->repository->getAllStudentsUsers(),$page,3);
-        $schools = $paginator->paginate($this->repository->getAllSchoolsUsers(),$page,3);
-        $admins = $paginator->paginate($this->repository->getAllAdminsUsers(),$page,3);
+        $form->handleRequest($request);
+
+        $users =$paginator->paginate($this->repository->findAllBySearch($search));
+
 
 
 
 
         return $this->render('pages/admin/users/admin.users.show.html.twig',[
-            'students_users' => $students,
-            'schools_users' => $schools,
-            'admins_users' => $admins
+            'users' => $users,
+            'search_form' => $form->createView()
         ]);
     }
 
@@ -184,13 +188,7 @@ class AdminUsersController extends  AbstractController {
         }
 
 
-    /**
-     * @return array
-     */
-    private function getSchoolarChoices(): array
-    {
-        return array_flip(User::SCHOOLAR_LEVEL);
-    }
+
 
 
 

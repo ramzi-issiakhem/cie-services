@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\UserSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -68,38 +69,38 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
             */
 
-        public function getAllSchoolsUsers(): Query
-        {
-            $role = "USER";
 
-            return $this->createQueryBuilder('u')
-                ->andWhere('u.type = 0')
-                ->andWhere('JSON_CONTAINS(u.roles, :role) = 1')
-                ->setParameter('role', '"ROLE_' . $role . '"')
-                ->getQuery();
 
+    public function findAllBySearch(UserSearch $search): Query
+    {
+        $query = $this->createQueryBuilder('u');
+
+
+
+        if ($search->getRelatedSchool()) {
+            $query->andWhere('u.related_school = :val_school')
+                ->setParameter('val_school',$search->getRelatedSchool()->getId());
         }
 
-        public function getAllStudentsUsers() :Query
-        {
-            $role = "USER";
-
-            return $this->createQueryBuilder('u')
-                ->andWhere('u.type = 1')
-                ->andWhere('JSON_CONTAINS(u.roles, :role) = 1')
-                ->setParameter('role', '"ROLE_' . $role . '"')
-                ->getQuery();
+        if ($search->getScholarLevel()) {
+            $query->andWhere('u.scholar_level = :val_level')
+                ->setParameter('val_level',$search->getScholarLevel());
         }
 
-        public function getAllAdminsUsers() : Query
-        {
-            $role = "USER";
-
-
-            return $this->createQueryBuilder('u')
-                ->andWhere('JSON_CONTAINS(u.roles, :role) = 0')
-                ->setParameter('role', '"ROLE_' . $role . '"')
-                ->getQuery();
+        if ($search->getType()) {
+            $query->andWhere('u.type = :val_type')
+                ->setParameter('val_type', $search->getType() );
         }
+
+        // TODO Gérer le probleme de filtre par role
+        if ($search->getRoles()) {
+            $role = "ROLE_ADMIN";//$search->getRoles();
+
+            $query->andWhere(' JSON_CONTAINS(u.roles, :role) = 1')
+                ->setParameter('role',$role);
+        }
+
+        return $query->getQuery() ;
+    }
 
 }

@@ -25,7 +25,9 @@ forms:
     reservation_places: Places disponibles
     state: Etat Actuel
     date: Date de L'evenement
+#      max: Date Max
     deadline: Date De DeadLine
+#      max: Deadline Max
 
   users:
     change:
