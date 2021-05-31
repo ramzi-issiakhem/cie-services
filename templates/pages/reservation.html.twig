@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+{% trans_default_domain 'forms' %}
+
+{% block body %}
+
+    <div class="container mt-4">
+
+        <h2> Event Presentation</h2>
+
+
+
+        <form method="post">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+
+            {% if error is defined %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security')  }}</div>
+            {% endif %}
+
+        <div class="container">
+            {{ form_start(form) }}
+            {{ form_row(form.choices) }}
+            <button class="btn-primary btn">
+                Reserve
+            </button>
+            {{ form_end(form) }}
+        </div>
+
+
+
+        </form>
+    </div>
+
+{% endblock %}

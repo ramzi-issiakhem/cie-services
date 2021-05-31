@@ -16,3 +16,21 @@ navbar:
     language: Langue
     brand:
         name: Afak-El Moustakbil
+mail:
+    send: Email Envoyé avec succès
+
+event:
+    already_joined: Evenement Déja reservé
+
+child:
+    create: Créer un enfant
+    name: Nom et Prénom
+    school: Ecole
+    actions: Actions
+    title: Vos Enfants
+    edit: Modifier
+    success:
+        remove: Enfant Supprimé avec succès
+        created: Enfant Crée
+        edited: Efant Edité
+    school_level: Niveau Scolaire

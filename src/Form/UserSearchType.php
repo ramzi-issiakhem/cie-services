@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Child;
 use App\Entity\User;
 use App\Entity\UserSearch;
 use App\Repository\UserRepository;
@@ -24,7 +25,7 @@ class UserSearchType extends AbstractType
                 'choice_translation_domain' => "types",
             ])
             ->add('scholar_level',ChoiceType::class, [
-                'choices' => array_flip(User::SCHOOLAR_LEVEL),
+                'choices' => array_flip(Child::SCHOOLAR_LEVEL),
                 'choice_translation_domain' => "types",
                 'label' => 'forms.schoolarlevel',
                 'required' => false,
@@ -45,7 +46,8 @@ class UserSearchType extends AbstractType
                 'choice_translation_domain' => "types",
                 'choices' => [
                     "users.type.professional" => 0,
-                    "users.type.personnel" => 1
+                    "users.type.personnal" => 1,
+                    "users.type.student" => 2
                 ]
             ])
             ->add('related_school',EntityType::class,[

@@ -7,22 +7,57 @@
         <h4>Nom</h4>
         <div>{{ user.name }}</div>
 
-        <h4>Related School</h4>
-        <div>{{ user.relatedSchool.name }}</div>
+
 
         <h4>Email</h4>
         <div>{{ user.email }}</div>
-        <h4>Phone</h4>
-        <div>0{{ user.mobilePhone }}</div>
 
         <h4>Phone</h4>
         <div>0{{ user.mobilePhone }}</div>
 
-        <h4>Phone</h4>
-        <div>{{ user.scholarLevelLabel|trans }}</div>
 
-        <a href="{{ path('user.edit',{'slug': user.slug}) }}" class="btn btn-primary">Editer</a>
+        <a href="{{ path('user.edit',{'id': user.id, 'slug': user.slug}) }}" class="btn btn-primary">Editer</a>
 
-    </div>
+    </div >
+        {% if user.type == 1 %}
+        <div class="container mt-4">
+                <a href="{{ path('user.child.create') }}" class="btn btn-primary">{{ 'child.create'|trans({},'messages') }}</a>
+
+                <h4> {{ 'child.title'|trans({},'messages')   }}</h4>
+                <table class="table">
+                        <thead>
+                        <tr>
+
+                                <th scope="col">{{ 'child.name'|trans({},'messages') }}</th>
+                                <th scope="col">{{ 'child.school_level'|trans({},'messages') }}</th>
+                                <th scope="col">{{ 'child.school'|trans({},'messages') }}</th>
+                                <th scope="col">{{ 'child.actions'|trans({},'messages') }}</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for child in user.children %}
+                                <tr>
+                                        <td>{{ child.name }}</td>
+                                        <td>{{ child.FormattedSchoolarLevel }}</td>
+                                        <td>{{ child.school.name }}</td>
+                                        <td>
+                                                <div class="row">
+                                                        <a href="{{ path('user.child.edit',{'id': child.id,'slug' : child.slug }) }}" class="col btn btn-warning container-fluid mb-2"> {{  'child.edit'| trans({},'messages') }}</a>
+
+                                                        <form class="col" method="post" action="{{ path('user.child.remove',{id: child.id}) }}" onsubmit="return confirm('Are you sure ?')">
+                                                                <input type="hidden" name="_method" value="DELETE">
+                                                                <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ child.id) }}">
+                                                                <button class="btn container-fluid mb-2 btn-danger">{{ 'child.edit'| trans({},'messages') }}</button>
+                                                        </form>
+                                                </div>
+
+                                        </td>
+                                </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+        </div>
+        {% endif %}
 
 {% endblock %}

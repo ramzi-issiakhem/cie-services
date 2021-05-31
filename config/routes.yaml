@@ -27,7 +27,30 @@ contact:
 
 user.profile:
      path: /{_locale}/profile/{slug}
-     controller: App\Controller\SecurityController::profile
+     controller: App\Controller\SecurityController::profilePage
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+
+user.child.edit:
+     path: /{_locale}/profile/child/edit/{id}/{slug}
+     controller: App\Controller\SecurityController::editChild
+     requirements:
+          _locale: en|fr|ar
+          default: fr
+
+user.child.remove:
+     path: /{_locale}/profile/child/remove/{id}
+     controller: App\Controller\SecurityController::removeChild
+     methods: DELETE
+     requirements:
+          _locale: en|fr|ar
+          default: fr
+
+user.child.create:
+     path: /{_locale}/profile/child/create
+     controller: App\Controller\SecurityController::createChild
      requirements:
           _locale: en|fr|ar
      defaults:
@@ -60,28 +83,23 @@ user.login:
      methods: GET|POST
 
 
-user.logout:
-     path: /{_locale}/profile/logout
-     defaults:
-          _locale: fr
+user.password.edit:
+     path: /{_locale}/profile/{slug}/{id}/edit/password
+     controller: App\Controller\SecurityController::editPassword
      requirements:
           _locale: en|fr|ar
+     defaults:
+          _locale: fr
 
 user.edit:
-     path: /{_locale}/profile/{slug}/edit
-     controller: App\Controller\UserController::edit
-     requirements:
-          _locale: en|fr|ar
-          default: fr
-
-user.reserve:
-     path: /{_locale}/profile/reserve/{id}
-     controller: App\Controller\HomeController::reserve
+     path: /{_locale}/profile/{slug}/{id}/edit
+     controller: App\Controller\SecurityController::edit
      requirements:
           _locale: en|fr|ar
      defaults:
           _locale: fr
-          id: 1
+
+
 
 admin.events.show:
      path: /{_locale}/admin/events
@@ -96,6 +114,32 @@ admin.event.edit:
      requirements:
           _locale: en|fr|ar
           id: '\d+'
+
+user.password.forgot.check_email:
+     path: /{_locale}/reset-password/check-email
+     controller: App\Controller\ResetPasswordController::checkEmail
+     methods:  GET|POST
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
+app_forgot_password_request:
+     path: /{_locale}/reset-password/request
+     controller: App\Controller\ResetPasswordController::request
+     methods:  GET|POST
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
+
+user.password.forgot:
+     path: /{_locale}/reset-password
+     controller: App\Controller\ResetPasswordController::request
+     methods:  GET|POST
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
 
 
 admin.event.remove:

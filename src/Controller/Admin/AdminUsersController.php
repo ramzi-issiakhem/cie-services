@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\UserSearch;
 use App\Form\UserSearchType;
 use App\Form\UserType;
+use App\Repository\ChildRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -42,13 +43,18 @@ class AdminUsersController extends  AbstractController {
      * @var UserPasswordEncoderInterface
      */
     private $encoder;
+    /**
+     * @var ChildRepository
+     */
+    private $child_repository;
 
-    public function __construct(UserPasswordEncoderInterface $encoder,EntityManagerInterface $em,TranslatorInterface $translator,UserRepository $repository)
+    public function __construct(UserPasswordEncoderInterface $encoder,EntityManagerInterface $em,TranslatorInterface $translator,UserRepository $repository,ChildRepository $child_repository)
     {
         $this->em = $em;
         $this->translator = $translator;
         $this->repository = $repository;
         $this->encoder = $encoder;
+        $this->child_repository = $child_repository;
     }
 
     public function editPassword(User $user,Request $request) {
@@ -101,7 +107,15 @@ class AdminUsersController extends  AbstractController {
                                 'widget' => "single_text",
                                 'label' => 'forms.birthday'
                             ])
-                         ->add('scholar_level', ChoiceType::class, [
+
+                         ->add('roles',CollectionType::class,[
+                             'entry_type' => ChoiceType::class,
+                             'entry_options' =>[
+                                 'choices' => User::ROLES,
+                                 'translation_domain' => 'types'
+                             ]
+                         ])
+                            /*->add('scholar_level', ChoiceType::class, [
                                     'choices' => array_flip(User::SCHOOLAR_LEVEL),
                                     'choice_translation_domain' => "types",
                                     'label' => 'forms.schoolarlevel',
@@ -117,7 +131,7 @@ class AdminUsersController extends  AbstractController {
                                         }
                                     }
                                 ])
-                         ->add('related_school', EntityType::class, [
+                         /*->add('related_school', EntityType::class, [
                                     'class' => User::class,
                                     'label' => 'forms.relatedschool',
                                     'choice_label' => 'name',
@@ -125,14 +139,8 @@ class AdminUsersController extends  AbstractController {
                                         return $er->createQueryBuilder('u')
                                             ->where('u.type = 0');
                                     },
-                                ])
-                         ->add('roles',CollectionType::class,[
-                             'entry_type' => ChoiceType::class,
-                             'entry_options' =>[
-                                 'choices' => User::ROLES,
-                                 'translation_domain' => 'types'
-                             ]
-                         ]);
+                                ])*/
+                    ;
                 }
 
 
@@ -162,15 +170,23 @@ class AdminUsersController extends  AbstractController {
         $page = $request->get('page',1);
         $form->handleRequest($request);
 
-        $users =$paginator->paginate($this->repository->findAllBySearch($search));
+        $type= $search->getType();
+        if ($type == 2) {
+            $users = $this->child_repository->findAllBySearch($search);
+        } else {
+            $users = $this->repository->findAllBySearch($search);
+        }
 
 
+
+        $users_result = $paginator->paginate($users,$page,10);
 
 
 
         return $this->render('pages/admin/users/admin.users.show.html.twig',[
-            'users' => $users,
-            'search_form' => $form->createView()
+            'users' => $users_result,
+            'search_form' => $form->createView(),
+
         ]);
     }
 

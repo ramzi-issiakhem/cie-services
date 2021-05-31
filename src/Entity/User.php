@@ -4,9 +4,10 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Cocur\Slugify\Slugify;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,23 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User extends AbstractLocalisation implements UserInterface
 {
-    const SCHOOLAR_LEVEL = [
-        0 => "levels.section.little",
-        1 => "levels.section.middle",
-        2 => "levels.section.big",
-        3 => "levels.primary.one",
-        4 => "levels.primary.two",
-        5 => "levels.primary.three",
-        6 => "levels.primary.four",
-        7 => "levels.primary.five",
-        8 => "levels.secondary.one",
-        9 => "levels.secondary.two",
-        10 => "levels.secondary.three",
-        11 => "levels.secondary.four",
-        12 => "levels.high.one",
-        13 => "levels.high.two",
-        14 => "levels.high.three",
-    ];
+
 
    /* const ROLES = [
         "roles.superadministrator" => ["ROLE_SUPER_ADMIN","ROLE_ADMIN","ROLE_MODERATOR"],
@@ -93,15 +78,6 @@ class User extends AbstractLocalisation implements UserInterface
      */
     private $birthday_date;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Assert\Type(
-     *     type="integer",
-     *     message="user.type.integer"
-     * )
-     */
-    private $scholar_level;
-
 
 
     /**
@@ -119,23 +95,9 @@ class User extends AbstractLocalisation implements UserInterface
      */
     private $type;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="users")
-     * @Assert\Valid
-     */
-    private $related_school;
 
-    /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="related_school")
-     * @Assert\Valid
-     */
-    private $users;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="school")
-     * @Assert\Valid
-     */
-    private $events;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -143,11 +105,31 @@ class User extends AbstractLocalisation implements UserInterface
     private $logo;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="school")
+     */
+    private $events;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Child::class, mappedBy="parent")
+     */
+    private $children;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Child::class, mappedBy="school")
+     */
+    private $users;
+
+
     public function __construct()
     {
 
-        $this->users = new ArrayCollection();
+
+
+
         $this->events = new ArrayCollection();
+        $this->children = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
 
@@ -230,39 +212,25 @@ class User extends AbstractLocalisation implements UserInterface
     }
 
 
-
-
-
+    /**
+     * @return DateTimeInterface|null
+     */
     public function getBirthdayDate(): ?\DateTimeInterface
     {
         return $this->birthday_date;
     }
 
-    public function setBirthdayDate(?\DateTimeInterface $birthday_date): self
+
+    /**
+     * @param DateTimeInterface $birthday_date
+     * @return $this
+     */
+    public function setBirthdayDate(\DateTimeInterface $birthday_date): self
     {
         $this->birthday_date = $birthday_date;
 
         return $this;
     }
-
-
-
-
-
-    public function getScholarLevel(): ?int
-    {
-        return $this->scholar_level;
-    }
-
-    public function setScholarLevel(?int $scholar_level): self
-    {
-        $this->scholar_level = $scholar_level;
-
-        return $this;
-    }
-
-
-
 
     /**
      * Returning a salt is only needed, if you are not using a modern
@@ -313,78 +281,19 @@ class User extends AbstractLocalisation implements UserInterface
         return $this;
     }
 
-    public function getRelatedSchool(): ?self
-    {
-        return $this->related_school;
-    }
 
-    public function setRelatedSchool(?self $related_school): self
-    {
-        $this->related_school = $related_school;
 
-        return $this;
-    }
+
+
+
+
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getUsers(): ArrayCollection
-    {
-        return $this->users;
-    }
 
-    public function addUser(self $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setRelatedSchool($this);
-        }
 
-        return $this;
-    }
-
-    public function removeUser(self $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getRelatedSchool() === $this) {
-                $user->setRelatedSchool(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getEvents(): ArrayCollection
-    {
-        return $this->events;
-    }
-
-    public function addEvent(Event $event): self
-    {
-        if (!$this->events->contains($event)) {
-            $this->events[] = $event;
-            $event->setSchool($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvent(Event $event): self
-    {
-        if ($this->events->removeElement($event)) {
-            // set the owning side to null (unless already changed)
-            if ($event->getSchool() === $this) {
-                $event->setSchool(null);
-            }
-        }
-
-        return $this;
-    }
-    public function serialize()
+    public function serialize(): string
     {
 
         return serialize([
@@ -394,7 +303,7 @@ class User extends AbstractLocalisation implements UserInterface
 
     }
 
-    public function unserialize($data)
+    public function unserialize($data): array
     {
 
         return  list (
@@ -428,12 +337,99 @@ class User extends AbstractLocalisation implements UserInterface
     /**
      * @return string
      */
-    public function getFormattedSchoolarLevel(): string
+
+
+
+
+
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
     {
-        return self::SCHOOLAR_LEVEL[$this->scholar_level];
+        return $this->events;
     }
 
-    public function getscholarLevelLabel() {
-        return self::SCHOOLAR_LEVEL[$this->getScholarLevel()];
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->setSchool($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getSchool() === $this) {
+                $event->setSchool(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Child[]
+     */
+    public function getChildren(): Collection
+    {
+        return $this->children;
+    }
+
+    public function addChild(Child $child): self
+    {
+        if (!$this->children->contains($child)) {
+            $this->children[] = $child;
+            $child->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChild(Child $child): self
+    {
+        if ($this->children->removeElement($child)) {
+            // set the owning side to null (unless already changed)
+            if ($child->getParent() === $this) {
+                $child->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Child[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(Child $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setSchool($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(Child $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getSchool() === $this) {
+                $user->setSchool(null);
+            }
+        }
+
+        return $this;
     }
 }

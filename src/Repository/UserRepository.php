@@ -19,9 +19,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    /**
+     * @var ManagerRegistry
+     */
+    private $registry;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
+        $this->registry = $registry;
     }
 
     /**
@@ -75,19 +81,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         $query = $this->createQueryBuilder('u');
 
+//        if ($search->getScholarLevel()) {
+//            $query
+//                ->from('Child','c')
+//                ->innerJoin();
+//            $users[] = $this->child_repository->findAllByScholarLevel($search->getScholarLevel());
+//        }
+
+//        if ($search->getRelatedSchool()) {
+//            $users[] = $this->child_repository->findAllBySchoolId($search->getRelatedSchool()->getId());
+//        }
 
 
-        if ($search->getRelatedSchool()) {
-            $query->andWhere('u.related_school = :val_school')
-                ->setParameter('val_school',$search->getRelatedSchool()->getId());
-        }
-
-        if ($search->getScholarLevel()) {
-            $query->andWhere('u.scholar_level = :val_level')
-                ->setParameter('val_level',$search->getScholarLevel());
-        }
-
-        if ($search->getType()) {
+        if (($search->getType() > -1) && ($search->getType() < 3)) {
             $query->andWhere('u.type = :val_type')
                 ->setParameter('val_type', $search->getType() );
         }
@@ -97,7 +103,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             $role = "ROLE_ADMIN";//$search->getRoles();
 
             $query->andWhere(' JSON_CONTAINS(u.roles, :role) = 1')
-                ->setParameter('role',$role);
+                ->setParameter('role',$role)
+                ;
         }
 
         return $query->getQuery() ;

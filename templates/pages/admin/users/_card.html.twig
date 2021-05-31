@@ -4,23 +4,32 @@
 
 
 <div class="card " style="width: 18rem;">
-    <img src="{{ asset('uploads/users/' ~ user.logo) }}" class="card-img-top" alt="logo">
+    {% if  user.email is defined %}
+            <img src="{{ asset('uploads/users/' ~ user.logo) }}" class="card-img-top" alt="logo">
+    {% else %}
+             <img src="{{ asset('uploads/users/' ~ user.parent.logo) }}" class="card-img-top" alt="logo">
+    {% endif %}
     <div class="card-body">
-        <h5 class="card-title">    {{ user.name }}</h5>
-        <span class="card-title">  {{ user.email }}</span>
-
+        <h5 class="card-title">    {{ user.name }} </h5>
+        {% if  user.email is defined %}
+            <span class="card-title">  {{ user.email }}</span>
+        {% else %}
+            <span class="card-title">  {{ user.formattedSchoolarLevel }}</span>
+            <span class="card-title">  {{ user.parent.name }}</span>
+        {% endif %}
     </div>
 
     <ul class="list-group list-group-flush">
 
-        {% if user.type == 1 %}
-        <li class="list-group-item">
-            <p class="card-text"> <span class="fw-bold"> {% trans %} users.birthday_date {% endtrans %} : </span> {{ user.birthdayDate |date("d/m/Y") }} </p>
-        </li>
-        <li class="list-group-item">
-            <p class="card-text"> <span class="fw-bold"> {% trans %} users.schoolar_level {% endtrans %} : </span>  {{ user.formattedSchoolarLevel|trans([],'types') }}  </p>
-        </li>
-
+        {% if ( ( user.type is defined) and( user.type == 1) ) or ( user.email is not defined ) %}
+            <li class="list-group-item">
+                <p class="card-text"> <span class="fw-bold"> {{ 'users.birthday_date'|trans }} : </span> {{ user.birthdayDate |date("d/m/Y") }} </p>
+            </li>
+        {% endif %}
+        {% if user.email is not defined %}
+            <li class="list-group-item">
+                <p class="card-text"> <span class="fw-bold">  : </span> {{ user.school.name }} </p>
+            </li>
         {% endif %}
 
 {#        <li class="list-group-item">#}
@@ -28,7 +37,7 @@
 {#        </li>#}
 
 
-
+        {% if user.email is defined %}
         <li class="list-group-item">
 
             <a href="{{ path('admin.user.edit',{'id': user.id, 'slug': user.slug }) }}" class="btn btn-warning container-fluid mb-2">{% trans %} users.edit {% endtrans %}</a>
@@ -41,6 +50,7 @@
             </form>
 
         </li>
+        {% endif %}
 
     </ul>
 </div>

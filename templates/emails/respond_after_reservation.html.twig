@@ -268,30 +268,30 @@
                                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
                                             <tr>
                                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#212b35;">Mail De Confirmation pour Votre Réservation</div>
+                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#212b35;">{{ 'mail.confimation.title'|trans('','mail') }}</div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">Bonjour Ramzi,</div>
+                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">{{ 'mail.hello'|trans({'%name%': user.name },'mail') }}</div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">Merci pour votre confiance , vous venez de réserver 3 place pour le prix de 2500 Da.</div>
+                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">{{ 'mail.confirmation.reservation'|trans({'%number%': user.name },'mail') }}</div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">Afin de pouvoir profiter pleinement de l'evenement , veuillez suivre ces étapes :</div>
+                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">{{ 'mail.consigns.title'|trans({},'mail') }}</div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                                     <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">
                                                         <ul>
-                                                            <li style="padding-bottom: 20px"><strong>Telechargement :</strong> Veuillez tout d'abord télécharger le fichier .pdf ci-joint.</li>
-                                                            <li><strong>Présentation:</strong> Le Jour-J veuillez présenter la feuille imprimée ou en version numérique </li>
+                                                            <li style="padding-bottom: 20px"><strong>{{ 'download'|trans({},'mail') }}</strong> {{ 'mail.consigns.download'|trans({},'mail') }}</li>
+                                                            <li><strong>{{ 'presentation'|trans({},'mail') }}</strong> {{ 'mail.consigns.presentation'|trans({},'mail') }} </li>
                                                         </ul>
                                                     </div>
                                                 </td>
@@ -301,7 +301,7 @@
                                                     <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;width:300px;line-height:100%;">
                                                         <tr>
                                                             <td align="center" bgcolor="#5e6ebf" role="presentation" style="border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#5e6ebf;" valign="middle">
-                                                                <a href="https://google.com" style="display:inline-block;width:250px;background:#5e6ebf;color:#ffffff;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:17px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;" target="_blank"> Visiter le site </a>
+                                                                <a href="https://google.com" style="display:inline-block;width:250px;background:#5e6ebf;color:#ffffff;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:17px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;" target="_blank"> {{ 'visit.site'|trans({},'mail') }} </a>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -312,7 +312,7 @@
                                                     <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;width:300px;line-height:100%;">
                                                         <tr>
                                                             <td align="center" bgcolor="#5e6ebf" role="presentation" style="border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#5e6ebf;" valign="middle">
-                                                                <a href="https://google.com" style="display:inline-block;width:250px;background:#5e6ebf;color:#ffffff;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:17px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;" target="_blank"> Telecharger le pdf </a>
+                                                                <a href="https://google.com" style="display:inline-block;width:250px;background:#5e6ebf;color:#ffffff;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:17px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;" target="_blank">{{ 'download'|trans({},'mail') }} </a>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -507,20 +507,7 @@
                                                     class="" style="vertical-align:top;width:285px;"
                                             >
                                     <![endif]-->
-                                    <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
-                                            <tr>
-                                                <td align="left" style="font-size:0px;padding:10px 25px;padding-bottom:0px;word-break:break-word;">
-                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:24px;text-align:left;text-transform:uppercase;color:#212b35;">address</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td align="left" style="font-size:0px;padding:10px 25px;padding-top:0;word-break:break-word;">
-                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:14px;font-weight:400;line-height:24px;text-align:left;color:#637381;">Austin Convention Center <br> 123 Main Street, 78701</div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
+
                                     <!--[if mso | IE]>
                                     </td>
 
@@ -528,20 +515,7 @@
                                             class="" style="vertical-align:top;width:285px;"
                                     >
                                     <![endif]-->
-                                    <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
-                                            <tr>
-                                                <td align="left" style="font-size:0px;padding:10px 25px;padding-bottom:0px;word-break:break-word;">
-                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:24px;text-align:left;text-transform:uppercase;color:#212b35;">Hours of Operation</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td align="left" style="font-size:0px;padding:10px 25px;padding-top:0;word-break:break-word;">
-                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:14px;font-weight:400;line-height:24px;text-align:left;color:#637381;">Dimanche, Jeudi : 8:00AM - 5:00PM</div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
+
                                     <!--[if mso | IE]>
                                     </td>
 
@@ -729,19 +703,15 @@
                                                                             <![endif]-->
                                                                         </td>
                                                                     </tr>
+
                                                                     <tr>
                                                                         <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                                                            <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;font-weight:bold;line-height:24px;text-align:center;color:#445566;">View this email in your browser</div>
+                                                                            <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;font-weight:400;line-height:16px;text-align:center;color:#445566;">{{ 'cause'|trans({},'mail') }}</div>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                                                            <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;font-weight:400;line-height:16px;text-align:center;color:#445566;">You are receiving this email because you reserve a place in an Event.</div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                                                            <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;font-weight:400;line-height:16px;text-align:center;color:#445566;">&copy; Afak Al Moustakbil.</div>
+                                                                            <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;font-weight:400;line-height:16px;text-align:center;color:#445566;">&copy; {{ 'brand'|trans({},'mail') }}</div>
                                                                         </td>
                                                                     </tr>
                                                                 </table>

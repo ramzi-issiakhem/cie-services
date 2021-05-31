@@ -24,8 +24,14 @@ levels:
       section: Classe Preparatoire
       secondary: College
       high: Lycée
+
 roles:
     administrator: Administrateur
     superadministrator: Super Administrateur
     moderator: Moderateur
     user: Utilisateur
+users:
+    type:
+      professional: Organisation/Ecole
+      personnal:  Parent D'élève
+      student: Etdudiant

@@ -6,6 +6,10 @@ event:
             product: Veuillez selectionner un des produits
             school : Veuillez selectionner une des écoles
 
+forms:
+    password:
+        invalid: Mots De Passe Différents
+
 user:
     type:
         email: Email invalide

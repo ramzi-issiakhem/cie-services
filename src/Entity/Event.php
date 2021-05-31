@@ -145,16 +145,18 @@ class Event
      */
     private $deadline_date;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $school;
+
 
     /**
      * @ORM\Column(type="array", nullable=true)
      */
     private $reservations = [];
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $school;
 
 
 
@@ -270,17 +272,7 @@ class Event
         return $this;
     }
 
-    public function getSchool(): ?User
-    {
-        return $this->school;
-    }
 
-    public function setSchool(?User $school): self
-    {
-        $this->school = $school;
-
-        return $this;
-    }
 
     /**
      * @return mixed
@@ -381,6 +373,18 @@ class Event
 
         public function addReservation(User $user) : int {
             return array_push($this->reservations,$user);
+        }
+
+        public function getSchool(): ?User
+        {
+            return $this->school;
+        }
+
+        public function setSchool(?User $school): self
+        {
+            $this->school = $school;
+
+            return $this;
         }
 
 }

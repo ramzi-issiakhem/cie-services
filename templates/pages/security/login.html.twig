@@ -32,12 +32,14 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
 
 
+            <a href="{{ path('user.password.forgot') }}">{{ 'forms.password_forgotten'| trans }}</a>
 
             <div class="checkbox mb-3">
                 <label>
-                    <input type="checkbox" name="_remember_me"> {% trans %} forms.users.remember {% endtrans %}
+                    <input type="checkbox" name="_remember_me"> {{ 'forms.users.remember'| trans }}
                 </label>
             </div>
+
 
 
             <button class="btn btn-lg btn-primary" type="submit">
