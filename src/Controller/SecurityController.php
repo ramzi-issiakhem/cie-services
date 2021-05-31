@@ -50,8 +50,10 @@ class SecurityController extends AbstractController
    }
 
     public function profile() {
-
-        return $this->render("pages/security/profile.html.twig");
+        $user = $this->getUser();
+        return $this->render("pages/security/profile.html.twig",[
+            'user' => $user
+        ]);
     }
 
     public function register(Request $request) {

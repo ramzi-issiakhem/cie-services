@@ -77,15 +77,7 @@ class Event
 
     private $price;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\Type(
-     *     type="integer",
-     *     message="event.type.integer"
-     * )
-     * @Assert\NotNull
-     */
-    private $reservations;
+
 
 
 
@@ -159,6 +151,11 @@ class Event
      */
     private $school;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $reservations = [];
+
 
 
 
@@ -206,17 +203,7 @@ class Event
         return $this;
     }
 
-    public function getReservations(): ?int
-    {
-        return $this->reservations;
-    }
 
-    public function setReservations(int $reservations): self
-    {
-        $this->reservations = $reservations;
-
-        return $this;
-    }
 
 
 
@@ -378,6 +365,22 @@ class Event
                 default:
                     return $this->descriptionFr;
             }
+        }
+
+        public function getReservations(): ?array
+        {
+            return $this->reservations;
+        }
+
+        public function setReservations(?array $reservations): self
+        {
+            $this->reservations = $reservations;
+
+            return $this;
+        }
+
+        public function addReservation(User $user) : int {
+            return array_push($this->reservations,$user);
         }
 
 }

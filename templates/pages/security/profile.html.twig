@@ -1,1 +1,28 @@
 {% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+{#         TODO Translate #}
+        <h4>Nom</h4>
+        <div>{{ user.name }}</div>
+
+        <h4>Related School</h4>
+        <div>{{ user.relatedSchool.name }}</div>
+
+        <h4>Email</h4>
+        <div>{{ user.email }}</div>
+        <h4>Phone</h4>
+        <div>0{{ user.mobilePhone }}</div>
+
+        <h4>Phone</h4>
+        <div>0{{ user.mobilePhone }}</div>
+
+        <h4>Phone</h4>
+        <div>{{ user.scholarLevelLabel|trans }}</div>
+
+        <a href="{{ path('user.edit',{'slug': user.slug}) }}" class="btn btn-primary">Editer</a>
+
+    </div>
+
+{% endblock %}

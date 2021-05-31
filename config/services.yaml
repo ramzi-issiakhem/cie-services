@@ -6,6 +6,7 @@
 parameters:
     products_directory: '%kernel.project_dir%/public/uploads/products'
     users_directory: '%kernel.project_dir%/public/uploads/users'
+    pdf_directory: '%kernel.project_dir%/public/uploads/pdf'
 
 services:
     # default configuration for services in *this* file

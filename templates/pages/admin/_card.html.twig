@@ -16,7 +16,7 @@
         </li>
 
         <li class="list-group-item">
-            <small class="text-muted">{% trans %} events.reservations {% endtrans %} : {{ event.reservationPlaces }} </small>
+            <small class="text-muted">{% trans %} events.reservations {% endtrans %} : {{ event.reservations.length|default(0) }} </small>
         </li>
 
         <li class="list-group-item">

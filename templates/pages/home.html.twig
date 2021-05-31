@@ -4,7 +4,71 @@
 {% block title %} Acceuil {% endblock %}
 {% block body %}
     {% for message in app.flashes('success') %}
-        <div class="alert alert-success">{{ message }}</div>
+        <script>
+            document.getElementById("toast").show();
+        </script>
+        <div id="toast" role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-bs-autohide="false">
+            <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto">Bootstrap</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ message }}
+            </div>
+        </div>
+
+
+
     {% endfor %}
+
+    <h4> Evenements   </h4>
+
+
+
+    <div class="container">
+
+        <div class="row">
+            {% for event in events %}
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ asset('uploads/products/' ~ event.product.coverImage) }}" class="card-img-top" alt="logo">
+                        <div class="card-body">
+                            <h5 class="card-title">  {% trans %} product.name {% endtrans %} :  {{ event.formattedName }}</h5>
+                            <p class="card-text"> {{ ( event.formattedDescription |length > 50 ? event.formattedDescription|slice(0, 140) ~ '...' : event.formattedDescription )|nl2br }}</p>
+                        </div>
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <a href="{{ path('user.reserve',{'id': event.id}) }}" class="btn btn-warning container-fluid mb-2">{% trans %} events.reserve {% endtrans %}</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+    <h4> Produits </h4>
+
+    <div class="container">
+    <div class="row">
+            {% for product in products %}
+                <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ asset('uploads/products/' ~ product.coverImage) }}" class="card-img-top" alt="logo">
+                    <div class="card-body">
+                        <h5 class="card-title">  {% trans %} product.name {% endtrans %} :  {{ product.formattedName }}</h5>
+                        <p class="card-text"> {{ ( product.formattedDescription |length > 50 ? product.formattedDescription|slice(0, 140) ~ '...' : product.formattedDescription )|nl2br }}</p>
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
+    </div>
+    </div>
 
 {% endblock %}

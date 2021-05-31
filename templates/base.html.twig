@@ -47,7 +47,7 @@
                     {% endif %}
 
                     {% if app.user %}
-                        <a class="nav-link active" href=""> {% trans %} user.profile {% endtrans %}</a>
+                        <a class="nav-link active" href="{{ path('user.profile',{'slug' : app.user.slug}) }}"> {% trans %} user.profile {% endtrans %}</a>
                         <a class="nav-link active" href="{{ path('user.logout') }}"> {% trans %} user.logout {% endtrans %}</a>
                     {% else  %}
                         <a class="nav-link active " href="{{ path('user.login') }}"> {% trans %} user.login {% endtrans %}</a>

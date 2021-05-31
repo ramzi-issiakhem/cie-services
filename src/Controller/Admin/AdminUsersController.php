@@ -86,7 +86,7 @@ class AdminUsersController extends  AbstractController {
             'translation_domain' => 'forms'
         ])
             ->add('email', EmailType::class, [
-                'label' => 'forms.email'
+                'label' => 'forms.emails'
             ])
 
             ->add('mobile_phone', NumberType::class, [

@@ -59,8 +59,9 @@ class User extends AbstractLocalisation implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Email(
-     *     message="user.type.email"
+     *     message="user.type.emails"
      * )
+     *
      */
     private $email;
 
@@ -155,6 +156,11 @@ class User extends AbstractLocalisation implements UserInterface
         return $this->id;
     }
 
+    /**
+     *
+     *
+     * @see UserInterface
+     */
     public function getEmail(): ?string
     {
         return $this->email;
@@ -425,5 +431,9 @@ class User extends AbstractLocalisation implements UserInterface
     public function getFormattedSchoolarLevel(): string
     {
         return self::SCHOOLAR_LEVEL[$this->scholar_level];
+    }
+
+    public function getscholarLevelLabel() {
+        return self::SCHOOLAR_LEVEL[$this->getScholarLevel()];
     }
 }

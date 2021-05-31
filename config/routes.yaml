@@ -61,18 +61,27 @@ user.login:
 
 
 user.logout:
-     path: /{_locale}/logout
+     path: /{_locale}/profile/logout
      defaults:
           _locale: fr
      requirements:
           _locale: en|fr|ar
 
 user.edit:
-     path: /{_locale}/{slug}/edit
+     path: /{_locale}/profile/{slug}/edit
      controller: App\Controller\UserController::edit
      requirements:
           _locale: en|fr|ar
           default: fr
+
+user.reserve:
+     path: /{_locale}/profile/reserve/{id}
+     controller: App\Controller\HomeController::reserve
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+          id: 1
 
 admin.events.show:
      path: /{_locale}/admin/events

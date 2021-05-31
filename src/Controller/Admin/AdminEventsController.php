@@ -100,7 +100,7 @@ class AdminEventsController extends  AbstractController {
     {
 
                 $event = new Event();
-                $event->setReservations(0);
+                $event->setReservations([]);
                 $form = $this->createForm(EventType::class,$event);
                 $form->handleRequest($request);
 

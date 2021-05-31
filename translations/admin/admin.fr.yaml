@@ -1,6 +1,6 @@
 events:
     name: Nom
-    reservations : Places
+    reservations : Places Reservés
     state:
         name : Etat
         current: Evenements en Cours de Réservation
