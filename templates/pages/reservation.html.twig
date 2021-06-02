@@ -22,9 +22,9 @@
 
         <div class="container">
             {{ form_start(form) }}
-            {{ form_row(form.choices) }}
+
             <button class="btn-primary btn">
-                Reserve
+                {{ 'event.reserve'|trans({},'messages') }}
             </button>
             {{ form_end(form) }}
         </div>

@@ -20,9 +20,11 @@ mail:
     send: Email Envoyé avec succès
 
 event:
-    already_joined: Evenement Déja reservé
+    already_joined: Evenement Déja reservé pour %names%
+    reserve: Reserver
 
 child:
+    download: Telecharger la liste
     create: Créer un enfant
     name: Nom et Prénom
     school: Ecole
@@ -34,3 +36,5 @@ child:
         created: Enfant Crée
         edited: Efant Edité
     school_level: Niveau Scolaire
+
+

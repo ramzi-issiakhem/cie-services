@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Intl\Locale;
@@ -148,6 +149,7 @@ class Event
 
 
     /**
+     * @var array
      * @ORM\Column(type="array", nullable=true)
      */
     private $reservations = [];
@@ -359,9 +361,17 @@ class Event
             }
         }
 
-        public function getReservations(): ?array
+    /**
+     * @return array|null
+     */
+    public function getReservations(): ?array
         {
             return $this->reservations;
+        }
+
+        public function getReservationsNumber(): int
+        {
+            return count($this->reservations);
         }
 
         public function setReservations(?array $reservations): self
@@ -371,8 +381,8 @@ class Event
             return $this;
         }
 
-        public function addReservation(User $user) : int {
-            return array_push($this->reservations,$user);
+        public function addReservation(int $child_id) : int {
+            return array_push($this->reservations,$child_id);
         }
 
         public function getSchool(): ?User

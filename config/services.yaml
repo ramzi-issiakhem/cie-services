@@ -7,7 +7,7 @@ parameters:
     products_directory: '%kernel.project_dir%/public/uploads/products'
     users_directory: '%kernel.project_dir%/public/uploads/users'
     pdf_directory: '%kernel.project_dir%/public/uploads/pdf'
-
+    excels_directory: '%kernel.project_dir%/public/downloads/excels'
 
 services:
     # default configuration for services in *this* file

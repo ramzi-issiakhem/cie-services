@@ -6,10 +6,14 @@ use App\Entity\Event;
 use App\Entity\EventSearch;
 use App\Form\EventSearchType;
 use App\Form\EventType;
+use App\Repository\ChildRepository;
 use App\Repository\EventRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -28,15 +32,61 @@ class AdminEventsController extends  AbstractController {
      * @var TranslatorInterface
      */
     private $translator;
+    /**
+     * @var ChildRepository
+     */
+    private $childRepository;
 
 
-    public function __construct(EventRepository $repository,EntityManagerInterface $em,TranslatorInterface  $translator)
+    public function __construct(ChildRepository $childRepository,EventRepository $repository,EntityManagerInterface $em,TranslatorInterface  $translator)
             {
                 $this->repository = $repository;
                 $this->em = $em;
                 $this->translator = $translator;
 
+                $this->childRepository = $childRepository;
             }
+
+    public function downloadChildrenList(Request $request,Event $event) {
+
+        $spreadsheet = new Spreadsheet();
+        $slug = new Slugify();
+
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setTitle("List-". $event->getEventDateTime()->format('d|m|y'))
+        ->setCellValue('A1','Nom')
+        ->setCellValue('B1','Niveau Scolaire')
+        ->setCellValue('C1','Ecole')
+            ->setCellValue('D1',"Evenement");
+
+        $children = $event->getReservations();
+
+        $index=2;
+        foreach ($children as $id) {
+            $child = $this->childRepository->find($id);
+            $sheet->setCellValue('A'.$index,$child->getName())
+                ->setCellValue('B'.$index,$this->translator->trans($child->getFormattedSchoolarLevel(),[],'types'))
+                ->setCellValue('C'.$index,$child->getSchool()->getName())
+                ->setCellValue('D'.$index,$event->getName());
+            $index = $index +1;
+        }
+
+        // Create your Office 2007 Excel (XLSX Format)
+        $writer = new Xlsx($spreadsheet);
+
+
+        // In this case, we want to write the file in the public directory
+        $publicDirectory = $this->getParameter('excels_directory');
+
+        $excelFilepath =  $publicDirectory. '/' . $slug->slugify($event->getName())."-". $slug->slugify($event->getSchool()->getName()). "-". uniqid() . '.xlsx';
+
+        // Create the file
+        $writer->save($excelFilepath);
+
+        // Return a text response to the browser saying that the excel was succesfully created
+        return $this->redirect($this->get('request')->getSchemeAndHttpHost().'/'.$excelFilepath);
+
+    }
 
 
     /**
@@ -55,6 +105,7 @@ class AdminEventsController extends  AbstractController {
 
 
 
+
                 return $this->render('pages/admin/admin.events.show.html.twig',[
                     'events' => $events,
                     'search_form' => $form_search->createView()
@@ -69,6 +120,12 @@ class AdminEventsController extends  AbstractController {
                 $form = $this->createForm(EventType::class,$event);
                 $form->handleRequest($request);
 
+                $children = [];
+                foreach ($event->getReservations() as $id) {
+                    $children[] = $this->childRepository->find($id);
+                }
+
+
                 if ( $form->isSubmitted() && $form->isValid()) {
                     $this->em->flush();
                     $this->addFlash('success',$this->translator->trans('events.success.edit',[],'admin'));
@@ -76,7 +133,9 @@ class AdminEventsController extends  AbstractController {
                 }
 
                 return $this->render('pages/admin/admin.event.edit.html.twig',[
-                    'form' => $form->createView()
+                    'form' => $form->createView(),
+                    'childrens' => $children,
+                    'event_id' => $event->getId()
                 ]);
             }
 

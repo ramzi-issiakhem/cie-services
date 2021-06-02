@@ -4,6 +4,10 @@ namespace App\Entity;
 
 class Contact {
 
+    const Objects = [
+        "email.objects.products" => "email.objects.products"
+    ];
+
     private $email;
 
     private $object;

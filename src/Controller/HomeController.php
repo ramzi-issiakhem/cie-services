@@ -2,17 +2,21 @@
     namespace  App\Controller;
 
 
+    use App\Entity\Contact;
     use App\Entity\Event;
     use App\Entity\User;
+    use App\Form\ContactType;
     use App\Repository\EventRepository;
     use App\Repository\ProductRepository;
-
-    use Doctrine\Common\Collections\ArrayCollection;
-    use Doctrine\Common\Collections\Collection;
+    use Doctrine\ORM\EntityManagerInterface;
+    use Illuminate\Support\Facades\Mail;
     use Knp\Snappy\Pdf;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Filesystem\Filesystem;
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    use Symfony\Component\HttpFoundation\File\File;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
     use Symfony\Component\Mailer\MailerInterface;
     use Symfony\Component\Mime\Address;
     use Symfony\Component\Mime\Email;
@@ -43,9 +47,13 @@
          * @var Pdf
          */
         private $pdf;
+        /**
+         * @var EntityManagerInterface
+         */
+        private $em;
 
 
-        public function __construct(Pdf $pdf,TranslatorInterface $translator,ProductRepository $productRepository, EventRepository  $eventRepository,Environment $render)
+        public function __construct(EntityManagerInterface $em,Pdf $pdf,TranslatorInterface $translator,ProductRepository $productRepository, EventRepository  $eventRepository,Environment $render)
         {
 
             $this->productRepository = $productRepository;
@@ -54,6 +62,7 @@
             $this->render = $render;
 
             $this->pdf = $pdf;
+            $this->em = $em;
         }
 
         /**
@@ -67,18 +76,21 @@
 
             $user = $this->getUser();
 
-            $form = $this->createFormBuilder()
+            $form = $this->createFormBuilder(null,[
+                'translation_domain' => 'forms'
+            ])
                 ->add('choices',ChoiceType::class,[
-                    'label' => "Test",
-                    'choices' => $this->getReservationChoices($user)
+                    'label' => "forms.choice.children",
+                    'choices' => $this->getReservationChoices($user),
+                    'multiple' => true
                 ]);
             $form = $form->getForm();
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $array =$request->request->get('choices');
-                if ( $array ) {
-                        return $this->forward('App\Controller\HomeController::reserve', [
+                $array = $form->get('choices')->getData();
+                if ( count($array) > 0 ) {
+                        return $this->forward('\App\Controller\HomeController::reserve', [
                             'mailer' => $mailer,
                             'event' => $event,
                             'request' => $request,
@@ -97,33 +109,87 @@
 
 
         }
-        public function reserve( $mailer,$event, $request,array $users) {
+        public function contact(Request $request,MailerInterface $mailer) {
 
+            $contact = new Contact();
+            $form = $this->createForm(ContactType::class,$contact);
 
-            $user = $this->getUser();
+            $form->handleRequest($request);
 
-            $before = $user->getEvents()->toArray();
-            $user->addEvent($event);
-            $after = $user->getEvents()->toArray();
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $before_reservations = $event->getReservations();
-            foreach ($users as $reservant) {
-                $event->addReservation($reservant);
-            }
-            $after_reservations = $event->getReservations();
+                $email = new Email();
+                $render_path = $this->render->render('emails/respond_contact.html.twig',[
+                    'contact' => $contact
+                ]);
 
-            if ((count (array_diff($before,$after)) > 0) && (count (array_diff($before_reservations,$after_reservations)) > 0)) {
-                $this->addFlash('success',$this->translator->trans('event.already_joined',[],"messages"));
+                $email
+                    ->from('user@no-reply.com')
+                    ->to('issiakhem.mohamedramzi@gmail.com')
+                    ->subject($contact->getMotif() . "  / " . $this->translator->trans($contact->getObject(),[],'types'))
+                    ->html($render_path,'utf-8');
+
+                try {
+                    $mailer->send($email);
+                } catch (TransportExceptionInterface $e) {
+                }
+                $this->addFlash('success',$this->translator->trans('mail.send',[],"messages"));
                 return $this->redirectToRoute('home');
             }
 
+            return $this->render('pages/contact.html.twig',[
+                'form' => $form->createView()
+            ]);
+        }
+
+        /** @var array $before_reservations */
+        /** @var array $after_reservations */
+        /** @var array $before */
+        public function reserve($mailer,$event, $request,array $users) {
+
+            $user = $this->getUser();
+
+
+            $before = $user->getEvents();
+            if (!($before->contains($event))) {
+                $user->addEvent($event);
+            }
+
+
+            $duplicate = [];
+            foreach ($users as $reservant) {
+
+                if ( (in_array($reservant->getId(), $event->getReservations() )) == true ) {
+                    array_push($duplicate,$reservant->getName());
+
+                } else {
+                    $event->addReservation($reservant->getId());
+                }
+            }
+
+
+
+            if  (count($duplicate) > 0) {
+
+                $this->addFlash('success',$this->translator->trans('event.already_joined',[
+                    '%names%' => implode(" , ",$duplicate)
+                ],"messages"));
+                return $this->redirectToRoute('home');
+            }
+
+            $this->em->flush();
+
+
+
+
+            $pdf_path = $this->createPdf($user,$event);
 
             $render_path =  $this->render->render('emails/respond_after_reservation.html.twig',[
                 'event' => $event,
-                'user'  => $user
+                'user'  => $user,
+                'users_length' => count($users),
+                'pdf_path' => $pdf_path
             ]);
-
-            $pdf_path = $this->createPdf($user,$event);
 
             $email = (new Email())
                 ->from('user@no-reply.com')
@@ -131,8 +197,10 @@
                 ->subject('Inscription à l\'evenement '. $event->getName())
                 ->attachFromPath($pdf_path)
                 ->html($render_path,'utf-8');
-
             $mailer->send($email);
+
+
+
             $this->addFlash('success',$this->translator->trans('mail.send',[],"messages"));
             return $this->redirectToRoute('home');
 
@@ -149,10 +217,6 @@
             ]);
         }
 
-        public function contact() {
-
-            return $this->render("pages/contact.html.twig" );
-        }
 
         public function aboutUs() {
             return $this->render("pages/about-us.html.twig" );
@@ -161,7 +225,7 @@
         private function createPdf( UserInterface $user, Event $event) : string
         {
 
-            $path = $this->getParameter('pdf_directory') . '/'. $user->getUsername() . "_" . $user->getId(). '.pdf';
+            $path = $this->getParameter('pdf_directory') . '/'. $user->getUsername() . "_" . $user->getId() . "_" . rand(0,99999) .'.pdf';
 
             $this->pdf->generateFromHtml($this->render->render(
                 'emails/respond_pdf_template.html.twig', // Ton template représentant le pdf à générer
@@ -178,14 +242,13 @@
 
           private function getReservationChoices(UserInterface $user): array
         {
-            $children = $user->getChildren() ;
-            $length   = count($children);
+            $children = $user->getChildren();
+            $length   = $children->count();
             $return_var = array();
 
             if ($length > 0) {
-                for ($i = 0; $i <= $length; $i++) {
-                    $return_var["test"] = $children[$i];
-
+                for ($i = 0; $i < $length; $i++) {
+                    $return_var[$children->get($i)->getName()] = $children->get($i);
                 }
             }
             return $return_var;

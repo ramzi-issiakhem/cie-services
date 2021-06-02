@@ -35,3 +35,6 @@ users:
       professional: Organisation/Ecole
       personnal:  Parent D'élève
       student: Etdudiant
+email:
+  objects:
+    products: Produits

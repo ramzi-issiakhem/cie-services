@@ -11,6 +11,7 @@ use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use ErrorException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -113,8 +114,7 @@ class SecurityController extends AbstractController
     }
 
     public function edit(User $user,Request $request) {
-//        $file = new File($this->getParameter('users_directory') .'/'. $user->getLogo());
-//        $user->setLogo($file);
+
         $form = $this->createForm(UserType::class,$user);
 
         if ($user->getType() == 1) {
@@ -127,6 +127,9 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
+
+            $path = $this->moveUploadedImages($form->get('logo')->getData(),$form->get('name')->getData());
+            $user->setLogo($path);
             $this->em->flush();
             $this->addFlash('success', $this->translator->trans('user.success.edited', [], 'messages'));
             return $this->redirectToRoute('user.profile',[
@@ -327,7 +330,7 @@ class SecurityController extends AbstractController
             // TODO Localisation Functionnality
 
             $logoImage = $form->get('logo')->getData();
-            $logoImage = $this->moveUploadedImages($logoImage);
+            $logoImage = $this->moveUploadedImages($logoImage,$form->get('name')->getData());
             $user->setLogo($logoImage);
 
 
@@ -383,7 +386,7 @@ class SecurityController extends AbstractController
 
 
 
-    private function moveUploadedImages($imageData): String
+    private function moveUploadedImages($imageData,String $name): String
     {
         $slugger = new Slugify();
 
@@ -394,7 +397,7 @@ class SecurityController extends AbstractController
             $originalFilename = pathinfo($imageData->getClientOriginalName(), PATHINFO_FILENAME);
             // this is needed to safely include the file name as part of the URL
             $safeFilename = $slugger->slugify($originalFilename);
-            $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageData->guessExtension();
+            $newFilename = $this->formatLogoName($imageData,$name) ;
 
 
             try {
@@ -411,7 +414,11 @@ class SecurityController extends AbstractController
             return "";
         }
 
-
+    private function formatLogoName($imageData,String $name)
+    {
+        $slug = new Slugify();
+        return  $slug->slugify($name) . '-' . uniqid() . '.' . $imageData->guessExtension();
+    }
 
 
 }

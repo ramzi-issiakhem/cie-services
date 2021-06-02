@@ -107,6 +107,12 @@ admin.events.show:
      requirements:
           _locale: en|fr|ar
 
+admin.download.children.list.event:
+     path: /{_locale}/admin/event/{id}/download/children/list
+     controller: App\Controller\Admin\AdminEventsController::downloadChildrenList
+     requirements:
+          _locale: en|fr|ar
+
 admin.event.edit:
      path: /{_locale}/admin/event/{id}
      controller: App\Controller\Admin\AdminEventsController::edit

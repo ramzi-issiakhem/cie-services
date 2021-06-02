@@ -3,24 +3,12 @@
 
 {% block title %} Acceuil {% endblock %}
 {% block body %}
-    {% for message in app.flashes('success') %}
-        <script>
-            document.getElementById("toast").show();
-        </script>
-        <div id="toast" role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-bs-autohide="false">
-            <div class="toast-header">
-                <img src="..." class="rounded me-2" alt="...">
-                <strong class="me-auto">Bootstrap</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                {{ message }}
-            </div>
-        </div>
 
 
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
 
-    {% endfor %}
 
     <h4> Evenements   </h4>
 

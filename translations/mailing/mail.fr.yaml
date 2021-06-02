@@ -1,8 +1,9 @@
 mail:
+  send_mail: Répondre
   forgot:
     notyou: Si ce n'est pas , vous veuillez immédiatement changer votre mot de passe
     title: Mail De Récuperation de Votre Mot De Passe
-  confimation:
+  confirmation:
     forgot: Vous recevez un lien pour la récupération de cotr mot de passe
     title: Mail De Confirmation pour Votre Réservation
     reservation: Merci pour votre confiance , vous venez de réserver %number% place(s) pour le prix de %price% Da.
@@ -18,4 +19,6 @@ visit:
 cause: You are receiving this email because you reserve a place in an Event.
 brand: Afak Al Moustakbil.
 click: Cliquez
+
+
 

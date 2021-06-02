@@ -1,9 +1,12 @@
 forms:
+  choice:
+    children: 'Reserver pour :'
   password_forgotten: Mot De Passe Oublié
   logo: Logo du Produit
   coverimage: Photo de Couverture
   images: Images de Présentation
   roles: Roles
+  message: Contenu de l'email
   name:
     fr: Nom en Latin
     ar: Nom en Arabe
@@ -15,6 +18,9 @@ forms:
   product: Produit
   school: Ecole
   email: Email
+  mail:
+    object: Catégorie
+    motif: Objet de l'email
   password:
     new: Mot De Passe
     repeat: Répeter le mot De Passe
