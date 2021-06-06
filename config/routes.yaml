@@ -25,6 +25,31 @@ contact:
           default: fr
 
 
+
+school.child.remove:
+     path: /{_locale}/profile/school/event/{id_event}/child/remove/{id}
+     controller: App\Controller\SecurityController::removeChildEvent
+     methods: DELETE
+     requirements:
+          _locale: en|fr|ar
+          default: fr
+
+download.school.event.list:
+     path: /{_locale}/profile/event/{id}/list/download
+     controller: App\Controller\SecurityController::downloadReservationList
+     requirements:
+          _locale: en|fr|ar
+
+
+
+school.event.list:
+     path: /{_locale}/profile/event/{id}/list
+     controller: App\Controller\SecurityController::reservationList
+     requirements:
+          _locale: en|fr|ar
+
+     defaults:
+          _locale: fr
 user.profile:
      path: /{_locale}/profile/{slug}
      controller: App\Controller\SecurityController::profilePage

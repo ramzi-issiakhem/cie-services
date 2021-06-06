@@ -45,6 +45,7 @@ forms:
       password: Changer le Mot De Passe
     remember: Me Rappeler
     login: Connecter
+    logo: Logo
     type:
         professional: Compte Professionel
         personnal: Compte Personnel

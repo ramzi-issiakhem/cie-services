@@ -77,7 +77,8 @@ class EventType extends AbstractType
                 'choice_label' => 'name',
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->orderBy('u.name', 'ASC')->andWhere('u.type = 0');
+                        ->orderBy('u.name', 'ASC')
+                        ->andWhere('u.type = 0');
                 }
             ]);
 

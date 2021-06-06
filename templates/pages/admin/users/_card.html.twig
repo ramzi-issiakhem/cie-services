@@ -14,7 +14,7 @@
         {% if  user.email is defined %}
             <span class="card-title">  {{ user.email }}</span>
         {% else %}
-            <span class="card-title">  {{ user.formattedSchoolarLevel }}</span>
+            <span class="card-title">  {{ user.formattedSchoolarLevel|trans({},'types') }}</span>
             <span class="card-title">  {{ user.parent.name }}</span>
         {% endif %}
     </div>
@@ -29,13 +29,11 @@
         {% if user.email is not defined %}
 
             <li class="list-group-item">
-                <p class="card-text"> <span class="fw-bold">  : </span>{% if user.school.name is defined %} {{ user.school.name }} {% else %} {{ 'users.school.notfound'|trans({},'admin') }}  {% endif %}</p>
+                <p class="card-text"> <span class="fw-bold"> {{ 'school.name'|trans({},'messages') }} : </span>{% if user.school.name is defined %} {{ user.school.name }} {% else %} {{ 'users.school.notfound'|trans({},'admin') }}  {% endif %}</p>
             </li>
         {% endif %}
 
-{#        <li class="list-group-item">#}
-{#            <span class="fw-bold"> {% trans %} users.mobile_phone {% endtrans %} : </span> <small class="text-muted"> 0{{ user.mobilePhone }} </small>#}
-{#        </li>#}
+
 
 
         {% if user.email is defined %}

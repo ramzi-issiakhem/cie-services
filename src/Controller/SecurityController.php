@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Child;
+use App\Entity\Event;
 use App\Entity\User;
 use App\Form\ChildType;
 use App\Form\UserType;
+use App\Repository\ChildRepository;
 use App\Repository\EventRepository;
 use App\Repository\UserRepository;
 use Cocur\Slugify\Slugify;
@@ -56,15 +58,20 @@ class SecurityController extends AbstractController
      * @var EventRepository
      */
     private $eventRepository;
+    /**
+     * @var ChildRepository
+     */
+    private $childRepository;
 
 
-    public function __construct(EventRepository $eventRepository,Environment $render, EntityManagerInterface $em,UserPasswordEncoderInterface $encoder,TranslatorInterface $translator)
+    public function __construct(ChildRepository $childRepository,EventRepository $eventRepository,Environment $render, EntityManagerInterface $em,UserPasswordEncoderInterface $encoder,TranslatorInterface $translator)
     {
         $this->em = $em;
         $this->encoder = $encoder;
         $this->translator = $translator;
         $this->render = $render;
         $this->eventRepository = $eventRepository;
+        $this->childRepository = $childRepository;
     }
 
     public function registerChoice(): Response
@@ -153,12 +160,18 @@ class SecurityController extends AbstractController
     public function profilePage(Request $request): Response
     {
         $user = $this->getUser();
+         $events = [];
+        if ($user->getType() == 0) {
+            $events= $user->getEvents();
+        }
+
         if ($request->get('slug') != $user->getSlug()) {
             return $this->redirectToRoute('home');
         }
 
         return $this->render("pages/security/profile.html.twig",[
-            'user' => $user
+            'user' => $user,
+            'events' => $events
         ]);
     }
 
@@ -175,21 +188,26 @@ class SecurityController extends AbstractController
         // If it's a parent
         if ($type == 1 ) {
 
-
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                // TODO Localisation Functionnality
+
+                if ( count($this->childRepository->findChildUserByName($form->get('name')->getData(),$user->getId())) == 0 ) {
+                    // TODO Localisation Functionnality
                     $child->setParent($user);
+                    $child->setEvents([]);
                     $user->addChild($child);
 
                     $this->em->persist($child);
                     $this->em->flush();
-                    $this->addFlash('success', $this->translator->trans('child.success.created',[],'messages'));
+                    $this->addFlash('success', $this->translator->trans('child.success.created', [], 'messages'));
 
-                return $this->redirectToRoute('home', [
-                    //'slug' => $user->slugify()
+
+                } else {
+                    $this->addFlash('success', $this->translator->trans('child.success.exists', [], 'messages'));
+                }
+                return $this->redirectToRoute('user.profile',[
+                    'slug' => $user->getSlug()
                 ]);
-
             }
 
 
@@ -251,25 +269,36 @@ class SecurityController extends AbstractController
 
         if ($this->isCsrfTokenValid('remove' . $child->getId(),$request->get("_token"))) {
 
-            $events = $child->getParent()->getEvents();
-            dump($events);
-            foreach ($events as $event) {
+            $events = $child->getEvents();
+            foreach ($events as $id) {
+                $event = $this->eventRepository->find($id);
+                if ($event) {
 
-                if (in_array($child->getId(),$event->getReservations())) {
+                    $array = $event->getReservations();
 
-                    $index = array_search($child->getId(),$event->getReservations());
-                    if ($index != false ) {
-                        $arr = $event->getReservations();
-                        unset($arr[$index]);
-                        $event->setReservations($arr);
-                        $this->em->flush();
+                    if (count($array) > 0 ) {
+
+                        if ($array[0] == $child->getId()) {
+                            unset($array[0]);
+                            if (count($array) == 0 ) {$array = [];};
+                            $event->setReservations(array_values($array));
+                            $this->em->flush();
+
+                        }
+
+                        $index = array_search($child->getId(), $array);
+                        if ($index != false) {
+
+                            unset($array[$index]);
+                            if (count($array) == 0 ) {$array = [];};
+                            $event->setReservations(array_values($array));
+                            $this->em->flush();
+                        }
                     }
-                    $event->removeReservations($child->getId());
                 }
+
+
             }
-
-
-
             $user->removeChild($child);
             $this->em->remove($child);
             $this->em->flush();
@@ -284,6 +313,10 @@ class SecurityController extends AbstractController
             'slug' => $user->getSlug()
         ]);
 
+    }
+
+    public function reservationListAction($_locale, $id)
+    {
     }
 
     /**
@@ -413,6 +446,75 @@ class SecurityController extends AbstractController
 
 
 
+    public function reservationList (Event $event){
+        $reservations = $event->getReservations();
+        $users = [];
+        foreach ($reservations as $id) {
+            $child = $this->childRepository->find($id);
+            if ($child != null) {
+                array_push($users,$child);
+            }
+        }
+
+        return $this->render('pages/security/school_event_list.html.twig',[
+            'users' => $users,
+            'event' => $event
+        ]);
+
+
+    }
+    public function downloadReservationList(Event $event) {
+
+        $serivce = new Services();
+        $url = $serivce->createExcelSheet($this->getParameter('excels_directory'),$event,$this->childRepository,$this->translator);
+
+        return $this->redirect($url);
+    }
+
+
+    public function  removeChildEvent (Child $child,Request $request)
+        {
+            $event = $this->eventRepository->find($request->get('id_event'));
+            if ($event != null) {
+                $array = $event->getReservations();
+
+                if ($this->isCsrfTokenValid('remove' . $child->getId(), $request->get("_token"))) {
+
+
+                if (count($array) > 0 ) {
+
+                    if ($array[0] == $child->getId()) {
+                        unset($array[0]);
+                        if (count($array) == 0 ) {$array = [];};
+                        $event->setReservations(array_values($array));
+                        $this->em->flush();
+
+                    }
+
+                    $index = array_search($child->getId(), $array);
+                    if ($index != false) {
+
+                        unset($array[$index]);
+                        if (count($array) == 0 ) {$array = [];};
+                        $event->setReservations(array_values($array));
+                        $this->em->flush();
+                    }
+                 }
+                    $this->addFlash('success',$this->translator->trans('child.success.remove',[],'messages'));
+                }
+
+            }
+
+            return $this->redirectToRoute('user.profile',[
+                'slug' => $this->getUser()->getSlug()
+            ]);
+
+        }
+
+
+
+
+
 
     private function moveUploadedImages($imageData,String $name): String
     {
@@ -447,6 +549,8 @@ class SecurityController extends AbstractController
         $slug = new Slugify();
         return  $slug->slugify($name) . '-' . uniqid() . '.' . $imageData->guessExtension();
     }
+
+
 
 
 

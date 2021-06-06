@@ -10,6 +10,14 @@
     use App\Repository\EventRepository;
     use App\Repository\ProductRepository;
     use Doctrine\ORM\EntityManagerInterface;
+    use Endroid\QrCode\Color\Color;
+    use Endroid\QrCode\Encoding\Encoding;
+    use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+    use Endroid\QrCode\Label\Label;
+    use Endroid\QrCode\Logo\Logo;
+    use Endroid\QrCode\QrCode;
+    use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+    use Endroid\QrCode\Writer\PngWriter;
     use Illuminate\Support\Facades\Mail;
     use Knp\Snappy\Pdf;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,6 +29,7 @@
     use Symfony\Component\Mailer\MailerInterface;
     use Symfony\Component\Mime\Address;
     use Symfony\Component\Mime\Email;
+    use Symfony\Component\Mime\Message;
     use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Contracts\Translation\TranslatorInterface;
@@ -90,6 +99,7 @@
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $array = $form->get('choices')->getData();
+
                 if ( count($array) > 0 ) {
                         return $this->forward('\App\Controller\HomeController::reserve', [
                             'mailer' => $mailer,
@@ -108,6 +118,69 @@
                 'form' => $form->createView()
             ]);
 
+
+        }
+
+
+        public function reserve($mailer,$event, $request,array $users) {
+
+            $user = $this->getUser();
+
+            $duplicate = [];
+            foreach ($users as $reservant) {
+
+                $reservations = [];
+                $reservants = [];
+                if ($event->getReservations() != null) {
+                    $reservations = $event->getReservations();
+                }
+
+                if ( (in_array($reservant->getId(), $reservations )) == true ) {
+                    array_push($duplicate,$reservant->getName());
+                } else {
+                    $reservant->addEvent($event->getId());
+                    $event->addReservation($reservant->getId());
+                    array_push($reservants,$reservant);
+                }
+
+            }
+
+
+
+            if  (count($duplicate) > 0) {
+
+                $this->addFlash('success',$this->translator->trans('event.already_joined',[
+                    '%names%' => implode(" , ",$duplicate)
+                ],"messages"));
+                return $this->redirectToRoute('home');
+            }
+
+            $this->em->flush();
+
+
+
+
+            $pdf_path = $this->createPdf($user,$event,$reservants);
+
+            $render_path =  $this->render->render('emails/respond_after_reservation.html.twig',[
+                'event' => $event,
+                'user'  => $user,
+                'users_length' => count($users),
+                'pdf_path' => $pdf_path
+            ]);
+
+            $email = (new Email())
+                ->from('user@no-reply.com')
+                ->to(new Address($user->getEmail()))
+                ->subject('Inscription à l\'evenement '. $event->getName())
+                ->attachFromPath($pdf_path)
+                ->html($render_path,'utf-8');
+            $mailer->send($email);
+
+
+
+            $this->addFlash('success',$this->translator->trans('mail.send',[],"messages"));
+            return $this->redirectToRoute('home');
 
         }
 
@@ -151,75 +224,6 @@
                 'form' => $form->createView()
             ]);
         }
-
-        /** @var array $before_reservations */
-        /** @var array $after_reservations */
-        /** @var array $before */
-        public function reserve($mailer,$event, $request,array $users) {
-
-            $user = $this->getUser();
-
-
-            $before = $user->getEvents();
-            if (!($before->contains($event))) {
-                $user->addEvent($event);
-            }
-
-
-            $duplicate = [];
-            foreach ($users as $reservant) {
-
-                $reservations = [];
-                if ($event->getReservations() != null) {
-                    $reservations = $event->getReservations();
-                }
-                if ( (in_array($reservant->getId(), $reservations )) == true ) {
-                    array_push($duplicate,$reservant->getName());
-
-                } else {
-                    $event->addReservation($reservant->getId());
-                }
-            }
-
-
-
-            if  (count($duplicate) > 0) {
-
-                $this->addFlash('success',$this->translator->trans('event.already_joined',[
-                    '%names%' => implode(" , ",$duplicate)
-                ],"messages"));
-                return $this->redirectToRoute('home');
-            }
-
-            $this->em->flush();
-
-
-
-
-            $pdf_path = $this->createPdf($user,$event);
-
-            $render_path =  $this->render->render('emails/respond_after_reservation.html.twig',[
-                'event' => $event,
-                'user'  => $user,
-                'users_length' => count($users),
-                'pdf_path' => $pdf_path
-            ]);
-
-            $email = (new Email())
-                ->from('user@no-reply.com')
-                ->to(new Address('mi.section8.2020@gmail.com'))
-                ->subject('Inscription à l\'evenement '. $event->getName())
-                ->attachFromPath($pdf_path)
-                ->html($render_path,'utf-8');
-            $mailer->send($email);
-
-
-
-            $this->addFlash('success',$this->translator->trans('mail.send',[],"messages"));
-            return $this->redirectToRoute('home');
-
-        }
-
         public function home() {
 
             $products = $this->productRepository->findAll();
@@ -237,8 +241,13 @@
             return $this->render("pages/about-us.html.twig" );
         }
 
-        private function createPdf( UserInterface $user, Event $event) : string
+        private function createPdf( UserInterface $user, Event $event,array $reservants) : string
         {
+
+            //$qr = $this->createQRCode($reservants);
+            $json = json_encode(array(
+                'reservants' => $reservants
+            ));
 
             $path = $this->getParameter('pdf_directory') . '/'. $user->getUsername() . "_" . $user->getId() . "_" . rand(0,99999) .'.pdf';
 
@@ -246,7 +255,9 @@
                 'emails/respond_pdf_template.html.twig', // Ton template représentant le pdf à générer
                 [
                     'event' => $event,
-                    'user' => $user
+                    'user' => $user,
+                    'reservants' => $reservants,
+                    'json' => $json
                 ]
             ), $path);
 
@@ -267,6 +278,39 @@
                 }
             }
             return $return_var;
+        }
+
+        /**
+         * @return \Endroid\QrCode\Writer\Result\ResultInterface
+         * @throws \Exception
+         */
+        private function createQRCode(array $reservants): \Endroid\QrCode\Writer\Result\ResultInterface
+        {
+
+            $writer = new PngWriter();
+            $json = json_encode(array(
+                'reservants' => $reservants
+            ));
+
+            $qrCode = QrCode::create('Data')
+                ->setEncoding(new Encoding('UTF-8'))
+                ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+                ->setSize(300)
+                ->setMargin(10)
+                ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
+                ->setData($json)
+                ->setForegroundColor(new Color(0, 0, 0))
+                ->setBackgroundColor(new Color(255, 255, 255));
+
+
+            $logo = Logo::create(__DIR__.'/assets/symfony.png')
+                ->setResizeToWidth(50);
+
+
+            $label = Label::create('Label')
+                ->setTextColor(new Color(255, 0, 0));
+
+            return  $writer->write($qrCode, $logo, $label);
         }
     }
 

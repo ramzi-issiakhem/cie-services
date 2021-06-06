@@ -3,11 +3,13 @@ namespace App\Controller\Admin;
 
 
 use App\Controller\SecurityController;
+use App\Entity\Child;
 use App\Entity\User;
 use App\Entity\UserSearch;
 use App\Form\UserSearchType;
 use App\Form\UserType;
 use App\Repository\ChildRepository;
+use App\Repository\EventRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -47,14 +49,19 @@ class AdminUsersController extends  AbstractController {
      * @var ChildRepository
      */
     private $child_repository;
+    /**
+     * @var EventRepository
+     */
+    private $eventRepository;
 
-    public function __construct(UserPasswordEncoderInterface $encoder,EntityManagerInterface $em,TranslatorInterface $translator,UserRepository $repository,ChildRepository $child_repository)
+    public function __construct(EventRepository $eventRepository,UserPasswordEncoderInterface $encoder,EntityManagerInterface $em,TranslatorInterface $translator,UserRepository $repository,ChildRepository $child_repository)
     {
         $this->em = $em;
         $this->translator = $translator;
         $this->repository = $repository;
         $this->encoder = $encoder;
         $this->child_repository = $child_repository;
+        $this->eventRepository = $eventRepository;
     }
 
     public function editPassword(User $user,Request $request) {
@@ -194,24 +201,29 @@ class AdminUsersController extends  AbstractController {
 
             if ($this->isCsrfTokenValid('remove' . $user->getId(),$request->get("_token"))) {
 
-                $collection = $user->getUsers();
-                foreach ($collection as $child) {
-                    $child->setSchool(null);
+
+
+                if ($user->getType() == 1) {
+
+                    foreach ( $user->getChildren() as $child) {
+                        $this->removeChild($child,$user);
+                    }
+
+//                    $collection = $user->getEvents();
+                } elseif ($user->getType() == 0) {
+
+                    $collection = $user->getUsers();
+                    foreach ($collection as $child) {
+                        $child->setSchool(null);
+                    }
+
+                    $collection = $user->getEvents();
+                    foreach ($collection as $event) {
+                        $event->setSchool(null);
+                    }
                 }
 
-                $collection = $user->getEvents();
-                foreach ($collection as $event) {
-                    $event->setSchool(null);
-                }
-
-
-
-
-
-
-
-
-
+                $this->em->flush();
                 $this->em->remove($user);
                 $this->em->flush();
                 $this->addFlash('success',$this->translator->trans('users.success.remove',[],'admin'));
@@ -224,6 +236,42 @@ class AdminUsersController extends  AbstractController {
 
 
 
+    private function removeChild(Child $child,User $user) {
+
+            $events = $child->getEvents();
+
+            foreach ($events as $id) {
+                $event = $this->eventRepository->find($id);
+                if ($event) {
+                    $array = $event->getReservations();
+                    if (count($array) > 0)
+                    {
+                        if ($array[0] == $child->getId()) {
+                            unset($array[0]);
+                            if (count($array) == 0 ) {$array = [];};
+                            $event->setReservations(array_values($array));
+                            $this->em->flush();
+
+                        }
+
+                        $index = array_search($child->getId(), $array);
+                        if ($index != false) {
+
+                            unset($array[$index]);
+                            if (count($array) == 0 ) {$array = [];};
+                            $event->setReservations(array_values($array));
+                            $this->em->flush();
+                        }
+                    }
+                }
+
+
+            }
+
+            $user->removeChild($child);
+            $this->em->remove($child);
+            $this->em->flush();
+        }
 
 
 

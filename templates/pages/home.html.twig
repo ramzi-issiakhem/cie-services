@@ -24,7 +24,7 @@
                         <img src="{% if asset_exists('uploads/products/' ~ event.product.coverImage) %} {{ asset('uploads/products/' ~ event.product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img-top" alt="logo">
 
                         <div class="card-body">
-                            <h5 class="card-title">  {% trans %} product.name {% endtrans %} :  {{ event.formattedName }}</h5>
+                            <h5 class="card-title">  {{ 'event.name'|trans({},'messages') }} :  {{ event.formattedName }}</h5>
                             <p class="card-text"> {{ ( event.formattedDescription |length > 50 ? event.formattedDescription|slice(0, 140) ~ '...' : event.formattedDescription )|nl2br }}</p>
                         </div>
 

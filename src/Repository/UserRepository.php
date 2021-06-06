@@ -81,16 +81,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         $query = $this->createQueryBuilder('u');
 
-//        if ($search->getScholarLevel()) {
-//            $query
-//                ->from('Child','c')
-//                ->innerJoin();
-//            $users[] = $this->child_repository->findAllByScholarLevel($search->getScholarLevel());
-//        }
-
-//        if ($search->getRelatedSchool()) {
-//            $users[] = $this->child_repository->findAllBySchoolId($search->getRelatedSchool()->getId());
-//        }
 
 
         if (($search->getType() > -1) && ($search->getType() < 3)) {
@@ -98,13 +88,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->setParameter('val_type', $search->getType() );
         }
 
-        // TODO Gérer le probleme de filtre par role
-        if ($search->getRoles()) {
-            $role = "ROLE_ADMIN";//$search->getRoles();
 
-            $query->andWhere(' JSON_CONTAINS(u.roles, :role) = 1')
-                ->setParameter('role',$role)
-                ;
+        if ($search->getRoles()) {
+            $role = $search->getRoles();
+            $role = '"' . $role .'"';
+            $query->andWhere('JSON_CONTAINS (u.roles, :role) = 1')
+                ->setParameter('role',$role);
         }
 
         return $query->getQuery() ;

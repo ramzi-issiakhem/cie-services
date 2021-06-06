@@ -71,6 +71,11 @@ class Child
      */
     private $school;
 
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $events;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -151,6 +156,26 @@ class Child
         $slug = new Slugify();
         return $slug->slugify($this->name);
     }
+
+    public function getEvents(): ?array
+    {
+        return $this->events;
+    }
+
+    public function setEvents(array $events): self
+    {
+        $this->events = $events;
+
+        return $this;
+    }
+    public function addEvent(int $event): self
+    {
+
+         array_push($this->events,$event);
+        $this->events = array_unique($this->events);
+        return $this;
+    }
+
 
 
 }

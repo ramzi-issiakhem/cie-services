@@ -18,7 +18,9 @@ class ChildType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',TextType::class)
+            ->add('name',TextType::class,[
+                'label' => 'forms.name.fr'
+            ])
             ->add('schoolar_level',ChoiceType::class, [
                 'choices' => array_flip(Child::SCHOOLAR_LEVEL),
                 'choice_translation_domain' => "types",
@@ -56,6 +58,7 @@ class ChildType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Child::class,
+            'translation_domain' => 'forms'
         ]);
     }
 }

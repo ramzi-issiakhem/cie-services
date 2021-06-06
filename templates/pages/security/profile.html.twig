@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+        {% for message in app.flashes('success') %}
+                <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
 
     <div class="container">
-{#         TODO Translate #}
+
         <h4>Nom</h4>
         <div>{{ user.name }}</div>
 
@@ -20,6 +23,7 @@
 
     </div >
         {% if user.type == 1 %}
+
         <div class="container mt-4">
                 <a href="{{ path('user.child.create') }}" class="btn btn-primary">{{ 'child.create'|trans({},'messages') }}</a>
 
@@ -39,7 +43,7 @@
                         {% for child in user.children %}
                                 <tr>
                                         <td>{{ child.name }}</td>
-                                        <td>{{ child.FormattedSchoolarLevel }}</td>
+                                        <td>{{ child.FormattedSchoolarLevel|trans({},'types') }}</td>
                                         <td>{% if child.school.name is defined %} {{ child.school.name }} {% else %} {{ 'school.notfound'|trans({},'messages') }} {% endif %}</td>
                                         <td>
                                                 <div class="row">
@@ -48,7 +52,7 @@
                                                         <form class="col" method="post" action="{{ path('user.child.remove',{id: child.id}) }}" onsubmit="return confirm('Are you sure ?')">
                                                                 <input type="hidden" name="_method" value="DELETE">
                                                                 <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ child.id) }}">
-                                                                <button class="btn container-fluid mb-2 btn-danger">{{ 'child.edit'| trans({},'messages') }}</button>
+                                                                <button class="btn container-fluid mb-2 btn-danger">{{ 'child.remove'| trans({},'messages') }}</button>
                                                         </form>
                                                 </div>
 
@@ -58,6 +62,44 @@
                         </tbody>
                 </table>
         </div>
-        {% endif %}
+        {% else %}
 
+
+            <div class="container mt-4">
+
+                <h4> {{ 'event.title'|trans({},'messages')   }}</h4>
+                <table class="table">
+                    <thead>
+                    <tr>
+
+                        <th scope="col">{{ 'event.name'|trans({},'messages') }}</th>
+                        <th scope="col">{{ 'event.date.event'|trans({},'messages') }}</th>
+                        <th scope="col">{{ 'event.date.deadline'|trans({},'messages') }}</th>
+                        <th scope="col">{{ 'event.number.reservations'|trans({},'messages') }}</th>
+                        <th scope="col">{{ 'child.actions'|trans({},'messages') }}</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for event in events %}
+                        <tr>
+                            <td>{{ event.name }}</td>
+                            <td>{{ event.eventDatetime|date('d/m/y') }}</td>
+                            <td>{{ event.deadlineDate|date('d/m/y') }}</td>
+                            <td>{{ event.reservations|length }}</td>
+                            <td>
+                                <div class="row">
+                                    <a href="{{ path('school.event.list',{'id': event.id}) }}" class="col btn btn-warning container-fluid mb-2"> {{  'event.list.edit'| trans({},'messages') }}</a>
+                                    <a href="{{ path('download.school.event.list',{'id': event.id}) }}" class="col btn btn-success container-fluid mb-2"> {{  'event.list.download'| trans({},'messages') }}</a>
+
+                                </div>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        {% endif %}
 {% endblock %}

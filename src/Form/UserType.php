@@ -18,10 +18,12 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email',EmailType::class, [
-                'label' => 'forms.emails'
+                'label' => 'forms.email'
             ])
             ->add('logo',FileType::class,[
-                'data_class' => null
+                'label' => 'forms.users.logo',
+                'data_class' => null,
+
             ])
 
             ->add('mobile_phone', NumberType::class, [

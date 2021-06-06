@@ -395,8 +395,10 @@ class Event
     }
 
 
-        public function addReservation(int $child_id) : int {
-            return array_push($this->reservations,$child_id);
+        public function addReservation(int $child_id) : self {
+            array_push($this->reservations,$child_id);
+            $this->reservations = array_unique($this->reservations);
+            return $this;
         }
 
         public function getSchool(): ?User

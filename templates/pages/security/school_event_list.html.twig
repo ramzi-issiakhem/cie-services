@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    {% if app.user.type == 0 %}
+
+        <div class="container mt-4">
+
+
+            <h4> {{ 'school.list.title'|trans({},'messages')   }}</h4>
+            <table class="table">
+                <thead>
+                <tr>
+
+                    <th scope="col">{{ 'child.name'|trans({},'messages') }}</th>
+                    <th scope="col">{{ 'child.school_level'|trans({},'messages') }}</th>
+                    <th scope="col">{{ 'child.parent'|trans({},'messages') }}</th>
+                    <th scope="col">{{ 'child.mobilephone'|trans({},'messages') }}</th>
+                    <th scope="col">{{ 'child.actions'|trans({},'messages') }}</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for child in users %}
+                    <tr>
+                        <td>{{ child.name }}</td>
+                        <td>{{ child.FormattedSchoolarLevel|trans({},'types') }}</td>
+                        <td>{{ child.parent.name }}</td>
+                        <td>0{{ child.parent.mobilePhone }}</td>
+                        <td>
+                            <div class="row">
+
+                                <form class="col" method="post" action="{{ path('school.child.remove',{id: child.id,id_event: event.id }) }}" onsubmit="return confirm('Are you sure ?')">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ child.id) }}">
+                                    <button class="btn container-fluid mb-2 btn-danger">{{ 'child.remove'| trans({},'messages') }}</button>
+                                </form>
+
+                            </div>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% endif %}
+{% endblock %}

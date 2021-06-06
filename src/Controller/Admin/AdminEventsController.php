@@ -2,6 +2,7 @@
 
 namespace  App\Controller\Admin;
 
+use App\Controller\Services;
 use App\Entity\Event;
 use App\Entity\EventSearch;
 use App\Form\EventSearchType;
@@ -59,50 +60,8 @@ class AdminEventsController extends  AbstractController {
      */
     public function downloadChildrenList(Request $request, Event $event) {
 
-        $spreadsheet = new Spreadsheet();
-        $slug = new Slugify();
-
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setTitle("List-". $event->getEventDateTime()->format('d|m|y'))
-        ->setCellValue('A1','Nom')
-        ->setCellValue('B1','Niveau Scolaire')
-        ->setCellValue('C1','Ecole')
-        ->setCellValue('C1','Mobile')
-        ->setCellValue('D1',"Evenement");
-
-
-        $children = $event->getReservations();
-
-        $index=2;
-        foreach ($children as $id) {
-
-            $child = $this->childRepository->find($id);
-            if ($child != null ) {
-                $sheet->setCellValue('A' . $index, $child->getName())
-                    ->setCellValue('B' . $index, $this->translator->trans($child->getFormattedSchoolarLevel(), [], 'types'))
-                    ->setCellValue('C' . $index, $child->getSchool()->getName())
-                    ->setCellValue('C' . $index, '0' . $child->getParent()->getMobilePhone())
-                    ->setCellValue('D' . $index, $event->getName());
-            }
-            $index = $index +1;
-        }
-
-
-
-
-        $writer = new Xlsx($spreadsheet);
-
-
-        // In this case, we want to write the file in the public directory
-        $publicDirectory = $this->getParameter('excels_directory');
-        $name = $slug->slugify($event->getName())."-". $slug->slugify($event->getSchool()->getName()). "-". uniqid() . '.xlsx';
-        $excelFilepath =  $publicDirectory. '/' . $name;
-
-        // Create the file
-        $writer->save($excelFilepath);
-
-        $package = new Package(new EmptyVersionStrategy());
-        $url = $package->getUrl('/downloads/excels/'.$name);
+        $serivce = new Services();
+        $url = $serivce->createExcelSheet($this->getParameter('excels_directory'),$event,$this->childRepository,$this->translator);
 
         // Return a text response to the browser saying that the excel was succesfully created
         return new RedirectResponse($url);
@@ -136,7 +95,7 @@ class AdminEventsController extends  AbstractController {
 
 
 
-            public function edit(Event $event,Request $request) {
+    public function edit(Event $event,Request $request) {
 
                 $form = $this->createForm(EventType::class,$event);
                 $form->handleRequest($request);
@@ -159,8 +118,7 @@ class AdminEventsController extends  AbstractController {
                     'event_id' => $event->getId()
                 ]);
             }
-
-            public function remove(Request $request,Event $event) {
+    public function remove(Request $request,Event $event) {
 
                     if ($this->isCsrfTokenValid('remove' . $event->getId(),$request->get("_token"))) {
                         $this->em->remove($event);

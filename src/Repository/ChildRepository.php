@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Child;
+use App\Entity\UserSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,34 +20,7 @@ class ChildRepository extends ServiceEntityRepository
         parent::__construct($registry, Child::class);
     }
 
-    // /**
-    //  * @return Child[] Returns an array of Child objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Child
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
     public function findAllBySchoolId(int $id)
     {
         return $this->createQueryBuilder('c')
@@ -73,7 +47,7 @@ class ChildRepository extends ServiceEntityRepository
             ;
     }
 
-    public function findAllBySearch(\App\Entity\UserSearch $search)
+    public function findAllBySearch(UserSearch $search)
     {
         $query = $this->createQueryBuilder('u');
 
@@ -89,5 +63,17 @@ class ChildRepository extends ServiceEntityRepository
 
         return $query->getQuery();
 
+    }
+
+    public function findChildUserByName(String $name,int $parent)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.name = :name_child')
+            ->setParameter('name_child',$name)
+            ->andWhere('c.parent = :parent_id')
+            ->setParameter('parent_id',$parent)
+            ->getQuery()
+            ->getResult()
+            ;
     }
 }

@@ -67,7 +67,7 @@ class UserSearchType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => UserSearch::class,
-            'translations_domain' => 'admin',
+            'translation_domain' => 'forms',
             'method' => 'get',
             'csrf_protection' => false
         ]);
