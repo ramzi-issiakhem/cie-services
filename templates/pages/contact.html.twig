@@ -16,8 +16,13 @@
 
         <div class="container">
             {{ form_start(form) }}
+
+            {{ form_row(form.email) }}
+            {{ form_row(form.object) }}
+            {{ form_row(form.motif) }}
+            {{ form_row(form.message) }}
             <button class="btn-primary btn">
-                Reserve
+                {{ 'message.reserve'|trans() }}
             </button>
             {{ form_end(form) }}
         </div>

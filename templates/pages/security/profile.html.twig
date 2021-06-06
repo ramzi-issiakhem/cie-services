@@ -40,7 +40,7 @@
                                 <tr>
                                         <td>{{ child.name }}</td>
                                         <td>{{ child.FormattedSchoolarLevel }}</td>
-                                        <td>{{ child.school.name }}</td>
+                                        <td>{% if child.school.name is defined %} {{ child.school.name }} {% else %} {{ 'school.notfound'|trans({},'messages') }} {% endif %}</td>
                                         <td>
                                                 <div class="row">
                                                         <a href="{{ path('user.child.edit',{'id': child.id,'slug' : child.slug }) }}" class="col btn btn-warning container-fluid mb-2"> {{  'child.edit'| trans({},'messages') }}</a>

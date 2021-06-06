@@ -21,9 +21,19 @@
 
     <nav class="  navbar navbar-expand-lg navbar-dark   bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ path('home') }}"> {% trans %} navbar.brand.name {% endtrans %}</a>
 
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <a class="navbar-brand" href="{{ path('home') }}"> {{ 'navbar.brand.name'|trans }}</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+
+
+
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" href="{{ path('home') }}">{% trans %} navbar.home {% endtrans %} </a>
                     <a class="nav-link" href="{{ path('contact') }}">{% trans %}navbar.contact {% endtrans %}</a>
@@ -39,9 +49,6 @@
                                 <li><a class="dropdown-item" href="{{ path('home',{'_locale' : 'en'}) }}">{% trans %} navbar.en {% endtrans %}</a></li>
                             </ul>
                         </div>
-
-
-
                     {% if is_granted('ROLE_MODERATOR') %}
                         <a class="nav-link active" href="{{ path('admin.events.show') }}"> {% trans %} admin.panel {% endtrans %}</a>
                     {% endif %}

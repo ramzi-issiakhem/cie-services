@@ -4,6 +4,7 @@
 
     use App\Entity\Contact;
     use App\Entity\Event;
+    use App\Entity\Product;
     use App\Entity\User;
     use App\Form\ContactType;
     use App\Repository\EventRepository;
@@ -109,6 +110,15 @@
 
 
         }
+
+        public function showProduct(Product $product,Request $request)
+        {
+
+            return $this->render('pages/product.html.twig',[
+                'product' => $product
+            ]);
+
+        }
         public function contact(Request $request,MailerInterface $mailer) {
 
             $contact = new Contact();
@@ -159,7 +169,11 @@
             $duplicate = [];
             foreach ($users as $reservant) {
 
-                if ( (in_array($reservant->getId(), $event->getReservations() )) == true ) {
+                $reservations = [];
+                if ($event->getReservations() != null) {
+                    $reservations = $event->getReservations();
+                }
+                if ( (in_array($reservant->getId(), $reservations )) == true ) {
                     array_push($duplicate,$reservant->getName());
 
                 } else {
@@ -207,6 +221,7 @@
         }
 
         public function home() {
+
             $products = $this->productRepository->findAll();
             $events   = $this->eventRepository->findAllOrderByState('ASC');
 

@@ -9,9 +9,22 @@
 
         <h2> Event Presentation</h2>
 
+        <div class="container-fluid">
+            <img class="text-center" src="{% if asset_exists('uploads/products/' ~ event.product.coverImage) %} {{ asset('uploads/products/' ~ event.product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}">
+            <h3>{{ event.formattedName }}</h3>
+            <h5>Price : {{ event.price }}</h5>
+            <h5>Places : {{ event.reservationPlaces }}</h5>
+            <h5>Date de l'evenement : {{ event.eventDatetime|date('d/m/y') }}</h5>
+            <h5>Date de fin d'inscription : {{ event.deadlineDate|date('d/m/y') }}</h5>
+            <p>
+                {{ event.formattedDescription }}
+            </p>
+        </div>
+        
+        
 
 
-        <form method="post">
+        <form method="post" class="mt-4">
             {% for message in app.flashes('success') %}
                 <div class="alert alert-success">{{ message }}</div>
             {% endfor %}
@@ -22,7 +35,7 @@
 
         <div class="container">
             {{ form_start(form) }}
-
+                    {{ form_row(form.choices) }}
             <button class="btn-primary btn">
                 {{ 'event.reserve'|trans({},'messages') }}
             </button>

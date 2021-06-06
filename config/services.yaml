@@ -8,7 +8,7 @@ parameters:
     users_directory: '%kernel.project_dir%/public/uploads/users'
     pdf_directory: '%kernel.project_dir%/public/uploads/pdf'
     excels_directory: '%kernel.project_dir%/public/downloads/excels'
-
+    fuz_tools.twig.asset_exists_extension.class: Twig\Extension\AssetExistsExtension
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -30,6 +30,10 @@ services:
     App\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
-
+    fuz_tools.twig.asset_exists_extension:
+        class: '%fuz_tools.twig.asset_exists_extension.class%'
+        arguments: [ '@kernel' ]
+        tags:
+            - { name: twig.extension }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -193,6 +193,25 @@ class AdminUsersController extends  AbstractController {
     public function remove(Request $request,User $user) {
 
             if ($this->isCsrfTokenValid('remove' . $user->getId(),$request->get("_token"))) {
+
+                $collection = $user->getUsers();
+                foreach ($collection as $child) {
+                    $child->setSchool(null);
+                }
+
+                $collection = $user->getEvents();
+                foreach ($collection as $event) {
+                    $event->setSchool(null);
+                }
+
+
+
+
+
+
+
+
+
                 $this->em->remove($user);
                 $this->em->flush();
                 $this->addFlash('success',$this->translator->trans('users.success.remove',[],'admin'));

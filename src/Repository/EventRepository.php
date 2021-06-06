@@ -75,7 +75,8 @@ class EventRepository extends ServiceEntityRepository
 
     public function findAllByState(EventSearch $search) :Query
     {
-        $query = $this->createQueryBuilder('e');
+        $query = $this->createQueryBuilder('e')
+            ->orderBy('e.event_datetime','ASC');
 
         if ($search->getEventDatetime()) {
             $date = $search->getEventDatetime();
@@ -107,4 +108,13 @@ class EventRepository extends ServiceEntityRepository
         }
         return $query->getQuery();
     }
+
+    /**
+     * @param int|null $getId
+     * @return int|mixed|string
+     */
+   /* public function findAllByChild(?int $getId)
+    {
+
+    }*/
 }

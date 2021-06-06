@@ -1,4 +1,6 @@
 forms:
+
+
   choice:
     children: 'Reserver pour :'
   password_forgotten: Mot De Passe Oublié
@@ -46,3 +48,5 @@ forms:
     type:
         professional: Compte Professionel
         personnal: Compte Personnel
+messages:
+  search: Filtrer les Résultats

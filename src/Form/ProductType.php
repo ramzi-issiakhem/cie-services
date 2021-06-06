@@ -31,21 +31,21 @@ class ProductType extends AbstractType
                 "label" => 'forms.description.fr'
             ])
             ->add('logo',FileType::class,[
-                'required' => true,
+                'required' => false,
                 'multiple' => false,
                 'mapped' => false,
                 "label" => 'forms.logo',
 
             ])
             ->add('cover_image',FileType::class,[
-                'required' => true,
+                'required' => false,
                 'multiple' => false,
                 'mapped' => false,
                 "label" => 'forms.coverimage'
 
             ])
             ->add('images',FileType::class,[
-                'required' => true,
+                'required' => false,
                 'mapped' => false,
                 'multiple' => true,
                 "label" => 'forms.images'

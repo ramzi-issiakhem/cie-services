@@ -18,9 +18,11 @@
 
         <div class="row">
             {% for event in events %}
+                {% if event.product.coverImage is defined %}
                 <div class="col-md-4">
                     <div class="card" style="width: 18rem;">
-                        <img src="{{ asset('uploads/products/' ~ event.product.coverImage) }}" class="card-img-top" alt="logo">
+                        <img src="{% if asset_exists('uploads/products/' ~ event.product.coverImage) %} {{ asset('uploads/products/' ~ event.product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img-top" alt="logo">
+
                         <div class="card-body">
                             <h5 class="card-title">  {% trans %} product.name {% endtrans %} :  {{ event.formattedName }}</h5>
                             <p class="card-text"> {{ ( event.formattedDescription |length > 50 ? event.formattedDescription|slice(0, 140) ~ '...' : event.formattedDescription )|nl2br }}</p>
@@ -28,12 +30,13 @@
 
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <a href="{{ path('user.reserve',{'id': event.id}) }}" class="btn btn-warning container-fluid mb-2">{% trans %} events.reserve {% endtrans %}</a>
+                                <a href="{{ path('user.reserve',{'id': event.id}) }}" class="btn btn-warning container-fluid mb-2">{{ 'event.reserve'|trans({},'messages') }}</a>
                             </li>
                         </ul>
 
                     </div>
                 </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
@@ -46,15 +49,24 @@
     <div class="container">
     <div class="row">
             {% for product in products %}
-                <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <img src="{{ asset('uploads/products/' ~ product.coverImage) }}" class="card-img-top" alt="logo">
-                    <div class="card-body">
-                        <h5 class="card-title">  {% trans %} product.name {% endtrans %} :  {{ product.formattedName }}</h5>
-                        <p class="card-text"> {{ ( product.formattedDescription |length > 50 ? product.formattedDescription|slice(0, 140) ~ '...' : product.formattedDescription )|nl2br }}</p>
-                    </div>
-                </div>
-                </div>
+                {% if product is defined %}
+                        <div class="col-md-4">
+                        <div class="card" style="width: 18rem;">
+                            <img src="{% if asset_exists('uploads/products/' ~ product.coverImage) %} {{ asset('uploads/products/' ~ product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img-top" alt="logo">
+                            <div class="card-body">
+                                <h5 class="card-title"> {{ 'product.name'|trans({},'messages') }} :  {{ product.formattedName }}</h5>
+                                <p class="card-text"> {{ ( product.formattedDescription |length > 50 ? product.formattedDescription|slice(0, 140) ~ '...' : product.formattedDescription )|nl2br }}</p>
+                            </div>
+
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <a href="{{ path('user.product',{'id': product.id}) }}" class="btn btn-warning container-fluid mb-2">{{ 'user.product'|trans({},'messages') }}</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                        </div>
+                {% endif %}
             {% endfor %}
     </div>
     </div>

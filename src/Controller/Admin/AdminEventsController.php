@@ -15,7 +15,11 @@ use Knp\Component\Pager\PaginatorInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Asset\Package;
+use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 
@@ -47,7 +51,13 @@ class AdminEventsController extends  AbstractController {
                 $this->childRepository = $childRepository;
             }
 
-    public function downloadChildrenList(Request $request,Event $event) {
+    /**
+     * @param Request $request
+     * @param Event $event
+     * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
+    public function downloadChildrenList(Request $request, Event $event) {
 
         $spreadsheet = new Spreadsheet();
         $slug = new Slugify();
@@ -57,34 +67,45 @@ class AdminEventsController extends  AbstractController {
         ->setCellValue('A1','Nom')
         ->setCellValue('B1','Niveau Scolaire')
         ->setCellValue('C1','Ecole')
-            ->setCellValue('D1',"Evenement");
+        ->setCellValue('C1','Mobile')
+        ->setCellValue('D1',"Evenement");
+
 
         $children = $event->getReservations();
 
         $index=2;
         foreach ($children as $id) {
+
             $child = $this->childRepository->find($id);
-            $sheet->setCellValue('A'.$index,$child->getName())
-                ->setCellValue('B'.$index,$this->translator->trans($child->getFormattedSchoolarLevel(),[],'types'))
-                ->setCellValue('C'.$index,$child->getSchool()->getName())
-                ->setCellValue('D'.$index,$event->getName());
+            if ($child != null ) {
+                $sheet->setCellValue('A' . $index, $child->getName())
+                    ->setCellValue('B' . $index, $this->translator->trans($child->getFormattedSchoolarLevel(), [], 'types'))
+                    ->setCellValue('C' . $index, $child->getSchool()->getName())
+                    ->setCellValue('C' . $index, '0' . $child->getParent()->getMobilePhone())
+                    ->setCellValue('D' . $index, $event->getName());
+            }
             $index = $index +1;
         }
 
-        // Create your Office 2007 Excel (XLSX Format)
+
+
+
         $writer = new Xlsx($spreadsheet);
 
 
         // In this case, we want to write the file in the public directory
         $publicDirectory = $this->getParameter('excels_directory');
-
-        $excelFilepath =  $publicDirectory. '/' . $slug->slugify($event->getName())."-". $slug->slugify($event->getSchool()->getName()). "-". uniqid() . '.xlsx';
+        $name = $slug->slugify($event->getName())."-". $slug->slugify($event->getSchool()->getName()). "-". uniqid() . '.xlsx';
+        $excelFilepath =  $publicDirectory. '/' . $name;
 
         // Create the file
         $writer->save($excelFilepath);
 
+        $package = new Package(new EmptyVersionStrategy());
+        $url = $package->getUrl('/downloads/excels/'.$name);
+
         // Return a text response to the browser saying that the excel was succesfully created
-        return $this->redirect($this->get('request')->getSchemeAndHttpHost().'/'.$excelFilepath);
+        return new RedirectResponse($url);
 
     }
 

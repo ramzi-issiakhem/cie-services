@@ -43,11 +43,13 @@ nav:
 
 
 users:
+    school:
+        notfound: Ecole Non-Trouvé
     change:
         password: Changer le mot de passe
     name: Nom d'utilisateur
     email: Email
-    birthday_date: Dtae d'anniversaire
+    birthday_date: Date d'anniversaire
     related_school: Etablissement affilié
     schoolar_level: Niveau de Scolarité
     mobile_phone: Numéro de Telephone

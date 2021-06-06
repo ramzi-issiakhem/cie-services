@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Intl\Locale;
@@ -53,7 +54,7 @@ class Event
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="events")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      * @Assert\Type(
      *     type="object",
      *     message="event.type.object.product"
@@ -380,6 +381,19 @@ class Event
 
             return $this;
         }
+
+    public function removeReservations(?int $id): self
+    {
+        $array = $this->reservations;
+        $index = array_search($id, $array);
+
+        if ($index != false ) {
+            unset($this->reservations[$index]);
+        }
+
+        return $this;
+    }
+
 
         public function addReservation(int $child_id) : int {
             return array_push($this->reservations,$child_id);

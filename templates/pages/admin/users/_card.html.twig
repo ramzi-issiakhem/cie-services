@@ -5,9 +5,9 @@
 
 <div class="card " style="width: 18rem;">
     {% if  user.email is defined %}
-            <img src="{{ asset('uploads/users/' ~ user.logo) }}" class="card-img-top" alt="logo">
+            <img src="{% if asset_exists('uploads/users/' ~ user.logo) %} {{ asset('uploads/users/' ~ user.logo) }} {% else %} {{ asset('uploads/users/sample_profile.png') }} {% endif %}" class="card-img-top" alt="logo">
     {% else %}
-             <img src="{{ asset('uploads/users/' ~ user.parent.logo) }}" class="card-img-top" alt="logo">
+             <img src="{% if asset_exists('uploads/users/' ~ user.parent.logo) %} {{ asset('uploads/users/' ~ user.parent.logo) }} {% else %} {{ asset('uploads/users/sample_profile.png') }} {% endif %}" class="card-img-top" alt="logo">
     {% endif %}
     <div class="card-body">
         <h5 class="card-title">    {{ user.name }} </h5>
@@ -27,8 +27,9 @@
             </li>
         {% endif %}
         {% if user.email is not defined %}
+
             <li class="list-group-item">
-                <p class="card-text"> <span class="fw-bold">  : </span> {{ user.school.name }} </p>
+                <p class="card-text"> <span class="fw-bold">  : </span>{% if user.school.name is defined %} {{ user.school.name }} {% else %} {{ 'users.school.notfound'|trans({},'admin') }}  {% endif %}</p>
             </li>
         {% endif %}
 

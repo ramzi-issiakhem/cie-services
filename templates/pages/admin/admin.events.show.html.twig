@@ -35,7 +35,7 @@
 
             <div class=" container mt-3  text-center">
                 <div class="col">
-                    <button class="mb-3 btn btn-primary">{% trans %} messages.search {% endtrans %}</button>
+                    <button class="mb-3 btn btn-primary">{{ 'messages.search'|trans({},'forms') }}</button>
                 </div>
             </div>
 
@@ -55,10 +55,16 @@
         <div class="row">
             {{ include('pages/admin/navigation_box.html.twig') }}
 
-        <div class="col col-md-10">
-            {% for event in events %}
-                {{ include('pages/admin/_card.html.twig',{event:event}) }}
-            {% endfor %}
+        <div class="col-md-10">
+            <div class="row">
+                {% for event in events %}
+
+                <div class="col-md-3 me-5">
+                        {{ include('pages/admin/_card.html.twig',{event:event}) }}
+                </div>
+                {% endfor %}
+            </div>
+
             <div class="pagination">
                 {{ knp_pagination_render(events) }}
             </div>

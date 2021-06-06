@@ -185,6 +185,13 @@ admin.user.edit.password:
           _locale: en|fr|ar
           id: '\d+'
 
+user.product:
+     path: /{_locale}/product/show/{id}
+     controller: App\Controller\HomeController::showProduct
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
 admin.user.remove:
      path: /{_locale}/admin/user/{id}
      controller: App\Controller\Admin\AdminUsersController::remove

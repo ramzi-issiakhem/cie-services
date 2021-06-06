@@ -48,7 +48,9 @@ class AdminProductsController extends AbstractController {
     public function create(Request $request){
 
         $product = new Product();
-        $form = $this->createForm(ProductType::class,$product);
+
+
+        $form = $this->createForm(ProductType::class,$product,["validation_groups" => "create"]);
         $form->handleRequest($request);
 
 
@@ -57,9 +59,9 @@ class AdminProductsController extends AbstractController {
             $coverImage = $form->get('cover_image')->getData();
             $images = $form->get('images')->getData();
 
-            $logoImage = $this->moveUploadedImages([$logoImage]);
-            $coverImage = $this->moveUploadedImages([$coverImage]);
-            $images = $this->moveUploadedImages($images);
+            $logoImage = $this->moveUploadedImages([$logoImage],$product);
+            $coverImage = $this->moveUploadedImages([$coverImage],$product);
+            $images = $this->moveUploadedImages($images,$product);
 
             $product->setLogo($logoImage[0]) ;
             $product->setCoverImage($coverImage[0]) ;
@@ -87,25 +89,35 @@ class AdminProductsController extends AbstractController {
 
     public function edit(Product $product,Request $request) {
 
+       //$this->updateImagesVariable($product);
 
-
-        $form = $this->createForm(ProductType::class,$product);
+        $form = $this->createForm(ProductType::class,$product,["validation_groups" => "edit"]);
         $form->handleRequest($request);
 
+
+
         if ( $form->isSubmitted() && $form->isValid()) {
-            // TODO Regler probleme upload files
+
 
             $logoImage = $form->get('logo')->getData();
             $coverImage = $form->get('cover_image')->getData();
             $images = $form->get('images')->getData();
 
-            $logoImage = $this->moveUploadedImages([$logoImage]);
-            $coverImage = $this->moveUploadedImages([$coverImage]);
-            $images = $this->moveUploadedImages($images);
+            if($logoImage) {
+                $logoImage = $this->moveUploadedImages([$logoImage],$product);
+                $product->setLogo($logoImage[0]) ;
+            }
 
-            $product->setLogo($logoImage[0]) ;
-            $product->setCoverImage($coverImage[0]) ;
-            $product->setImages($images) ;
+            if($coverImage) {
+                $coverImage = $this->moveUploadedImages([$coverImage],$product);
+                $product->setCoverImage($coverImage[0]) ;
+            }
+
+            if($images) {
+                $images = $this->moveUploadedImages([$images],$product);
+                $product->setImages($images) ;
+            }
+
 
 
 
@@ -123,6 +135,13 @@ class AdminProductsController extends AbstractController {
     public function remove(Request $request,Product $product) {
 
         if ($this->isCsrfTokenValid('remove' . $product->getId(),$request->get("_token"))) {
+            $events = $product->getEvents();
+            foreach ($events as $event) {
+                $event->setProduct(null);
+
+            }
+            $this->em->flush();
+
             $this->em->remove($product);
             $this->em->flush();
             $this->addFlash('success',$this->translator->trans('products.success.remove',[],'admin'));
@@ -133,7 +152,7 @@ class AdminProductsController extends AbstractController {
 
     }
 
-    private function moveUploadedImages(Array $array): array
+    private function moveUploadedImages(Array $array,Product $product): array
     {
         $slugger = new Slugify();
         $return_array = [];
@@ -144,9 +163,9 @@ class AdminProductsController extends AbstractController {
             //if ($image->guessExtension() == "png" || $image->guessExtension() == "jpeg") {
 
 
-                $originalFilename = pathinfo($imageData->getClientOriginalName(), PATHINFO_FILENAME);
+                //$originalFilename = pathinfo($imageData->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slugify($originalFilename);
+                $safeFilename = $slugger->slugify($product->getName());
                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageData->guessExtension();
 
 
@@ -166,8 +185,39 @@ class AdminProductsController extends AbstractController {
 
     }
 
-    private function prepareProductToEdit(Product $product)
+    private function updateImagesVariable(Product $product)
     {
 
+        $path_logo = $this->getParameter('products_directory') . '/' . $product->getLogo();
+        $path_cover = $this->getParameter('products_directory') . '/' . $product->getCoverImage();
+        $sample_image = $this->getParameter('products_directory') . '/sample_product.png';
+
+        if (file_exists($path_logo)) {
+            $product->setLogo(new File($path_logo));
+        } else {
+            $product->setLogo(new File($sample_image));
+        }
+
+        if (file_exists($path_cover)) {
+            $product->setCoverImage(new File($path_cover));
+        } else {
+            $product->setCoverImage(new File($sample_image));
+        }
+
+        $images = [];
+        foreach (($product->getImages()) as $image) {
+
+            $path = $this->getParameter('products_directory') . '/' . $image;
+
+            if (file_exists($path)) {
+                $images[] = new File($path);
+            } else {
+                $images[] = new File($sample_image);
+            }
+
+        }
+
+        $product->setImages($images);
     }
+
 }

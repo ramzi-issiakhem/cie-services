@@ -3,6 +3,7 @@ user:
     register: Enregistrement
     logout: Se Déconnecter
     profile: Profil
+    product: En Savoir Plus
 admin:
     panel: Panel Admin
 
@@ -36,5 +37,12 @@ child:
         created: Enfant Crée
         edited: Efant Edité
     school_level: Niveau Scolaire
-
-
+    notfound: Enfant Non-Trouvé
+    shool_level:
+        notfound: Niveau Scolaire Introuvable
+message:
+    reserve: Réserver
+school:
+    notfound: Ecole Non-Trouvé
+product:
+    name: Produit

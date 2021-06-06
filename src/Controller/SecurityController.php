@@ -6,6 +6,7 @@ use App\Entity\Child;
 use App\Entity\User;
 use App\Form\ChildType;
 use App\Form\UserType;
+use App\Repository\EventRepository;
 use App\Repository\UserRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
@@ -51,14 +52,19 @@ class SecurityController extends AbstractController
      * @var Environment
      */
     private $render;
+    /**
+     * @var EventRepository
+     */
+    private $eventRepository;
 
 
-    public function __construct(Environment $render, EntityManagerInterface $em,UserPasswordEncoderInterface $encoder,TranslatorInterface $translator)
+    public function __construct(EventRepository $eventRepository,Environment $render, EntityManagerInterface $em,UserPasswordEncoderInterface $encoder,TranslatorInterface $translator)
     {
         $this->em = $em;
         $this->encoder = $encoder;
         $this->translator = $translator;
         $this->render = $render;
+        $this->eventRepository = $eventRepository;
     }
 
     public function registerChoice(): Response
@@ -212,6 +218,8 @@ class SecurityController extends AbstractController
                 $form->handleRequest($request);
 
                 if ($form->isSubmitted() && $form->isValid()) {
+
+
                     $this->em->flush();
                     $this->addFlash('success', $this->translator->trans('child.success.edited', [], 'messages'));
                     return $this->redirectToRoute('user.profile',[
@@ -243,9 +251,29 @@ class SecurityController extends AbstractController
 
         if ($this->isCsrfTokenValid('remove' . $child->getId(),$request->get("_token"))) {
 
+            $events = $child->getParent()->getEvents();
+            dump($events);
+            foreach ($events as $event) {
+
+                if (in_array($child->getId(),$event->getReservations())) {
+
+                    $index = array_search($child->getId(),$event->getReservations());
+                    if ($index != false ) {
+                        $arr = $event->getReservations();
+                        unset($arr[$index]);
+                        $event->setReservations($arr);
+                        $this->em->flush();
+                    }
+                    $event->removeReservations($child->getId());
+                }
+            }
+
+
+
             $user->removeChild($child);
             $this->em->remove($child);
             $this->em->flush();
+
             $this->addFlash('success',$this->translator->trans('child.success.remove',[],'messages'));
             return $this->redirectToRoute('user.profile',[
                 'slug' => $user->getSlug()
@@ -419,6 +447,8 @@ class SecurityController extends AbstractController
         $slug = new Slugify();
         return  $slug->slugify($name) . '-' . uniqid() . '.' . $imageData->guessExtension();
     }
+
+
 
 
 }

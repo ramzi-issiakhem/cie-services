@@ -69,13 +69,13 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Image()
+     * @Assert\Image(groups = {"create"})
      */
     private $logo;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Image()
+     * @Assert\Image(groups = {"create"})
      */
     private $cover_image;
 
@@ -89,7 +89,7 @@ class Product
     /**
      * @ORM\Column(type="array", nullable=true)
      * @Assert\All({
-     *     @Assert\Image()
+     *     @Assert\Image(groups = {"create"})
      * })
      */
     private $images = [];

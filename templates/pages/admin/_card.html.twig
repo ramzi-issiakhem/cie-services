@@ -1,7 +1,8 @@
 
 {% trans_default_domain 'admin' %}
 <div class="card" style="width: 18rem;">
-    <img src="{{ asset('uploads/products/' ~ event.product.logo) }}" class="card-img-top" alt="logo">
+    <img src="{% if asset_exists('uploads/products/' ~ event.product.logo) %} {{ asset('uploads/products/' ~ event.product.logo) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img-top" alt="logo">
+
     <div class="card-body">
         <h5 class="card-title">  {% trans %} events.school.name {% endtrans %} :  {{ event.school.name }}</h5>
 {#        <h5 class="card-title">  {% trans %} events.name {% endtrans %} :  {{ event.formattedName }}</h5>#}

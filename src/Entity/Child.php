@@ -67,7 +67,7 @@ class Child
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="users")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $school;
 

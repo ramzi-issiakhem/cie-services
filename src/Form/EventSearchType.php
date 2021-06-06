@@ -39,11 +39,11 @@ class EventSearchType extends AbstractType
             ->add('event_datetime',DateTimeType::class,[
                 'required' => false,
                 'widget' => "single_text",
-                'label' => 'forms.event.date.max'
+                'label' => 'forms.event.date'
             ])
             ->add('deadline_date',DateType::class,[
                 'required' => false,
-                'label' => 'forms.event.deadline.max',
+                'label' => 'forms.event.deadline',
                 'widget' => "single_text"
             ])
             ->add('school',EntityType::class,[
@@ -69,7 +69,7 @@ class EventSearchType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => EventSearch::class,
-            'translations_domain' => 'admin',
+            'translation_domain' => 'forms',
             'method' => 'get',
             'csrf_protection' => false
         ]);
