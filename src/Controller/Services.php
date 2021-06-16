@@ -24,9 +24,9 @@ class Services {
             ->setCellValue('A1','Nom')
             ->setCellValue('B1',"Evenement")
             ->setCellValue('C1','Ecole')
-            ->setCellValue('C1',"Parent")
-            ->setCellValue('D1','Niveau Scolaire')
-            ->setCellValue('E1','Mobile');
+            ->setCellValue('D1',"Parent")
+            ->setCellValue('E1','Niveau Scolaire')
+            ->setCellValue('F1','Mobile');
 
 
         $children = $event->getReservations();
@@ -40,9 +40,9 @@ class Services {
                 $sheet->setCellValue('A' . $index, $child->getName())
                     ->setCellValue('B' . $index, $event->getName())
                     ->setCellValue('C' . $index, $child->getSchool()->getName())
-                    ->setCellValue('C' . $index, $child->getParent()->getName())
-                    ->setCellValue('D' . $index, $translator->trans($child->getFormattedSchoolarLevel(), [], 'types'))
-                    ->setCellValue('D' . $index, '0' . $child->getParent()->getMobilePhone());
+                    ->setCellValue('D' . $index, $child->getParent()->getName())
+                    ->setCellValue('E' . $index, $translator->trans($child->getFormattedSchoolarLevel(), [], 'types'))
+                    ->setCellValue('F' . $index, '0' . $child->getParent()->getMobilePhone());
                 $count = $count +1;
             }
             $index = $index +1;

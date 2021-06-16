@@ -49,7 +49,9 @@
 
                 <div class="row">
                 {% for user in users %}
-                        {{ include('pages/admin/users/_card.html.twig',{user:user}) }}
+                       <div class="col-md-3 me-5">
+                           {{ include('pages/admin/users/_card.html.twig',{user:user}) }}
+                       </div>
                 {% endfor %}
                 </div>
                 <div class="pagination">

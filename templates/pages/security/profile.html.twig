@@ -5,12 +5,11 @@
                 <div class="alert alert-success">{{ message }}</div>
         {% endfor %}
 
-    <div class="container">
-
-        <h4>Nom</h4>
+    <div class="container text-center mb-5">
+    
+        <div> <img style="width: 250px; height: 300px;" src="{% if asset_exists('uploads/users/' ~ user.logo) %} {{ asset('uploads/users/' ~ user.logo) }} {% else %} {{ asset('uploads/users/sample_user.png') }} {% endif %}" alt="logo"> </div>
+        <div class="mt-4"> <h4>Nom</h4> </div>
         <div>{{ user.name }}</div>
-
-
 
         <h4>Email</h4>
         <div>{{ user.email }}</div>
@@ -22,13 +21,15 @@
         <a href="{{ path('user.edit',{'id': user.id, 'slug': user.slug}) }}" class="btn btn-primary">Editer</a>
 
     </div >
+    
+    
         {% if user.type == 1 %}
 
-        <div class="container mt-4">
-                <a href="{{ path('user.child.create') }}" class="btn btn-primary">{{ 'child.create'|trans({},'messages') }}</a>
+        <div class="container text-center mt-4">
+                <a href="{{ path('user.child.create') }}" class=" btn btn-primary mb-5">{{ 'child.create'|trans({},'messages') }}</a>
 
-                <h4> {{ 'child.title'|trans({},'messages')   }}</h4>
-                <table class="table">
+                <h4 > {{ 'child.title'|trans({},'messages')   }}</h4>
+                <table class="table mt-5">
                         <thead>
                         <tr>
 

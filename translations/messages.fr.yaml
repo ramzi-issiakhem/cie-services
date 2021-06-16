@@ -1,10 +1,11 @@
 user:
+    edit: Editer
     login: Connexion
     register: Enregistrement
     logout: Se Déconnecter
     profile: Profil
     product: En Savoir Plus
-    filter: 'messages'
+    filter: Filtrer
 admin:
     panel: Panel Admin
 
@@ -37,7 +38,7 @@ event:
 
 child:
     download: Telecharger la liste
-    create: Créer un enfant
+    create: Ajouter un enfant
     name: Nom et Prénom
     school: Ecole
     actions: Actions
@@ -45,8 +46,8 @@ child:
     edit: Modifier
     success:
         remove: Enfant Supprimé avec succès
-        created: Enfant Crée
-        edited: Efant Edité
+        created: Enfant Ajouté
+        edited: Enfant Edité
         exists: Vous avez un enfant avec le meme nom
     school_level: Niveau Scolaire
     notfound: Enfant Non-Trouvé
@@ -61,6 +62,8 @@ school:
     notfound: Ecole Non-Trouvé
     list:
         title: Liste des Enfants
-    name: 'messages'
+    name: Nom de l'Ecole
 product:
     name: Produit
+password:
+    change: Changer le mot de passe

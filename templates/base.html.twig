@@ -53,15 +53,22 @@
                             </ul>
                         </div>
                     {% if is_granted('ROLE_MODERATOR') %}
-                        <a class="nav-link active" href="{{ path('admin.events.show') }}"> {% trans %} admin.panel {% endtrans %}</a>
+                        <div class="d-flex justify-content-end">
+                            <a class="nav-link active" href="{{ path('admin.events.show') }}"> {% trans %} admin.panel {% endtrans %}</a>
+                        </div>
                     {% endif %}
 
                     {% if app.user %}
-                        <a class="nav-link active" href="{{ path('user.profile',{'slug' : app.user.slug}) }}"> {% trans %} user.profile {% endtrans %}</a>
-                        <a class="nav-link active" href="{{ path('user.logout') }}"> {% trans %} user.logout {% endtrans %}</a>
+                        <div class="d-flex justify-content-end">
+                            <a class="nav-link active" href="{{ path('user.profile',{'slug' : app.user.slug}) }}"> {% trans %} user.profile {% endtrans %}</a>
+                            <a class="nav-link active" href="{{ path('user.logout') }}"> {% trans %} user.logout {% endtrans %}</a>
+                        </div>
                     {% else  %}
-                        <a class="nav-link active " href="{{ path('user.login') }}"> {% trans %} user.login {% endtrans %}</a>
-                        <a class="nav-link active" href="{{ path('user.register.choice') }}"> {% trans %} user.register {% endtrans %}</a>
+
+                        <div class="d-flex justify-content-end">
+                            <a class="nav-link active " href="{{ path('user.login') }}"> {% trans %} user.login {% endtrans %}</a>
+                            <a class="nav-link active" href="{{ path('user.register.choice') }}"> {% trans %} user.register {% endtrans %}</a>
+                        </div>
 
                     {% endif %}
 

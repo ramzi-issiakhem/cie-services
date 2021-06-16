@@ -1,6 +1,7 @@
 forms:
 
-
+  telephone: Numéro de Telephone
+  birthday_date: Date D'anniversaire
   choice:
     children: 'Reserver pour :'
   password_forgotten: Mot De Passe Oublié
