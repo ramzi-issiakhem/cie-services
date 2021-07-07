@@ -87,6 +87,18 @@ class User extends AbstractLocalisation implements UserInterface
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     *
+     */
+    private $facebookID;
+
+    /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     *
+     */
+    private $facebookToken;
+
+    /**
      * @ORM\Column(type="integer")
      * @Assert\Type(
      *     type="integer",
@@ -431,5 +443,37 @@ class User extends AbstractLocalisation implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFacebookID()
+    {
+        return $this->facebookID;
+    }
+
+    /**
+     * @param mixed $facebookID
+     */
+    public function setFacebookID($facebookID): void
+    {
+        $this->facebookID = $facebookID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFacebookToken()
+    {
+        return $this->facebookToken;
+    }
+
+    /**
+     * @param mixed $facebookToken
+     */
+    public function setFacebookToken($facebookToken): void
+    {
+        $this->facebookToken = $facebookToken;
     }
 }

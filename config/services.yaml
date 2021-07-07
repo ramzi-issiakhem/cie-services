@@ -10,8 +10,13 @@ parameters:
     excels_directory: '%kernel.project_dir%/public/downloads/excels'
     fuz_tools.twig.asset_exists_extension.class: Twig\Extension\AssetExistsExtension
 services:
+
+
+
+
     # default configuration for services in *this* file
     _defaults:
+        public: true
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 

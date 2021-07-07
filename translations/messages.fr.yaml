@@ -57,7 +57,10 @@ child:
     mobilephone: Numero de Telephone
     parent: Parent
 message:
-    reserve: Réserver
+  reserve: Réserver
+  catalog:
+      download: Télécharger catalogue
+      downloaded: Catalogue Telechargé
 school:
     notfound: Ecole Non-Trouvé
     list:

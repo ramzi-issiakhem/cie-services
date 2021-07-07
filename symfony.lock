@@ -124,6 +124,15 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.4"
     },
+    "guzzlehttp/guzzle": {
+        "version": "7.3.0"
+    },
+    "guzzlehttp/promises": {
+        "version": "1.4.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.8.2"
+    },
     "illuminate/collections": {
         "version": "v8.43.0"
     },
@@ -175,6 +184,18 @@
             "ref": "c81bdcf4a9d4e7b1959071457f9608631865d381"
         }
     },
+    "knpuniversity/oauth2-client-bundle": {
+        "version": "1.20",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.20",
+            "ref": "80acc9223a205cbf5d9828fd616c82a374d281dd"
+        },
+        "files": [
+            "./config/packages/knpu_oauth2_client.yaml"
+        ]
+    },
     "laminas/laminas-code": {
         "version": "4.3.0"
     },
@@ -183,6 +204,12 @@
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.2.0"
+    },
+    "league/oauth2-client": {
+        "version": "2.6.0"
+    },
+    "league/oauth2-facebook": {
+        "version": "2.0.5"
     },
     "maennchen/zipstream-php": {
         "version": "2.1.0"
@@ -204,6 +231,9 @@
     },
     "nikic/php-parser": {
         "version": "v4.10.5"
+    },
+    "paragonie/random_compat": {
+        "version": "v9.99.100"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -246,6 +276,9 @@
     },
     "psr/simple-cache": {
         "version": "1.0.1"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
     },
     "scienta/doctrine-json-functions": {
         "version": "4.3.0"

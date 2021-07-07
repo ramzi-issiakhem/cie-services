@@ -4,9 +4,12 @@ namespace App\Repository;
 
 use App\Entity\User;
 use App\Entity\UserSearch;
+use Cocur\Slugify\Slugify;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -23,11 +26,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * @var ManagerRegistry
      */
     private $registry;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
 
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(EntityManagerInterface $em,ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
         $this->registry = $registry;
+        $this->em = $em;
     }
 
     /**
@@ -98,5 +106,49 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $query->getQuery() ;
     }
+
+    public function findOrCreateFromOauth(ResourceOwnerInterface $owner)
+    {
+        $user = $this->createQueryBuilder('u')
+            ->where('u.facebookID = :facebookId')
+            ->setParameter('facebookId', $owner->getId())
+            ->getQuery()->getSingleResult();
+
+        if ($user) {
+            return $user;
+        }
+
+        $user = new User();
+        $user->setFacebookID($owner->getId());
+        $user->setEmail($owner->getEmail());
+        $user->setType(1);
+
+
+        $url = $owner->getPictureUrl();
+        $name = $owner->getName();
+        $newFilename = $this->formatLogoName($name);
+        $user->setLogo($newFilename);
+        file_put_contents($this->getParameter('products_directory') . '/' . $newFilename,file_get_contents($url));
+
+        $user->setRoles(['ROLE_USER']);
+//        $user->setMobilePhone();
+//        $user->setPassword();
+//        $user->setFacebookToken();
+
+            $this->em->persist($user);
+            $this->em->flush();
+
+            return  $user;
+
+
+    }
+
+
+
+        private function formatLogoName(String $name)
+        {
+            $slug = new Slugify();
+            return  $slug->slugify($name) . '-' . uniqid() ;
+        }
 
 }

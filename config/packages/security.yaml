@@ -44,13 +44,15 @@ security:
 
             form_login:
                 enable_csrf: true
-                login_path: user.login
+#                login_path: user.login
+                login_path: under_construction
                 check_path: user.login
                 use_referer: true
 
             entry_point: form_login
             custom_authenticators:
                 - App\Security\UserAuthenticator
+            custom_authenticator: App\Security\FacebookAuthenticator
 
 
 
@@ -58,8 +60,15 @@ security:
 
 
     access_control:
+         - { path: /under/construction , roles:  }
+         - { path: /login , roles:  }
+         - { path: /logout , roles:  }
+         - { path: /contact , roles:  }
+         - { path: /about-us , roles:  }
          - { path: /admin, roles: ROLE_MODERATOR }
          - { path: /profile, roles: ROLE_USER }
+#         - { path: / , roles: ROLE_SUPER_MODERATOR }
+
 
 
     role_hierarchy:

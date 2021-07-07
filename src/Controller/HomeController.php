@@ -2,10 +2,12 @@
     namespace  App\Controller;
 
 
+    use App\Entity\Catalog;
     use App\Entity\Contact;
     use App\Entity\Event;
     use App\Entity\Product;
     use App\Entity\User;
+    use App\Form\CatalogType;
     use App\Form\ContactType;
     use App\Repository\EventRepository;
     use App\Repository\ProductRepository;
@@ -21,9 +23,12 @@
     use Illuminate\Support\Facades\Mail;
     use Knp\Snappy\Pdf;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Asset\Package;
+    use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
     use Symfony\Component\Filesystem\Filesystem;
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     use Symfony\Component\HttpFoundation\File\File;
+    use Symfony\Component\HttpFoundation\RedirectResponse;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
     use Symfony\Component\Mailer\MailerInterface;
@@ -192,6 +197,34 @@
             ]);
 
         }
+
+        public function underConstruction(Request $request)
+        {
+            $catalog = new Catalog();
+            $form = $this->createForm(CatalogType::class,$catalog);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $this->em->persist($catalog);
+                $this->em->flush();
+
+                $package = new Package(new EmptyVersionStrategy());
+                $url = $package->getUrl('/downloads/catalog/catalog_preview.pdf');;
+
+                $this->addFlash('success',$this->translator->trans('message.catalog.downloaded',[],"messages"));
+
+                return new RedirectResponse($url);
+            }
+
+
+            return $this->render('pages/under_construction.html.twig',[
+                'form' => $form->createView()
+            ]);
+        }
+
+
         public function contact(Request $request,MailerInterface $mailer) {
 
             $contact = new Contact();
@@ -229,10 +262,12 @@
             $products = $this->productRepository->findAll();
             $events   = $this->eventRepository->findAllOrderByState('ASC');
 
+            $formatted_products = array_chunk($products,3);
+            $formatted_events = array_chunk($events,3);
 
             return $this->render("pages/home.html.twig",[
-                "products" => $products,
-                "events" => $events
+                "products" => $formatted_products,
+                "events" => $formatted_events
             ]);
         }
 

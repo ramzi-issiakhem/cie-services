@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}   Admin Panel - Edit {% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <a href="{{ path('admin.catalogs.download') }}"> {{ 'forms.downloadForms'|trans({},'forms') }}</a>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">{{ 'forms.buisenessName'|trans({},'forms') }}</th>
+                <th scope="col">{{ 'forms.firstName'|trans({},'forms') }}</th>
+                <th scope="col">{{ 'forms.familyName'|trans({},'forms') }}</th>
+                <th scope="col">{{ 'forms.email'|trans({},'forms') }}</th>
+                <th scope="col">{{ 'forms.mobilephone'|trans({},'forms') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for catalog in catalogs %}
+                {% if catalog is defined %}
+                    <tr>
+                        <td>{{ catalog.buisenessName }}</td>
+                        <td>{{ catalog.firstName }}</td>
+                        <td>{{ catalog.familyName }}</td>
+                        <td>{{ catalog.email }}</td>
+                        <td>0{{ catalog.mobilePhone }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div>
+
+
+{% endblock %}

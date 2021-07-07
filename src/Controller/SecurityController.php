@@ -13,6 +13,7 @@ use App\Repository\UserRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use ErrorException;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -24,6 +25,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -50,10 +52,7 @@ class SecurityController extends AbstractController
      * @var TranslatorInterface
      */
     private $translator;
-    /**
-     * @var Environment
-     */
-    private $render;
+
     /**
      * @var EventRepository
      */
@@ -64,12 +63,11 @@ class SecurityController extends AbstractController
     private $childRepository;
 
 
-    public function __construct(ChildRepository $childRepository,EventRepository $eventRepository,Environment $render, EntityManagerInterface $em,UserPasswordEncoderInterface $encoder,TranslatorInterface $translator)
+    public function __construct(ChildRepository $childRepository,EventRepository $eventRepository, EntityManagerInterface $em,UserPasswordEncoderInterface $encoder,TranslatorInterface $translator)
     {
         $this->em = $em;
         $this->encoder = $encoder;
         $this->translator = $translator;
-        $this->render = $render;
         $this->eventRepository = $eventRepository;
         $this->childRepository = $childRepository;
     }
@@ -444,7 +442,12 @@ class SecurityController extends AbstractController
         throw new \Exception('this should not be reached!');
     }
 
+    public  function facebookConnect(ClientRegistry $registry)  {
 
+        $client = $registry->getClient('facebook');
+        return $client->redirect();
+
+    }
 
     public function reservationList (Event $event){
         $reservations = $event->getReservations();

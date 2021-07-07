@@ -2,8 +2,44 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
+facebook_auth:
+     path: /{_locale}/connect/facebook
+     controller: App\Controller\SecurityController::facebookConnect
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+
+oauth_check:
+     path: /oauth/check/facebook
+     controller: App\Controller\TestController::test
+
+admin.catalogs.show:
+     path: /{_locale}/admin/catalogs/form/show
+     controller: App\Controller\Admin\AdminCatalogController::show
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+
+admin.catalogs.download:
+     path: /{_locale}/admin/catalogs/form/download
+     controller: App\Controller\Admin\AdminCatalogController::downloadList
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+
+under_construction:
+     path: /{_locale}/under/construction
+     controller: App\Controller\HomeController::underConstruction
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+
 home:
-     path: /{_locale}
+     path: /{_locale}/home
      controller: App\Controller\HomeController::home
      requirements:
           _locale: en|fr|ar

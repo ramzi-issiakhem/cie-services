@@ -10,6 +10,10 @@ forms:
   images: Images de Présentation
   roles: Roles
   message: Contenu de l'email
+  firstName: Prénom
+  familyName: Nom
+  buisenessName: Nom de l'Entreprise
+  downloadForms: Telecharger la liste
   name:
     fr: Nom en Latin
     ar: Nom en Arabe

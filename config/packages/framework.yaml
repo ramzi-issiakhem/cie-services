@@ -11,6 +11,12 @@ framework:
         cookie_secure: auto
         cookie_samesite: lax
 
+    assets:
+        packages:
+            slides:
+                base_path: ressources/slides
+            products_logo:
+                base_path: uploads/product/
     #esi: true
     #fragments: true
     php_errors:

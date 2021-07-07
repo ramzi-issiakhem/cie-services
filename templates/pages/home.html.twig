@@ -2,7 +2,9 @@
 
 
 {% block title %} Acceuil {% endblock %}
+
 {% block body %}
+
 
 
         {% for message in app.flashes('success') %}
@@ -10,65 +12,186 @@
         {% endfor %}
 
 
-    <h4> Evenements   </h4>
 
+        <div id="myCarousel" class="carousel slide carousel-fade mb-5" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="bd-placeholder-img" width="100%" height="100%" src="{{ asset('slide_home_1.png','slides') }}" aria-hidden="true" >
 
-
-    <div class="container">
-
-        <div class="row">
-            {% for event in events %}
-                {% if event.product.coverImage is defined %}
-                <div class="col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img src="{% if asset_exists('uploads/products/' ~ event.product.coverImage) %} {{ asset('uploads/products/' ~ event.product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img-top" alt="logo">
-
-                        <div class="card-body">
-                            <h5 class="card-title">  {{ 'event.name'|trans({},'messages') }} :  {{ event.formattedName }}</h5>
-                            <p class="card-text"> {{ ( event.formattedDescription |length > 50 ? event.formattedDescription|slice(0, 140) ~ '...' : event.formattedDescription )|nl2br }}</p>
+                    <div class="container">
+                        <div class="carousel-caption text-start">
+                            <p class="text-center" ><a class="btn btn-lg btn-primary" href="#"> TO CHANGE </a></p>
                         </div>
-
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <a href="{{ path('user.reserve',{'id': event.id}) }}" class="btn btn-warning container-fluid mb-2">{{ 'event.reserve'|trans({},'messages') }}</a>
-                            </li>
-                        </ul>
-
                     </div>
                 </div>
-                {% endif %}
-            {% endfor %}
+                <div class="carousel-item">
+                    <img class="bd-placeholder-img" width="100%" height="100%" src="{{ asset('slide_home_2.png','slides') }}" aria-hidden="true" >
+
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <p class="text-center"><a class="btn btn-lg btn-primary" href="#">TO CHANGE</a></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-    </div>
+
+
+        <div class="container mt-5 w-50 p-3 mb-5">
+            <div class="text-center ">
+                <h2 >Qui Sommes-Nous</h2>
+                <p >
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                </p>
+            </div>
+        </div>
 
 
 
 
-    <h4> Produits </h4>
+    <div class="container-fluid" style="background-color: #0000FF">
 
-    <div class="container">
-    <div class="row">
-            {% for product in products %}
-                {% if product is defined %}
-                        <div class="col-md-4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="{% if asset_exists('uploads/products/' ~ product.coverImage) %} {{ asset('uploads/products/' ~ product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img-top" alt="logo">
-                            <div class="card-body">
-                                <h5 class="card-title"> {{ 'product.name'|trans({},'messages') }} :  {{ product.formattedName }}</h5>
-                                <p class="card-text"> {{ ( product.formattedDescription |length > 50 ? product.formattedDescription|slice(0, 140) ~ '...' : product.formattedDescription )|nl2br }}</p>
+        <h2 class="text-center" style="color: white">Nos Services</h2>
+        <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner ">
+                {% for slide in products %}
+                 <div class="container carousel-item active">
+
+                    <div class="row">
+                        {% for product in slide %}
+                        {% if product is defined %}
+                            <div class="col" >
+                                    <div class="card bg-white text-white " style="width: 18rem;">
+                                        <img src="{% if asset_exists('uploads/products/' ~ product.coverImage) %} {{ asset('uploads/products/' ~ product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img" alt="...">
+
+                                            <a type="button" class="position-absolute bottom-0 start-50 translate-middle-x btn w-75" style="color: white;background-color: #985FAB" href="{{ path('user.product',{id:product.id}) }}">  Block level button  </a>
+
+                                    </div>
                             </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
 
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <a href="{{ path('user.product',{'id': product.id}) }}" class="btn btn-warning container-fluid mb-2">{{ 'user.product'|trans({},'messages') }}</a>
-                                </li>
-                            </ul>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
 
-                        </div>
-                        </div>
-                {% endif %}
-            {% endfor %}
+        </div>
+
+
     </div>
+
     </div>
+
+
+    <div class="container-fluid" style="background-color: #DDE8FE">
+
+        <h2 class="text-center" style="color: white">Nos Programmes</h2>
+
+        <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner ">
+                {% for slide in events %}
+                 <div class="container carousel-item active">
+
+                    <div class="row">
+                        {% for event in slide %}
+                        {% if event is defined %}
+                            <div class="col" >
+                                    <div class="card bg-white text-white " style="width: 18rem;">
+                                        <img src="{% if asset_exists('uploads/products/' ~ event.product.coverImage) %} {{ asset('uploads/products/' ~ event.product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img" alt="...">
+                                        <div class="container">
+
+
+                                        <p style="color: black;"> Date : {{ event.eventdatetime|date("m/d/Y") }}</p>
+                                            <p style="color: black;"> Ecole : {{ event.school.name }}</p>
+                                                <a type="button" class="position-absolute bottom-0 start-50 translate-middle-x btn w-75" style="color: white;background-color: #985FAB" href="{{ path('user.reserve',{'id': event.id}) }}">  Reserve  </a>
+                                        </div>
+                                    </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {% endblock %}
