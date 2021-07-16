@@ -63,69 +63,28 @@
 
 
 
-    <div class="container-fluid" style="background-color: #0000FF">
+
+
+    <div class="container-fluid pb-5" style="background-color: #0000FF" >
+    <div class="container "  >
 
         <h2 class="text-center" style="color: white">Nos Services</h2>
-        <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner ">
-                {% for slide in products %}
-                 <div class="container carousel-item active">
 
-                    <div class="row">
+        <div id="carouselProducts" class="carousel slide  " data-bs-ride="carousel">
+            <div class="carousel-inner ">
+                {% set index = 0 %}
+                {% for slide in products %}
+
+                 <div class="container carousel-item {% if index == 0 %} {% set index = 1%} active {% endif %}">
+
+                    <div class="row justify-content-center">
                         {% for product in slide %}
                         {% if product is defined %}
-                            <div class="col" >
-                                    <div class="card bg-white text-white " style="width: 18rem;">
-                                        <img src="{% if asset_exists('uploads/products/' ~ product.coverImage) %} {{ asset('uploads/products/' ~ product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img" alt="...">
-
-                                            <a type="button" class="position-absolute bottom-0 start-50 translate-middle-x btn w-75" style="color: white;background-color: #985FAB" href="{{ path('user.product',{id:product.id}) }}">  Block level button  </a>
-
-                                    </div>
-                            </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endfor %}
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-
-        </div>
-
-
-    </div>
-
-    </div>
-
-
-    <div class="container-fluid" style="background-color: #DDE8FE">
-
-        <h2 class="text-center" style="color: white">Nos Programmes</h2>
-
-        <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner ">
-                {% for slide in events %}
-                 <div class="container carousel-item active">
-
-                    <div class="row">
-                        {% for event in slide %}
-                        {% if event is defined %}
-                            <div class="col" >
-                                    <div class="card bg-white text-white " style="width: 18rem;">
-                                        <img src="{% if asset_exists('uploads/products/' ~ event.product.coverImage) %} {{ asset('uploads/products/' ~ event.product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img" alt="...">
-                                        <div class="container">
-
-
-                                        <p style="color: black;"> Date : {{ event.eventdatetime|date("m/d/Y") }}</p>
-                                            <p style="color: black;"> Ecole : {{ event.school.name }}</p>
-                                                <a type="button" class="position-absolute bottom-0 start-50 translate-middle-x btn w-75" style="color: white;background-color: #985FAB" href="{{ path('user.reserve',{'id': event.id}) }}">  Reserve  </a>
+                            <div class="col col-md-auto"  >
+                                    <div class="card  " style="width: 18rem;">
+                                        <img src="{% if asset_exists('uploads/products/' ~ product.coverImage) %} {{ asset('uploads/products/' ~ product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <a type="button" class="btn w-100" style="color: white;background-color: #985FAB" href="{{ path('user.product',{id:product.id}) }}"> {{ 'message.know_more'|trans({},'messages') }}   </a>
                                         </div>
                                     </div>
                             </div>
@@ -135,16 +94,71 @@
                 </div>
                 {% endfor %}
 
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselProducts" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselProducts" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
 
         </div>
+
+
+    </div>
+
+    </div>
+    </div>
+
+
+    <div class="container-fluid pb-5" style="background-color: #DDE8FE">
+    <div class="container">
+
+        <h2 class="text-center" style="color: white">Nos Programmes</h2>
+
+        <div id="carouselEvents" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% set index = 0 %}
+                {% for slide in events %}
+                 <div class="container carousel-item {% if index == 0 %} {% set index = 1%} active {% endif %}">
+
+                    <div class="row justify-content-center">
+                        {% for event in slide %}
+                        {% if event is defined %}
+
+                            <div class="col col-md-auto" >
+
+                                    <div class="card  " style="width: 18rem;">
+                                        <img src="{% if asset_exists('uploads/products/' ~ event.product.coverImage) %} {{ asset('uploads/products/' ~ event.product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                        <p style="color: black;">
+                                             Date : {{ event.eventdatetime|date("m/d/Y") }} <br>
+                                             Ecole : {{ event.school.name }}
+                                        </p>
+                                                <a type="button" class=" btn w-100" style="color: white;background-color: #985FAB" href="{{ path('user.reserve',{'id': event.id}) }}">  Reserve  </a>
+                                        </div>
+                                    </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselEvents" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselEvents" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+
+        </div>
+        </div>
+    </div>
+    </div>
 
 
 

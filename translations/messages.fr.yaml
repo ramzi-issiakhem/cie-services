@@ -18,7 +18,7 @@ navbar:
     ar: Arabe
     language: Langue
     brand:
-        name: Afak-El Moustakbil
+        name: Cie-Services
 mail:
     send: Email Envoyé avec succès
 
@@ -57,6 +57,7 @@ child:
     mobilephone: Numero de Telephone
     parent: Parent
 message:
+  know_more: En Savoir plus
   reserve: Réserver
   catalog:
       download: Télécharger catalogue
