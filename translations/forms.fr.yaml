@@ -1,0 +1,12 @@
+forms:
+  name: Nom
+  price: Prix
+  description: Description
+  product: Produit
+  school: Ecole
+
+  event:
+    reservation_places: Places disponibles
+    state: Etat Actuel
+    date: Date de L'evenement
+    deadline: Date De DeadLine
