@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    <script src="{{ asset('scripts.js','js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+{% endblock %}
 
 {% block title %} Acceuil {% endblock %}
 
@@ -7,205 +12,234 @@
 
 
 
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">{{ message }}</div>
-        {% endfor %}
 
 
 
-        <div id="myCarousel" class="carousel slide carousel-fade mb-5" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="bd-placeholder-img" width="100%" height="100%" src="{{ asset('slide_home_1.png','slides') }}" aria-hidden="true" >
 
+    <header class="masthead" style=" background-image:  url('{{ asset("bg-masthead.png","ressource_images") }}')"></header>
+
+
+    <section class="page-section" id="about" style="background-color: #091753">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="text-white mt-0">Qui Sommes-Nous</h2>
+                    <hr class="divider divider-light" />
                     <div class="container">
-                        <div class="carousel-caption text-start">
-                            <p class="text-center" ><a class="btn btn-lg btn-primary" href="#"> TO CHANGE </a></p>
-                        </div>
+                    <p class="text-white-75 mb-4">Le Centre internationale des Services Educatifs "Cie-Services" a été concu essentiellement dans le nut de fournir des services éducatifs hautement qualifiés
+                    et distinctids aux établissement du secteur éducatif ainsi qu'aux personnes qui s'intéressent a l'éducation et à la formation .
+                        <br><br> <b><i>  Pour plus d'informations , veuillez telecharger notre catalogue </i></b> </p>
+                    <button class="btn btn-light btn-xl" data-bs-toggle="modal" data-bs-target="#catalogModel">{{ 'message.catalog.download'|trans() }}</button>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img class="bd-placeholder-img" width="100%" height="100%" src="{{ asset('slide_home_2.png','slides') }}" aria-hidden="true" >
-
-                    <div class="container">
-                        <div class="carousel-caption">
-                            <p class="text-center"><a class="btn btn-lg btn-primary" href="#">TO CHANGE</a></p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-
-
-        <div class="container mt-5 w-50 p-3 mb-5">
-            <div class="text-center ">
-                <h2 >Qui Sommes-Nous</h2>
-                <p >
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                </p>
             </div>
         </div>
+    </section>
 
+    <!-- Catalog Modal !-->
 
+                <div class="modal  fade modal-dialog-scrollable" id="catalogModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
 
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">{{ 'message.catalog.download'|trans() }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
 
-
-    <div class="container-fluid pb-5" style="background-color: #0000FF" >
-    <div class="container "  >
-
-        <h2 class="text-center" style="color: white">Nos Services</h2>
-
-        <div id="carouselProducts" class="carousel slide  " data-bs-ride="carousel">
-            <div class="carousel-inner ">
-                {% set index = 0 %}
-                {% for slide in products %}
-
-                 <div class="container carousel-item {% if index == 0 %} {% set index = 1%} active {% endif %}">
-
-                    <div class="row justify-content-center">
-                        {% for product in slide %}
-                        {% if product is defined %}
-                            <div class="col col-md-auto"  >
-                                    <div class="card  " style="width: 18rem;">
-                                        <img src="{% if asset_exists('uploads/products/' ~ product.coverImage) %} {{ asset('uploads/products/' ~ product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img-top" alt="...">
+                            <div class="card mb-3 " style="max-width: 100%;">
+                                <div class="row d-flex align-items-center ">
+                                    <div class="col-md-4">
+                                        <img src="{{  asset('logo_cie.png','ressource_images') }}" class="card-img" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
                                         <div class="card-body">
-                                            <a type="button" class="btn w-100" style="color: white;background-color: #985FAB" href="{{ path('user.product',{id:product.id}) }}"> {{ 'message.know_more'|trans({},'messages') }}   </a>
+                                            <h5 class="card-title">Brochure Cie Services</h5>
+                                            <p class="card-text">Afin de telecharger notre Brchure , nous aurons besoin de quelques informations supplémentaire </p>
                                         </div>
                                     </div>
+                                </div>
                             </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endfor %}
 
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselProducts" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselProducts" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-
-        </div>
+                            <div class="modal-body container-fluid">
+                                {{ form_start(form_catalog) }}
 
 
-    </div>
+                                <div class="container-fluid gx-4 gx-lg-5 justify-content-center mb-5">
 
-    </div>
-    </div>
+                                        <h4>Tell Us About Yourself</h4>
 
-
-    <div class="container-fluid pb-5" style="background-color: #DDE8FE">
-    <div class="container">
-
-        <h2 class="text-center" style="color: white">Nos Programmes</h2>
-
-        <div id="carouselEvents" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                {% set index = 0 %}
-                {% for slide in events %}
-                 <div class="container carousel-item {% if index == 0 %} {% set index = 1%} active {% endif %}">
-
-                    <div class="row justify-content-center">
-                        {% for event in slide %}
-                        {% if event is defined %}
-
-                            <div class="col col-md-auto" >
-
-                                    <div class="card  " style="width: 18rem;">
-                                        <img src="{% if asset_exists('uploads/products/' ~ event.product.coverImage) %} {{ asset('uploads/products/' ~ event.product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img-top" alt="...">
-                                        <div class="card-body">
-                                        <p style="color: black;">
-                                             Date : {{ event.eventdatetime|date("m/d/Y") }} <br>
-                                             Ecole : {{ event.school.name }}
-                                        </p>
-                                                <a type="button" class=" btn w-100" style="color: white;background-color: #985FAB" href="{{ path('user.reserve',{'id': event.id}) }}">  Reserve  </a>
+                                        <!-- Name input-->
+                                        <div class="form-floating mb-3">
+                                            {{ form_widget(form_catalog.email,{'attr': {'placeholder': form_label(form_catalog.email) }}) }}
+                                            <label for="name">{{ form_label(form_catalog.email) }}</label>
+                                            <div class="invalid-feedback" >{{ form_errors(form_catalog.email) }}</div>
                                         </div>
+
+                                        <div class="form-floating mb-3">
+                                            {{ form_widget(form_catalog.familyName,{'attr': {'placeholder': form_label(form_catalog.familyName) }}) }}
+                                            <label for="name">{{ form_label(form_catalog.familyName) }}</label>
+                                            <div class="invalid-feedback" >{{ form_errors(form_catalog.familyName) }}</div>
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            {{ form_widget(form_catalog.firstName,{'attr': {'placeholder': form_label(form_catalog.firstName) }}) }}
+                                            <label for="name">{{ form_label(form_catalog.firstName) }}</label>
+                                            <div class="invalid-feedback" >{{ form_errors(form_catalog.firstName) }}</div>
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            {{ form_widget(form_catalog.buisenessName,{'attr': {'placeholder': form_label(form_catalog.buisenessName) }}) }}
+                                            <label for="name">{{ form_label(form_catalog.buisenessName) }}</label>
+                                            <div class="invalid-feedback" >{{ form_errors(form_catalog.buisenessName) }}</div>
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            {{ form_widget(form_catalog.mobilePhone,{'attr': {'placeholder': form_label(form_catalog.mobilePhone) }}) }}
+                                            <label for="name">{{ form_label(form_catalog.mobilePhone) }}</label>
+                                            <div class="invalid-feedback" >{{ form_errors(form_catalog.mobilePhone) }}</div>
+                                        </div>
+
+
+
+
+                                    <button  class="btn btn-primary btn-xxl " >{{ 'message.catalog.download'|trans() }}</button>
+
                                     </div>
+                                </div>
+
+
+
+
+                                {{ form_end(form_catalog) }}
                             </div>
-                            {% endif %}
-                        {% endfor %}
+
+                        </div>
                     </div>
+
                 </div>
-                {% endfor %}
 
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselEvents" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselEvents" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+
+
+    <!-- Services-->
+    <section class="page-section" id="services">
+        <div class="container px-4 px-lg-5">
+
+            <!-- TODO -->
+            <h2 class="text-center mt-0">Our Services</h2>
+            <hr class="divider" />
+            <div class=" gx-4 gx-lg-5">
+
+                <div id="carouselProducts" class="carousel slide container-fluid" data-ride="carousel" >
+                    <div class="carousel-inner">
+                        {% set index = 0 %}
+                        {% for slide in products %}
+                            <div class="container-fluid carousel-item {% if index == 0 %} {% set index = 1%} active {% endif %}">
+
+                                <div class="row justify-content-between">
+                                    {% for product in slide %}
+                                        {% if product is defined %}
+                                            <div class="col-lg-4 col-md-5 text-center"  >
+                                                 <div class="mt-5">
+                                                     <img src="{% if asset_exists('uploads/products/' ~ product.coverImage) %} {{ asset('uploads/products/' ~ product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="d-block w-100" alt="product_logo">
+                                                 </div>
+                                                <!--<a type="button" class="btn w-100" style="color: white;background-color: #985FAB" href="{{ path('user.product',{id:product.id}) }}"> {{ 'message.know_more'|trans({},'messages') }}   </a> !-->
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselProducts" data-bs-slide="prev"></button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselProducts" data-bs-slide="next"></button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+    <!-- Contact-->
+
+    <section class="page-section" id="contact" style="background-color:  #091753 ">
+        <div class="container px-4 px-lg-5" >
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8 col-xl-6 text-center">
+                    <h2 class="mt-0" style="color: white">Feel Free to Contact Us</h2>
+                    <hr style="color: whitesmoke"  />
+                    <p  STYLE="color: whitesmoke" class=" mb-5" >You have question or any recommendation just feel free to Contact Us right here !</p>
+                </div>
+            </div>
+            <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+                <div class="col-lg-6">
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">{{ message }}</div>
+                    {% endfor %}
+
+                    {% for message in app.flashes('error') %}
+                        <div class="alert alert-danger">{{ message }}</div>
+                    {% endfor %}
+                        {{ form_start(form_contact) }}
+                            <!-- Name input-->
+                            <div class="form-floating mb-3">
+                                {{ form_widget(form_contact.email,{'attr': {'placeholder': form_label(form_contact.email) }}) }}
+                                <label for="name">{{ form_label(form_contact.email) }}</label>
+                                <div class="invalid-feedback" >{{ form_errors(form_contact.email) }}</div>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                {{ form_widget(form_contact.object,{'attr': {'placeholder': form_label(form_contact.object) }}) }}
+                                <label for="name">{{ form_label(form_contact.object) }}</label>
+                                <div class="invalid-feedback" >{{ form_errors(form_contact.object) }}</div>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                {{ form_widget(form_contact.motif,{'attr': {'placeholder': form_label(form_contact.motif) }}) }}
+                                <label for="name">{{ form_label(form_contact.motif) }}</label>
+                                <div class="invalid-feedback" >{{ form_errors(form_contact.motif) }}</div>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                {{ form_widget(form_contact.message) }}
+                                <label for="name">{{ form_label(form_contact.message) }}</label>
+                            </div>
+
+                            <div class="d-grid"><button  class="btn btn-light btn-xl " >{{ 'contact.us'|trans() }}</button></div>
+                        {{ form_end(form_contact) }}
+
+                </div>
+            </div>
 
         </div>
-        </div>
-    </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </section>
 
 
 
 
 {% endblock %}
+
+{% block footer %}
+    <footer>
+        <footer class="bg-light  py-2">
+            <div class="container mt-2 mb-2 px-4 px-lg-5">
+                <div class="text-center align-content-center">
+                    <a href="https://www.instagram.com" ><img style="margin-right: 2rem" src="{{ asset('logo_instagram.png','ressource_images') }}" alt="instagram"  width="40rem" ></a>
+                    <a href="https://www.facebook.com" ><img style="margin-right: 2rem" src="{{ asset('logo_facebook.png','ressource_images') }}" alt="instagram" width="40rem" ></a>
+                    <a href="https://www.linkedin.com" ><img style="margin-right: 2rem" src="{{ asset('logo_linkedin.png','ressource_images') }}" alt="instagram" width="40rem" ></a>
+                </div>
+            </div>
+        </footer>
+    </footer>
+{% endblock %}
+
+

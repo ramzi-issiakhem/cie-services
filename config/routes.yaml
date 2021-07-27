@@ -39,11 +39,12 @@ under_construction:
           _locale: fr
 
 home:
-     path: /{_locale}/home
+     path: /{_locale}/home{section}
      controller: App\Controller\HomeController::home
      requirements:
           _locale: en|fr|ar
      defaults:
+          section: head
           _locale: fr
 
 aboutus:

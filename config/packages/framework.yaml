@@ -13,6 +13,12 @@ framework:
 
     assets:
         packages:
+            css:
+                base_path: css
+            js:
+                base_path: js
+            ressource_images:
+                base_path: ressources/images
             slides:
                 base_path: ressources/slides
             products_logo:
@@ -21,3 +27,5 @@ framework:
     #fragments: true
     php_errors:
         log: true
+    profiler:
+        enabled: false

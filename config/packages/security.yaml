@@ -44,8 +44,7 @@ security:
 
             form_login:
                 enable_csrf: true
-#                login_path: user.login
-                login_path: under_construction
+                login_path: user.login
                 check_path: user.login
                 use_referer: true
 

@@ -225,39 +225,13 @@
         }
 
 
-        public function contact(Request $request,MailerInterface $mailer) {
+
+        public function home(Request $request,MailerInterface $mailer) {
 
             $contact = new Contact();
-            $form = $this->createForm(ContactType::class,$contact);
-
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-
-                $email = new Email();
-                $render_path = $this->render->render('emails/respond_contact.html.twig',[
-                    'contact' => $contact
-                ]);
-
-                $email
-                    ->from('user@no-reply.com')
-                    ->to('issiakhem.mohamedramzi@gmail.com')
-                    ->subject($contact->getMotif() . "  / " . $this->translator->trans($contact->getObject(),[],'types'))
-                    ->html($render_path,'utf-8');
-
-                try {
-                    $mailer->send($email);
-                } catch (TransportExceptionInterface $e) {
-                }
-                $this->addFlash('success',$this->translator->trans('mail.send',[],"messages"));
-                return $this->redirectToRoute('home');
-            }
-
-            return $this->render('pages/contact.html.twig',[
-                'form' => $form->createView()
-            ]);
-        }
-        public function home() {
+            $catalog = new Catalog();
+            $form_contact = $this->createForm(ContactType::class,$contact);
+            $form_catalog = $this->createForm(CatalogType::class,$catalog);
 
             $products = $this->productRepository->findAll();
             $events   = $this->eventRepository->findAllOrderByState('ASC');
@@ -265,9 +239,54 @@
             $formatted_products = array_chunk($products,3);
             $formatted_events = array_chunk($events,3);
 
+            $form_contact->handleRequest($request);
+            $form_catalog->handleRequest($request);
+
+            if ($form_catalog->isSubmitted() && $form_catalog->isValid()) {
+                $this->em->persist($catalog);
+                $this->em->flush();
+
+                $package = new Package(new EmptyVersionStrategy());
+
+                $this->addFlash('success_catalog',$this->translator->trans('message.catalog.downloaded',[],"messages"));
+                return new  RedirectResponse( $package->getUrl('/downloads/catalog/catalog_preview.pdf'));
+            }
+
+            if ($form_contact->isSubmitted() && $form_contact->isValid()) {
+
+                $email = new Email();
+
+                $render_path = $this->render->render('emails/respond_contact.html.twig',[
+                    'contact' => $contact
+                ]);
+
+
+
+                $email
+                    ->from($contact->getEmail())
+                    ->to('issiakhem.mohamedramzi@gmail.com')
+                    ->subject( " Auto-Contact / " . $this->translator->trans($contact->getObject(),[],'types'))
+                    ->html($render_path,'utf-8');
+
+                try {
+                    $mailer->send($email);
+                    $this->addFlash('success',$this->translator->trans('mail.send',[],"messages"));
+                    return $this->redirectToRoute('home', ['section' => "#contact"]);
+                } catch (TransportExceptionInterface $e) {
+                    $this->addFlash('error',$this->translator->trans('mail.not.send',[],"messages"));
+
+                }
+
+
+            }
+
+
+
             return $this->render("pages/home.html.twig",[
                 "products" => $formatted_products,
-                "events" => $formatted_events
+                "events" => $formatted_events,
+                "form_contact" => $form_contact->createView(),
+                "form_catalog" => $form_catalog->createView()
             ]);
         }
 
@@ -348,7 +367,60 @@
             return  $writer->write($qrCode, $logo, $label);
         }
     }
+/*
+ *  {{ form_start(form) }}
 
+                                <!-- Email Adress input-->
+                                <div class="form-floating mb-3">
+                                    <div class="form-control">
+                                        {{ form_label(form.email) }}
+                                        {{ form_widget(form.email) }}
+                                        <small>{{ form_help(form.email) }}</small>
+                                        <div class="form-error">
+                                            {{ form_errors(form.email) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Object  input-->
+                                <div class="form-floating mb-3">
+                                    <div class="form-control">
+                                        {{ form_label(form.object) }}
+                                        {{ form_widget(form.object) }}
+                                        <small>{{ form_help(form.object) }}</small>
+                                        <div class="form-error">
+                                            {{ form_errors(form.object) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Object  input-->
+                                <div class="form-floating mb-3">
+                                    <div class="form-control">
+                                        {{ form_label(form.motif) }}
+                                        {{ form_widget(form.motif) }}
+                                        <small>{{ form_help(form.motif) }}</small>
+                                        <div class="form-error">
+                                            {{ form_errors(form.motif) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Object  input-->
+                                <div class="form-floating mb-3">
+                                    <div class="form-control">
+                                        {{ form_label(form.message) }}
+                                        {{ form_widget(form.message) }}
+                                        <small>{{ form_help(form.message) }}</small>
+                                        <div class="form-error">
+                                            {{ form_errors(form.message) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                {{ form_end(form) }}
+ */
 
 
 ?>

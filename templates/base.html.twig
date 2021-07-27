@@ -4,25 +4,64 @@
 
     <head>
         <meta charset="UTF-8">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
+        <!-- Favicon <link rel="icon" type="image/x-icon" href="{{ asset("") }}" />-->
+
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+
+        <link href="{{ asset('home.css','css') }}" rel="stylesheet" />
         <title> {% block title %} Cie-Services {% endblock %} </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
         {% block stylesheets %}
 
         {% endblock %}
 
         {% block javascripts %}
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-        {% endblock %}
+                   {% endblock %}
     </head>
-    <body>
+    <body >
 
 
 
     {% trans_default_domain 'messages' %}
 
-    <nav class="  navbar navbar-expand-lg  " style="background-color: #E5EFFE">
+    <nav class="navbar sticky-top  navbar-expand-lg navbar-light " style="background: linear-gradient(to top, rgba(179,236,255,1) 0%, rgba(208,243,255,1) 24%, rgba(224,239,244,1) 53%, rgba(236,236,236,1) 100%)">
+        <div class="container-fluid">
+
+            <a class="navbar-brand" href="{{ path('home') }}" style="padding-left: 0;margin-right: 0" >
+                <img class="me-0" src="{{ asset('logo_cie.png','ressource_images') }}" alt="" width="80rem">
+            </a>
+            <a style="color: #091753;text-decoration: none;font-weight: bold" href="{{ path('home') }}" > CENTRE INTERNATIONAL </br> DES SERVICES EDUCATIFS </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                        <ul class="navbar-nav ms-auto my-2 my-lg-0" >
+                            <li class="nav-item"><a style="color: #091753;text-decoration: none;font-weight: bold" class="nav-link" href="{{ path('home') }}#about">About</a></li>
+                            <li class="nav-item"><a style="color: #091753;text-decoration: none;font-weight: bold" class="nav-link" href="{{ path('home') }}#services">Services</a></li>
+                            <li class="nav-item"><a style="color: #091753;text-decoration: none;font-weight: bold" class="nav-link" href="{{ path('home') }}#contact">Contact</a></li>
+                            <li class="nav-item"><a style="color: #091753;text-decoration: none;font-weight: bold" class="nav-link" href="{{ path('user.login') }}">Login</a></li>
+                        </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <!--<nav class="  navbar navbar-expand-lg  " style="background-color: #E5EFFE">
         <div class="container-fluid">
 
             <a class="navbar-brand" href="{{ path('home') }}"> {{ 'navbar.brand.name'|trans }}</a>
@@ -77,11 +116,18 @@
 
 
         </div>
-    </nav>
+    </nav>-->
 
 
         {% block body %}
 
         {% endblock %}
+
+    {% block footer %}
+
+    {% endblock %}
     </body>
+
+
+
 </html>

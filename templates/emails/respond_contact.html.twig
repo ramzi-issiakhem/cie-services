@@ -3,7 +3,7 @@
 
 <head>
     <title> Discount Light </title>
-    <!--[if !mso]><!-- -->
+    <!--[if !mso]> !-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!--<![endif]-->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -116,7 +116,7 @@
                                                     <tbody>
                                                     <tr>
                                                         <td style="width:150px;">
-                                                            <img alt height="auto" src="https://res.cloudinary.com/dheck1ubc/image/upload/v1544153577/Email/Images/AnnouncementOffset/crofts-white.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="150">
+                                                            <img alt height="auto" src="{{   app.request.schemeAndHttpHost ~ asset('logo_cie_white.png','ressource_images') }}" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="150">
                                                         </td>
                                                     </tr>
                                                     </tbody>
@@ -125,8 +125,8 @@
                                         </tr>
                                         <tr>
                                             <td align="center" style="font-size:0px;padding:10px 25px;padding-top:30px;word-break:break-word;">
-                                                <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;letter-spacing:1px;line-height:24px;text-align:center;text-transform:uppercase;color:#ffffff;">Afak Al-Moustakbil <br>
-                                                    <span style="color: #979797; font-weight: normal">-</span>
+                                                <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;letter-spacing:1px;line-height:24px;text-align:center;text-transform:uppercase;color:#ffffff;">Cie Services <br>
+
                                                 </div>
                                             </td>
                                         </tr>
@@ -137,7 +137,7 @@
                                                     <tr>
                                                         <td style="width:600px;">
                                                             <a href="https://google.com" target="_blank">
-                                                                <img alt height="auto" src="https://res.cloudinary.com/dheck1ubc/image/upload/v1544156968/Email/Images/AnnouncementOffset/header-top.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="600">
+                                                                <img alt height="auto" src="{{ asset('logo_instagram.png','ressource_images') }}" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="600">
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -168,6 +168,8 @@
         </tr>
         </tbody>
     </table>
+
+
     <!--[if mso | IE]>
     <table
             align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600"
@@ -198,7 +200,7 @@
                                         <tr>
                                             <td style="width:600px;">
                                                 <a href="https://google.com" target="_blank">
-                                                    <img alt height="auto" src="https://res.cloudinary.com/dheck1ubc/image/upload/v1544156968/Email/Images/AnnouncementOffset/header-bottom.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="600">
+                                                    <img alt height="auto" src="{{ asset('bg-masthead.png','ressource_images') }}" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="600">
                                                 </a>
                                             </td>
                                         </tr>
@@ -268,12 +270,21 @@
                                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
                                             <tr>
                                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#212b35;">{{ contact.motif }}</div>
+                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#212b35;">Email : {{ contact.email }}</div>
                                                 </td>
                                             </tr>
+
+
+
                                             <tr>
                                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">{{ contact.message }}</div>
+                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#212b35;">Motif : {{ contact.motif }}</div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                                    <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">Message : <br> {{ contact.message }}</div>
                                                 </td>
                                             </tr>
 

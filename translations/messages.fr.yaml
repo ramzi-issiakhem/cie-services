@@ -20,7 +20,9 @@ navbar:
     brand:
         name: Cie-Services
 mail:
-    send: Email Envoyé avec succès
+  send: Email Envoyé avec succès
+  not:
+    send: Email non envoye
 
 event:
     already_joined: Evenement Déja reservé pour %names% , Réessayez
@@ -71,3 +73,5 @@ product:
     name: Produit
 password:
     change: Changer le mot de passe
+contact:
+  us: Nous Contacter

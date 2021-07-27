@@ -5,30 +5,6 @@
 {% block body %}
 
     <h5 class="mt-4">Contact</h5>
-    <form method="post">
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">{{ message }}</div>
-        {% endfor %}
 
-        {% if error is defined %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security')  }}</div>
-        {% endif %}
-
-        <div class="container">
-            {{ form_start(form) }}
-
-            {{ form_row(form.email) }}
-            {{ form_row(form.object) }}
-            {{ form_row(form.motif) }}
-            {{ form_row(form.message) }}
-            <button class="btn-primary btn">
-                {{ 'message.reserve'|trans() }}
-            </button>
-            {{ form_end(form) }}
-        </div>
-
-
-
-    </form>
 
 {% endblock %}
