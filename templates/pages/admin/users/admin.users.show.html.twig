@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'admin' %}
+
+{% block title %} Panel Admin - Event {% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    <div class="container-fluid bg-light ">
+        <div class="container  ">
+            {{ form_start(search_form) }}
+            <div class="row ">
+                <div class="col mt-4">
+                    {{ form_row(search_form.roles) }}
+                </div>
+                <div class="col mt-4">
+                    {{ form_row(search_form.scholar_level) }}
+                </div>
+            </div>
+
+
+            <div class="form-row align-items end">
+                <div class="col ">
+                    {{ form_row(search_form.type) }}
+                </div>
+                <div class="col">
+                    {{ form_row(search_form.related_school) }}
+                </div>
+            </div>
+
+            <div class=" container mt-3  text-center">
+                <div class="col">
+                    <button class="mb-3 btn btn-primary"> {{ 'user.filter'|trans({},'messages') }}</button>
+                </div>
+            </div>
+
+
+            {{ form_end(search_form) }}
+        </div>
+    </div>
+
+
+
+    <div class="row mb-0">
+        {{ include('pages/admin/navigation_box.html.twig') }}
+
+            <div class="col col-md-10">
+
+                <div class="row">
+                {% for user in users %}
+                       <div class="col-md-3 me-5">
+                           {{ include('pages/admin/users/_card.html.twig',{user:user}) }}
+                       </div>
+                {% endfor %}
+                </div>
+                <div class="pagination">
+                    {{ knp_pagination_render(users) }}
+                </div>
+            </div>
+    </div>
+
+
+
+
+{% endblock %}

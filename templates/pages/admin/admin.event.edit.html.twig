@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}   Admin Panel - Edit {% endblock %}
+
+{% block body %}
+    {{ include('pages/admin/_form.html.twig', {form: form,button: 'events.edit'})  }}
+
+
+
+
+    <div class="container mt-4">
+
+        <a href="{{ path('admin.download.children.list.event',{'id': event_id } ) }}" class="col btn btn-warning mb-2"> {{  'child.download'| trans({},'messages') }}</a>
+
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">{{ 'child.name'|trans({},'messages') }}</th>
+                <th scope="col">{{ 'child.school_level'|trans({},'messages') }}</th>
+                <th scope="col">{{ 'child.school'|trans({},'messages') }}</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for child in childrens %}
+                {% if child is defined %}
+                <tr>
+                    <td>{% if child.name is defined %} {{ child.name }} {% else %} {{ 'child.notfound'|trans({},'messages') }} {% endif %}</td>
+                    <td>{% if child.FormattedSchoolarLevel is defined %} {{ child.FormattedSchoolarLevel|trans({},'types') }} {% else %} {{ 'child.shool_level.notfound'|trans({},'messages') }} {% endif %}</td>
+                    <td></td>
+                    <td>{% if child.school.name is defined %} {{ child.school.name }} {% else %} {{ 'school.notfound'|trans({},'messages') }} {% endif %}</td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div>
+
+
+{% endblock %}

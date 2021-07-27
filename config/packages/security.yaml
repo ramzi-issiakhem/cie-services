@@ -1,0 +1,78 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+
+
+    enable_authenticator_manager: true
+
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        from_database:
+            entity:
+                class: App\Entity\User
+                property: email
+
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+
+        # used to reload user from session & other features (e.g. switch_user)
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path: /
+
+            lazy: true
+
+            provider: from_database
+
+            logout:
+                path: user.logout
+                target: home
+
+            form_login:
+                enable_csrf: true
+                login_path: user.login
+                check_path: user.login
+                use_referer: true
+
+            entry_point: form_login
+            custom_authenticators:
+                - App\Security\UserAuthenticator
+            custom_authenticator: App\Security\FacebookAuthenticator
+
+
+
+
+
+
+    access_control:
+         - { path: /under/construction , roles:  }
+         - { path: /login , roles:  }
+         - { path: /logout , roles:  }
+         - { path: /contact , roles:  }
+         - { path: /about-us , roles:  }
+         - { path: /admin, roles: ROLE_MODERATOR }
+         - { path: /profile, roles: ROLE_USER }
+#         - { path: / , roles: ROLE_SUPER_MODERATOR }
+
+
+
+    role_hierarchy:
+        # IS_AUTHENTICATED_FULLY without remember
+        # IS_AUTHENTICATED_REMEMBERED WITH REMEMBER
+            ROLE_MODERATOR : ROLE_USER
+            ROLE_ADMIN: ROLE_MODERATOR
+            ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]

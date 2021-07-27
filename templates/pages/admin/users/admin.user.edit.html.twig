@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Admin - User Edition {% endblock %}
+
+{% block body %}
+
+    {{ include('pages/admin/users/_form.html.twig',{form:form}) }}
+
+    <a href="{{ path('admin.user.edit.password',{'id': user.id,'slug': user.slug}) }}" class="btn btn-primary">
+        {% trans from 'forms' %} forms.users.change.password {% endtrans %}
+    </a>
+{% endblock %}

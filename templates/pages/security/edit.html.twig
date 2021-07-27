@@ -1,0 +1,14 @@
+
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'messages' %}
+
+{% block title %} Admin - Product Edition {% endblock %}
+
+{% block body %}
+
+    <div class="container lt-4">
+        {{ include('pages/security/_form.html.twig',{form:form,user:user}) }}
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,58 @@
+forms:
+
+  telephone: Numéro de Telephone
+  birthday_date: Date D'anniversaire
+  choice:
+    children: 'Reserver pour :'
+  password_forgotten: Mot De Passe Oublié
+  logo: Logo du Produit
+  coverimage: Photo de Couverture
+  images: Images de Présentation
+  roles: Roles
+  message: Contenu de l'email
+  firstName: Prénom
+  familyName: Nom
+  buisenessName: Nom de l'Entreprise
+  downloadForms: Telecharger la liste
+  name:
+    fr: Nom en Latin
+    ar: Nom en Arabe
+  price: Prix
+  description:
+    fr: Description en Francais
+    en: Description en Anglais
+    ar: Description en Arabe
+  product: Produit
+  school: Ecole
+  email: Email
+  mail:
+    object: Catégorie
+    motif: Objet de l'email
+  password:
+    new: Mot De Passe
+    repeat: Répeter le mot De Passe
+  mobilephone: Numero de telephone
+  username: Nom D'utilisateur
+  birthday: Date D'anniversaire
+  schoolarlevel: Niveau Scolaire
+  relatedschool: Etablissement Affilié
+
+  event:
+    reservation_places: Places disponibles
+    state: Etat Actuel
+    date: Date de L'evenement
+#      max: Date Max
+    deadline: Date De DeadLine
+#      max: Deadline Max
+
+  users:
+    change:
+      password: Changer le Mot De Passe
+    remember: Me Rappeler
+    login: Connecter
+    logo: Logo
+    type:
+        professional: Compte Professionel
+        personnal: Compte Personnel
+messages:
+  search: Filtrer les Résultats

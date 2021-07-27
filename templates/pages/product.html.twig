@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+{% trans_default_domain 'forms' %}
+
+{% block body %}
+
+    <div class="container mt-4">
+
+        <h2> Product Presentation</h2>
+
+        <div class="container-fluid">
+            <img class="text-center" src="{% if asset_exists('uploads/products/' ~ product.coverImage) %} {{ asset('uploads/products/' ~ product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}">
+            <h3>{{ product.formattedName }}</h3>
+            <p>
+                {{ product.formattedDescription }}
+            </p>
+        </div>
+
+    </div>
+
+{% endblock %}

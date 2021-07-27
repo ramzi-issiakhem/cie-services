@@ -1,0 +1,24 @@
+mail:
+  send_mail: Répondre
+  forgot:
+    notyou: Si ce n'est pas , vous veuillez immédiatement changer votre mot de passe
+    title: Mail De Récuperation de Votre Mot De Passe
+  confirmation:
+    forgot: Vous recevez un lien pour la récupération de cotr mot de passe
+    title: Mail De Confirmation pour Votre Réservation
+    reservation: Merci pour votre confiance , vous venez de réserver %number% place(s) pour le prix de %price% Da.
+  hello: Bonjour %name%
+  consigns:
+    title: Afin de pouvoir profiter pleinement de l'evenement , veuillez suivre ces étapes
+    download: Veuillez tout d'abord télécharger le fichier .pdf ci-joint.
+    presentation: Le Jour-J veuillez présenter la feuille imprimée ou en version numérique
+download: Telechargement
+presentation: Présenation
+visit:
+    site: Visiter le Site
+cause: You are receiving this email because you reserve a place in an Event.
+brand: Afak Al Moustakbil.
+click: Cliquez
+
+
+

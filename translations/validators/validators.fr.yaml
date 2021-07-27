@@ -1,0 +1,24 @@
+event:
+    type:
+        integer: Veuillez enter un nombre
+        string: Veuillez entrer du texte
+        object:
+            product: Veuillez selectionner un des produits
+            school : Veuillez selectionner une des écoles
+
+forms:
+    password:
+        invalid: Mots De Passe Différents
+
+user:
+    type:
+        email: Email invalide
+        type:
+            integer: Veuillez enter un nombre
+        password:
+            compromised: Votre Mot De Passe a deja été pirate auparavent veuillez le changer
+
+        regex:
+            name : Votre nom ne doit pas contenir de nombre
+            mobilephone: Veuillez introduire un numéro valide (555112233)
+        date: Veuillez introduire un date valide

@@ -1,0 +1,38 @@
+{% trans_default_domain 'admin' %}
+
+<div class="container lt-4">
+    {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col-md-4">{{ form_row(form.nameAr) }}</div>
+        <div class="col-md-4">{{ form_row(form.name) }}</div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_row(form.price) }}
+        </div>
+        <div class="col-md-4">{{ form_row(form.reservation_places) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">{{ form_row(form.event_datetime) }}</div>
+        <div class="col-md-4">{{ form_row(form.deadline_date) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">{{ form_row(form.product) }}</div>
+        <div class="col-md-3">{{ form_row(form.school) }}</div>
+        <div class="col-md-3">{{ form_row(form.state) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">{{ form_row(form.descriptionAr) }}</div>
+        <div class="col-md-4">{{ form_row(form.descriptionFr) }}</div>
+        <div class="col-md-4">{{ form_row(form.descriptionEn) }}</div>
+    </div>
+
+        <button class="btn btn-primary"> {{ button|default('events.create')|trans }} </button>
+    {{ form_end(form) }}
+</div>

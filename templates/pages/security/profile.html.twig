@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+        {% for message in app.flashes('success') %}
+                <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
+    <div class="container text-center mb-5">
+    
+        <div> <img style="width: 250px; height: 300px;" src="{% if asset_exists('uploads/users/' ~ user.logo) %} {{ asset('uploads/users/' ~ user.logo) }} {% else %} {{ asset('uploads/users/sample_user.png') }} {% endif %}" alt="logo"> </div>
+        <div class="mt-4"> <h4>Nom</h4> </div>
+        <div>{{ user.name }}</div>
+
+        <h4>Email</h4>
+        <div>{{ user.email }}</div>
+
+        <h4>Phone</h4>
+        <div>0{{ user.mobilePhone }}</div>
+
+
+        <a href="{{ path('user.edit',{'id': user.id, 'slug': user.slug}) }}" class="btn btn-primary">Editer</a>
+
+    </div >
+    
+    
+        {% if user.type == 1 %}
+
+        <div class="container text-center mt-4">
+                <a href="{{ path('user.child.create') }}" class=" btn btn-primary mb-5">{{ 'child.create'|trans({},'messages') }}</a>
+
+                <h4 > {{ 'child.title'|trans({},'messages')   }}</h4>
+                <table class="table mt-5">
+                        <thead>
+                        <tr>
+
+                                <th scope="col">{{ 'child.name'|trans({},'messages') }}</th>
+                                <th scope="col">{{ 'child.school_level'|trans({},'messages') }}</th>
+                                <th scope="col">{{ 'child.school'|trans({},'messages') }}</th>
+                                <th scope="col">{{ 'child.actions'|trans({},'messages') }}</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for child in user.children %}
+                                <tr>
+                                        <td>{{ child.name }}</td>
+                                        <td>{{ child.FormattedSchoolarLevel|trans({},'types') }}</td>
+                                        <td>{% if child.school.name is defined %} {{ child.school.name }} {% else %} {{ 'school.notfound'|trans({},'messages') }} {% endif %}</td>
+                                        <td>
+                                                <div class="row">
+                                                        <a href="{{ path('user.child.edit',{'id': child.id,'slug' : child.slug }) }}" class="col btn btn-warning container-fluid mb-2"> {{  'child.edit'| trans({},'messages') }}</a>
+
+                                                        <form class="col" method="post" action="{{ path('user.child.remove',{id: child.id}) }}" onsubmit="return confirm('Are you sure ?')">
+                                                                <input type="hidden" name="_method" value="DELETE">
+                                                                <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ child.id) }}">
+                                                                <button class="btn container-fluid mb-2 btn-danger">{{ 'child.remove'| trans({},'messages') }}</button>
+                                                        </form>
+                                                </div>
+
+                                        </td>
+                                </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+        </div>
+        {% else %}
+
+
+            <div class="container mt-4">
+
+                <h4> {{ 'event.title'|trans({},'messages')   }}</h4>
+                <table class="table">
+                    <thead>
+                    <tr>
+
+                        <th scope="col">{{ 'event.name'|trans({},'messages') }}</th>
+                        <th scope="col">{{ 'event.date.event'|trans({},'messages') }}</th>
+                        <th scope="col">{{ 'event.date.deadline'|trans({},'messages') }}</th>
+                        <th scope="col">{{ 'event.number.reservations'|trans({},'messages') }}</th>
+                        <th scope="col">{{ 'child.actions'|trans({},'messages') }}</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for event in events %}
+                        <tr>
+                            <td>{{ event.name }}</td>
+                            <td>{{ event.eventDatetime|date('d/m/y') }}</td>
+                            <td>{{ event.deadlineDate|date('d/m/y') }}</td>
+                            <td>{{ event.reservations|length }}</td>
+                            <td>
+                                <div class="row">
+                                    <a href="{{ path('school.event.list',{'id': event.id}) }}" class="col btn btn-warning container-fluid mb-2"> {{  'event.list.edit'| trans({},'messages') }}</a>
+                                    <a href="{{ path('download.school.event.list',{'id': event.id}) }}" class="col btn btn-success container-fluid mb-2"> {{  'event.list.download'| trans({},'messages') }}</a>
+
+                                </div>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        {% endif %}
+{% endblock %}

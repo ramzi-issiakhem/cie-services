@@ -1,0 +1,37 @@
+
+<div class="container">
+    <h2 class="text-center">Afak Al-Mostakbil</h2>
+    <h5 class="text-center">
+        {{ 'mail.confirmation.reservation'|trans({},'mail') }}
+    </h5>
+    <p>
+        {{ 'mail.confirmation.reservation'|trans({},'mail') }}
+    </p>
+
+    <table class="table table-bordered border-primary ">
+        <thead>
+        <tr>
+
+            <th scope="col">{{ 'child.name'|trans({},'messages') }}</th>
+            <th scope="col">{{ 'child.school'|trans({},'messages') }}</th>
+            <th scope="col">{{ 'child.school_level'|trans({},'messages') }}</th>
+            <th scope="col">{{ 'child.parent'|trans({},'messages') }}</th>
+            <th scope="col">{{ 'child.mobilephone'|trans({},'messages') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for child in reservants %}
+            <tr>
+                <td>{{ child.name }}</td>
+                <td>{{ child.school.name }}</td>
+                <td>{{ child.FormattedSchoolarLevel|trans({},'types') }}</td>
+                <td>{{ child.parent.name }}</td>
+                <td>0{{ child.parent.mobilePhone }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+{#    <img src="{{ qr_code_data_uri(json) }}" alt="">#}
+</div>
+
