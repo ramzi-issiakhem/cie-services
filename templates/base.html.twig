@@ -1,62 +1,19 @@
 <!DOCTYPE html>
 <html>
-
-
     <head>
         <meta charset="UTF-8">
-
-        <title> {% block title %} Afak Al-Moustakbil {% endblock %} </title>
-
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
-
+            {#{{ encore_entry_link_tags('app') }}#}
         {% endblock %}
 
         {% block javascripts %}
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+            {#{{ encore_entry_script_tags('app') }}#}
         {% endblock %}
     </head>
     <body>
-    {% trans_default_domain 'messages' %}
-
-    <nav class="  navbar navbar-expand-lg navbar-dark   bg-primary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ path('home') }}"> {% trans %} navbar.brand.name {% endtrans %}</a>
-
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="{{ path('home') }}">{% trans %} navbar.home {% endtrans %} </a>
-                    <a class="nav-link" href="{{ path('contact') }}">{% trans %}navbar.contact {% endtrans %}</a>
-                    <a class="nav-link" href="{{ path('aboutus') }}">{% trans %} navbar.aboutus {% endtrans %}</a>
-                        <div class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {% trans  %} navbar.language {% endtrans %}
-                            </a>
-
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="{{ path('home',{'_locale' : 'fr'}) }}">{% trans %} navbar.fr {% endtrans %}</a></li>
-                                <li><a class="dropdown-item" href="{{ path('home',{'_locale' : 'ar'}) }}">{% trans %} navbar.ar {% endtrans %}</a></li>
-                                <li><a class="dropdown-item" href="{{ path('home',{'_locale' : 'en'}) }}">{% trans %} navbar.en {% endtrans %}</a></li>
-                            </ul>
-                        </div>
-                    <a class="nav-link active" href=""> {% trans %} user.profile {% endtrans %}</a>
-
-                    <a class="nav-link active " href="{{ path('user.login') }}"> {% trans %} user.login {% endtrans %}</a>
-                    <a class="nav-link active" href="{{ path('user.register') }}"> {% trans %} user.register {% endtrans %}</a>
-
-                    <a class="nav-link active" href="{{ path('admin.events.show') }}"> {% trans %} admin.panel {% endtrans %}</a>
-
-
-                </div>
-            </div>
-
-
-        </div>
-    </nav>
-
-
-        {% block body %}
-
-        {% endblock %}
+        {% block body %}{% endblock %}
     </body>
 </html>
