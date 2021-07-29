@@ -11,30 +11,117 @@
 {% block body %}
 
 
+    <div id="aboutUsContainer" class="container-fluid" >
 
 
+    <div class="container " style="background-color: rgba(0,0,0,0)">
+        <div class="card mb-3 " style="border: none;background-color: rgba(0,0,0,0)">
+            <div class="row d-flex align-items-center ">
+
+                <div class="col-md-8">
+                    <div class="card-body ">
+                        <h5 class="card-title mb-4"> <b> Qui Sommes-Nous </b> </h5>
+                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
 
 
-
-    <header class="masthead" style=" background-image:  url('{{ asset("bg-masthead.png","ressource_images") }}')"></header>
-
-
-    <section class="page-section" id="about" style="background-color: #091753">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <h2 class="text-white mt-0">Qui Sommes-Nous</h2>
-                    <hr class="divider divider-light" />
-                    <div class="container">
-                    <p class="text-white-75 mb-4">Le Centre internationale des Services Educatifs "Cie-Services" a été concu essentiellement dans le nut de fournir des services éducatifs hautement qualifiés
-                    et distinctids aux établissement du secteur éducatif ainsi qu'aux personnes qui s'intéressent a l'éducation et à la formation .
-                        <br><br> <b><i>  Pour plus d'informations , veuillez telecharger notre catalogue </i></b> </p>
-                    <button class="btn btn-light btn-xl" data-bs-toggle="modal" data-bs-target="#catalogModel">{{ 'message.catalog.download'|trans() }}</button>
                     </div>
                 </div>
+
+                <div class="col-md-4">
+                    <img  src="{{  asset('Catalogue.png','ressource_images') }}" class="w-100 card-img" alt="...">
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row d-flex align-items-center  text-start" >
+                            <div class="col-sm-12  text-center"><b>Pour plus d'informations : </b></div>
+                            <div class="col-sm-12 "><button style="background-color: #0d6efd;border-radius: 2rem;width: 100%;color: white" class="btn" data-bs-toggle="modal" data-bs-target="#catalogModel">{{ 'message.catalog.download'|trans() }}</button></div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="container-fluid" id="services">
+        <div class="container-md ">
+            <div class="col-md-8">
+                <h5 id="servicesTitle"><b> Nos Services </b></h5>
+                <p >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. <br><br><br> It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
+                <p id="services_text_2"></p>
+
             </div>
         </div>
-    </section>
+        <div id="services_row" class="row text-center">
+        <div class="col">
+            <img class="" alt="logo" src="{{ asset('logo_cie_coaching.png','ressource_images') }}">
+            <img class="" alt="logo" src="{{ asset('logo_cie_coaching.png','ressource_images') }}">
+            <img class="" alt="logo" src="{{ asset('logo_cie_coaching.png','ressource_images') }}">
+            <img class="" alt="logo" src="{{ asset('logo_cie_coaching.png','ressource_images') }}">
+            <img class="" alt="logo" src="{{ asset('logo_cie_coaching.png','ressource_images') }}">
+            <img class="" alt="logo" src="{{ asset('logo_cie_coaching.png','ressource_images') }}">
+        </div>
+    </div>
+    </div>
+
+
+
+    <!-- <header class="masthead" style=" background-image:  url('{{ asset("bg-masthead.png","ressource_images") }}')"></header>
+   !-->
+
+    <div class="container-fluid" style="padding-bottom: 3rem;padding-top: 3rem;background-color: #e5e5e5">
+        <div class="container" >
+            <div class="row gx-4 gx-lg-5 justify-content-center mb-5" >
+                <div class="col-lg-6" style="background-color: white;padding-bottom: 1rem;padding-top: 1.5rem;border-radius: 1rem">
+                    <h4> Contact Us </h4>
+
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">{{ message }}</div>
+                    {% endfor %}
+
+                    {% for message in app.flashes('error') %}
+                        <div class="alert alert-danger">{{ message }}</div>
+                    {% endfor %}
+                    {{ form_start(form_contact) }}
+                    <!-- Name input-->
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form_contact.email,{'attr': {'placeholder': form_label(form_contact.email) }}) }}
+                        <label for="name">{{ form_label(form_contact.email) }}</label>
+                        <div class="invalid-feedback" >{{ form_errors(form_contact.email) }}</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form_contact.object,{'attr': {'placeholder': form_label(form_contact.object) }}) }}
+                        <label for="name">{{ form_label(form_contact.object) }}</label>
+                        <div class="invalid-feedback" >{{ form_errors(form_contact.object) }}</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form_contact.motif,{'attr': {'placeholder': form_label(form_contact.motif) }}) }}
+                        <label for="name">{{ form_label(form_contact.motif) }}</label>
+                        <div class="invalid-feedback" >{{ form_errors(form_contact.motif) }}</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form_contact.function,{'attr': {'placeholder': form_label(form_contact.function) }}) }}
+                        <label for="name">{{ form_label(form_contact.function) }}</label>
+                        <div class="invalid-feedback" >{{ form_errors(form_contact.function) }}</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form_contact.message) }}
+                        <label for="name">{{ form_label(form_contact.message) }}</label>
+                    </div>
+
+                    <div class="d-grid"><button  class="btn btn-light btn-xl " >{{ 'contact.us'|trans() }}</button></div>
+                    {{ form_end(form_contact) }}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 
     <!-- Catalog Modal !-->
 
@@ -48,17 +135,21 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
+
                             <div class="card mb-3 " style="max-width: 100%;">
-                                <div class="row d-flex align-items-center ">
-                                    <div class="col-md-4">
-                                        <img src="{{  asset('logo_cie.png','ressource_images') }}" class="card-img" alt="...">
-                                    </div>
-                                    <div class="col-md-8">
+                                <div class="row d-flex  ">
+
+                                    <div class="col-md-8" style="margin-top: 3rem;padding-left: 3rem">
                                         <div class="card-body">
                                             <h5 class="card-title">Brochure Cie Services</h5>
                                             <p class="card-text">Afin de telecharger notre Brchure , nous aurons besoin de quelques informations supplémentaire </p>
+
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <img src="{{  asset('catalogue_popup.png','ressource_images') }}" class="card-img" alt="...">
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -71,29 +162,28 @@
                                         <h4>Tell Us About Yourself</h4>
 
                                         <!-- Name input-->
-                                        <div class="form-floating mb-3">
+                                        <div class="form-floating mb-3" >
                                             {{ form_widget(form_catalog.email,{'attr': {'placeholder': form_label(form_catalog.email) }}) }}
                                             <label for="name">{{ form_label(form_catalog.email) }}</label>
                                             <div class="invalid-feedback" >{{ form_errors(form_catalog.email) }}</div>
                                         </div>
 
+
+
+
                                         <div class="form-floating mb-3">
-                                            {{ form_widget(form_catalog.familyName,{'attr': {'placeholder': form_label(form_catalog.familyName) }}) }}
-                                            <label for="name">{{ form_label(form_catalog.familyName) }}</label>
-                                            <div class="invalid-feedback" >{{ form_errors(form_catalog.familyName) }}</div>
+                                            {{ form_widget(form_catalog.name,{'attr': {'placeholder': form_label(form_catalog.name) }}) }}
+                                            <label for="name">{{ form_label(form_catalog.name) }}</label>
+                                            <div class="invalid-feedback" >{{ form_errors(form_catalog.name) }}</div>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            {{ form_widget(form_catalog.firstName,{'attr': {'placeholder': form_label(form_catalog.firstName) }}) }}
-                                            <label for="name">{{ form_label(form_catalog.firstName) }}</label>
-                                            <div class="invalid-feedback" >{{ form_errors(form_catalog.firstName) }}</div>
+                                            {{ form_widget(form_catalog.function,{'attr': {'placeholder': form_label(form_catalog.function) }}) }}
+                                            <label for="name">{{ form_label(form_catalog.function) }}</label>
+                                            <div class="invalid-feedback" >{{ form_errors(form_catalog.function) }}</div>
                                         </div>
 
-                                        <div class="form-floating mb-3">
-                                            {{ form_widget(form_catalog.buisenessName,{'attr': {'placeholder': form_label(form_catalog.buisenessName) }}) }}
-                                            <label for="name">{{ form_label(form_catalog.buisenessName) }}</label>
-                                            <div class="invalid-feedback" >{{ form_errors(form_catalog.buisenessName) }}</div>
-                                        </div>
+
 
                                         <div class="form-floating mb-3">
                                             {{ form_widget(form_catalog.mobilePhone,{'attr': {'placeholder': form_label(form_catalog.mobilePhone) }}) }}
@@ -122,44 +212,6 @@
 
 
 
-    <!-- Services-->
-    <section class="page-section" id="services">
-        <div class="container px-4 px-lg-5">
-
-            <!-- TODO -->
-            <h2 class="text-center mt-0">Our Services</h2>
-            <hr class="divider" />
-            <div class=" gx-4 gx-lg-5">
-
-                <div id="carouselProducts" class="carousel slide container-fluid" data-ride="carousel" >
-                    <div class="carousel-inner">
-                        {% set index = 0 %}
-                        {% for slide in products %}
-                            <div class="container-fluid carousel-item {% if index == 0 %} {% set index = 1%} active {% endif %}">
-
-                                <div class="row justify-content-between">
-                                    {% for product in slide %}
-                                        {% if product is defined %}
-                                            <div class="col-lg-4 col-md-5 text-center"  >
-                                                 <div class="mt-5">
-                                                     <img src="{% if asset_exists('uploads/products/' ~ product.coverImage) %} {{ asset('uploads/products/' ~ product.coverImage) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="d-block w-100" alt="product_logo">
-                                                 </div>
-                                                <!--<a type="button" class="btn w-100" style="color: white;background-color: #985FAB" href="{{ path('user.product',{id:product.id}) }}"> {{ 'message.know_more'|trans({},'messages') }}   </a> !-->
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        {% endfor %}
-
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselProducts" data-bs-slide="prev"></button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselProducts" data-bs-slide="next"></button>
-                </div>
-
-            </div>
-        </div>
-    </section>
 
 
 
@@ -169,59 +221,10 @@
 
 
 
-    <!-- Contact-->
 
-    <section class="page-section" id="contact" style="background-color:  #091753 ">
-        <div class="container px-4 px-lg-5" >
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-lg-8 col-xl-6 text-center">
-                    <h2 class="mt-0" style="color: white">Feel Free to Contact Us</h2>
-                    <hr style="color: whitesmoke"  />
-                    <p  STYLE="color: whitesmoke" class=" mb-5" >You have question or any recommendation just feel free to Contact Us right here !</p>
-                </div>
-            </div>
-            <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
-                <div class="col-lg-6">
-                    {% for message in app.flashes('success') %}
-                        <div class="alert alert-success">{{ message }}</div>
-                    {% endfor %}
 
-                    {% for message in app.flashes('error') %}
-                        <div class="alert alert-danger">{{ message }}</div>
-                    {% endfor %}
-                        {{ form_start(form_contact) }}
-                            <!-- Name input-->
-                            <div class="form-floating mb-3">
-                                {{ form_widget(form_contact.email,{'attr': {'placeholder': form_label(form_contact.email) }}) }}
-                                <label for="name">{{ form_label(form_contact.email) }}</label>
-                                <div class="invalid-feedback" >{{ form_errors(form_contact.email) }}</div>
-                            </div>
 
-                            <div class="form-floating mb-3">
-                                {{ form_widget(form_contact.object,{'attr': {'placeholder': form_label(form_contact.object) }}) }}
-                                <label for="name">{{ form_label(form_contact.object) }}</label>
-                                <div class="invalid-feedback" >{{ form_errors(form_contact.object) }}</div>
-                            </div>
 
-                            <div class="form-floating mb-3">
-                                {{ form_widget(form_contact.motif,{'attr': {'placeholder': form_label(form_contact.motif) }}) }}
-                                <label for="name">{{ form_label(form_contact.motif) }}</label>
-                                <div class="invalid-feedback" >{{ form_errors(form_contact.motif) }}</div>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                                {{ form_widget(form_contact.message) }}
-                                <label for="name">{{ form_label(form_contact.message) }}</label>
-                            </div>
-
-                            <div class="d-grid"><button  class="btn btn-light btn-xl " >{{ 'contact.us'|trans() }}</button></div>
-                        {{ form_end(form_contact) }}
-
-                </div>
-            </div>
-
-        </div>
-    </section>
 
 
 
@@ -229,17 +232,47 @@
 {% endblock %}
 
 {% block footer %}
-    <footer>
-        <footer class="bg-light  py-2">
+
+        <footer class="  py-2">
+            <div class="container-fluid" style="background-image: url( {{ asset('maps.png','ressource_images') }} );background-position: center center;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;"></div>
+
             <div class="container mt-2 mb-2 px-4 px-lg-5">
-                <div class="text-center align-content-center">
-                    <a href="https://www.instagram.com" ><img style="margin-right: 2rem" src="{{ asset('logo_instagram.png','ressource_images') }}" alt="instagram"  width="40rem" ></a>
-                    <a href="https://www.facebook.com" ><img style="margin-right: 2rem" src="{{ asset('logo_facebook.png','ressource_images') }}" alt="instagram" width="40rem" ></a>
-                    <a href="https://www.linkedin.com" ><img style="margin-right: 2rem" src="{{ asset('logo_linkedin.png','ressource_images') }}" alt="instagram" width="40rem" ></a>
+                <div class="card mb-3" style="max-width: 540px;border:none">
+                    <div class="row g-0">
+
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Coordonnées</h5>
+                                <span class="row mb-2">
+                                    <span class="col-12">
+                                        <img alt="test" width="10%" src="{{ asset('logo_instagram.png','ressource_images') }}">
+                                    0558058547/548965210
+                                    </span>
+                                </span>
+
+                                <span class="row mb-2">
+                                    <span class="col-12">
+                                        <img alt="test" width="10%" src="{{ asset('logo_instagram.png','ressource_images') }}">
+                                    education-center@gmail.com
+                                    </span>
+                                </span>
+
+                                <span class="row mb-2">
+                                    <span class="col-12">
+                                        <img alt="test" width="10%" src="{{ asset('logo_instagram.png','ressource_images') }}">
+                                     11 Decembre , Cheraga
+                                    </span>
+                                </span>
+
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </footer>
-    </footer>
+
 {% endblock %}
 
 

@@ -38,3 +38,6 @@ users:
 email:
   objects:
     products: Produits
+  functions:
+    company: Entreprise
+    parents: Parents

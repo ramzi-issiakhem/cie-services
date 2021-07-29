@@ -37,6 +37,63 @@
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 }
 
+#infoHeader {
+  height: 2.5rem;
+  background-color: #3398CC;
+  z-index: 2;
+
+}
+
+#services {
+  color: white;
+  padding-top: 5rem;
+  padding-bottom: 10rem;
+
+  background-image: url("../ressources/images/kids_bg.png"),url("../ressources/images/services_bg_1.png");
+  background-size: 40rem , cover;
+
+  background-repeat: no-repeat,no-repeat;
+  background-position: bottom center,center;
+}
+
+
+#services_row > div > img {
+  width: 6rem;
+
+}
+
+#servicesTitle {
+  margin-bottom: 2rem;
+}
+
+#navigationBar {
+  background:   rgba(236,236,236,0.4  );
+  z-index: 1;
+
+}
+#brand {
+  padding-left: 0;
+  margin-right: 0;
+}
+
+#aboutUsContainer {
+
+  padding-top: 7rem;
+  background: url("../ressources/images/bg_about_us.png") top right no-repeat;
+}
+
+.nav-item > a {
+  color:  #070D4C;
+
+  margin-right: 2.5rem;
+  text-decoration: underline;
+  text-decoration-color: #3398CC;
+  text-underline-offset: 0.2rem;
+  font-size: 1.2rem;
+}
+
+
+
 *,
 *::before,
 *::after {
@@ -49,8 +106,10 @@
   }
 }
 
+
 body {
-  margin: 0;
+
+
   font-family: "Merriweather", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
   font-weight: 400;

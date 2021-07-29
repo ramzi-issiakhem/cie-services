@@ -35,12 +35,29 @@
 
     {% trans_default_domain 'messages' %}
 
-    <nav class="navbar sticky-top  navbar-expand-lg navbar-light " style="background: linear-gradient(to top, rgba(179,236,255,1) 0%, rgba(208,243,255,1) 24%, rgba(224,239,244,1) 53%, rgba(236,236,236,1) 100%)">
-        <div class="container-fluid">
+    <div class="container-fluid " id="infoHeader">
 
-            <a class="navbar-brand" href="{{ path('home') }}" style="padding-left: 0;margin-right: 0" >
+        <div class="row d-flex  justify-content-between ">
+
+            <div class=" col align-items-center" >
+                <img  src="{{ asset('logo_instagram.png','ressource_images') }}" alt="test" style="width: 1.5rem">
+                <img src="{{ asset('logo_facebook.png','ressource_images') }}" alt="test" style="width: 1.5rem">
+                <img src="{{ asset('logo_linkedin.png','ressource_images') }}" alt="test" style="width: 1.5rem">
+            </div>
+
+            <span class="col text-end">
+                <img style="width: 1.5rem" src="{{ asset('logo_facebook.png','ressource_images') }}" alt="test" > <span style="color: white">0558457292</span>
+            </span>
+        </div>
+
+    </div>
+
+    <nav id="navigationBar" class=" navbar navbar-expand-lg navbar-light" >
+        <div class="container-fluid">
+            <a id="brand" class="navbar-brand" href="{{ path('home') }}"  >
                 <img class="me-0" src="{{ asset('logo_cie.png','ressource_images') }}" alt="" width="80rem">
             </a>
+
             <a style="color: #091753;text-decoration: none;font-weight: bold" href="{{ path('home') }}" > CENTRE INTERNATIONAL </br> DES SERVICES EDUCATIFS </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,10 +66,10 @@
 
             <div class="collapse navbar-collapse" id="navbarScroll">
                         <ul class="navbar-nav ms-auto my-2 my-lg-0" >
-                            <li class="nav-item"><a style="color: #091753;text-decoration: none;font-weight: bold" class="nav-link" href="{{ path('home') }}#about">About</a></li>
-                            <li class="nav-item"><a style="color: #091753;text-decoration: none;font-weight: bold" class="nav-link" href="{{ path('home') }}#services">Services</a></li>
-                            <li class="nav-item"><a style="color: #091753;text-decoration: none;font-weight: bold" class="nav-link" href="{{ path('home') }}#contact">Contact</a></li>
-                            <li class="nav-item"><a style="color: #091753;text-decoration: none;font-weight: bold" class="nav-link" href="{{ path('user.login') }}">Login</a></li>
+                            <li class="nav-item"><a  class="nav-link" href="{{ path('home') }}#about">About</a></li>
+                            <li class="nav-item"><a  class="nav-link" href="{{ path('home') }}#services">Nos Services</a></li>
+                            <li class="nav-item"><a  class="nav-link" href="{{ path('home') }}#contact">Contact</a></li>
+                            <li class="nav-item"><a  class="nav-link" href="{{ path('user.login') }}">Login</a></li>
                         </ul>
             </div>
         </div>

@@ -8,6 +8,11 @@ class Contact {
         "email.objects.products" => "email.objects.products"
     ];
 
+    const Functions = [
+        "email.functions.company" => "email.functions.company",
+        "email.functions.parents" => "email.functions.parents",
+    ];
+
     private $email;
 
     private $object;
@@ -15,6 +20,8 @@ class Contact {
     private $motif;
 
     private $message;
+
+    private $function;
 
     /**
      * @return mixed
@@ -78,6 +85,22 @@ class Contact {
     public function setMessage($message): void
     {
         $this->message = $message;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFunction()
+    {
+        return $this->function;
+    }
+
+    /**
+     * @param mixed $function
+     */
+    public function setFunction($function): void
+    {
+        $this->function = $function;
     }
 
 

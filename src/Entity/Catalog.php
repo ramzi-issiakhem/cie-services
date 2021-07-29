@@ -22,20 +22,18 @@ class Catalog
      */
     private $email;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $familyName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $firstName;
+    private $function;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $buisenessName;
+    private $name;
+
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -59,41 +57,7 @@ class Catalog
         return $this;
     }
 
-    public function getFamilyName(): ?string
-    {
-        return $this->familyName;
-    }
 
-    public function setFamilyName(string $familyName): self
-    {
-        $this->familyName = $familyName;
-
-        return $this;
-    }
-
-    public function getFirstName(): ?string
-    {
-        return $this->firstName;
-    }
-
-    public function setFirstName(string $firstName): self
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getBuisenessName(): ?string
-    {
-        return $this->buisenessName;
-    }
-
-    public function setBuisenessName(string $buisenessName): self
-    {
-        $this->buisenessName = $buisenessName;
-
-        return $this;
-    }
 
     public function getMobilePhone(): ?string
     {
@@ -105,5 +69,37 @@ class Catalog
         $this->mobilePhone = $mobilePhone;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFunction()
+    {
+        return $this->function;
+    }
+
+    /**
+     * @param mixed $funtion
+     */
+    public function setFunction($function): void
+    {
+        $this->function = $function;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
     }
 }

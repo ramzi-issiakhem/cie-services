@@ -3,6 +3,7 @@ forms:
   telephone: Numéro de Telephone
   birthday_date: Date D'anniversaire
   choice:
+    function: Fonction
     children: 'Reserver pour :'
   password_forgotten: Mot De Passe Oublié
   logo: Logo du Produit
@@ -25,7 +26,11 @@ forms:
   product: Produit
   school: Ecole
   email: Email
+  catalog:
+    name: Nom & Prénom Ou Ecole
+
   mail:
+
     object: Catégorie
     motif: Objet de l'email
   password:

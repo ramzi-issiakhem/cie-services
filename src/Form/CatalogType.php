@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Catalog;
+use App\Entity\Contact;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,22 +17,21 @@ class CatalogType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+                ->add('function',ChoiceType::class,[
+                    'label' => "forms.choice.function",
+                    "choices" => Contact::Functions,
+                    'choice_translation_domain' => 'types'
+                ])
                 ->add('email',EmailType::class,[
                     'label' => 'forms.email',
                     'required' => true
                 ])
-                ->add('familyName',TextType::class,[
-                    'label' => 'forms.familyName',
+
+                ->add('name',TextType::class,[
+                    'label' => 'forms.catalog.name',
                     'required' => true
                 ])
-                ->add('firstName',TextType::class,[
-                    'label' => 'forms.firstName',
-                    'required' => true
-                ])
-                ->add('buisenessName',TextType::class,[
-                    'label' => 'forms.buisenessName',
-                    'required' => true
-                ])
+
                 ->add('mobilePhone',NumberType::class,[
                     'label' => "forms.telephone",
                     'required' => true
