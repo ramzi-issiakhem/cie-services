@@ -57,10 +57,7 @@
 }
 
 
-#services_row > div > img {
-  width: 6rem;
-
-}
+#services_row > div > img {}
 
 #servicesTitle {
   margin-bottom: 2rem;
