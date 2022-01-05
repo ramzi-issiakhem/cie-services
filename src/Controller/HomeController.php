@@ -282,8 +282,8 @@
 
 
 
-            return $this->render("pages/home.html.twig",[
-                "products" => $formatted_products,
+            return $this->render("index.html.twig",[
+                "products" => $products,
                 "events" => $formatted_events,
                 "form_contact" => $form_contact->createView(),
                 "form_catalog" => $form_catalog->createView()

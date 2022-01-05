@@ -2,148 +2,103 @@
 <html>
 
 
-    <head>
-        <meta charset="UTF-8">
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<head>
 
-        <!-- Favicon <link rel="icon" type="image/x-icon" href="{{ asset("") }}" />-->
+    <meta charset="UTF-8">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
-
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
-
-        <link href="{{ asset('home.css','css') }}" rel="stylesheet" />
-        <title> {% block title %} Cie-Services {% endblock %} </title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-
-        {% block stylesheets %}
-
-        {% endblock %}
-
-        {% block javascripts %}
-                   {% endblock %}
-    </head>
-    <body >
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
 
 
+    <link rel="stylesheet" href="{{ asset("bootstrap.css","css") }}" />
+    <script src="{{ asset("bootstrap.js","js") }}"></script>
 
-    {% trans_default_domain 'messages' %}
-
-    <div class="container-fluid " id="infoHeader">
-
-        <div class="row d-flex  justify-content-between ">
-
-            <div class=" col align-items-center" >
-                <img  src="{{ asset('logo_instagram.png','ressource_images') }}" alt="test" style="width: 1.5rem">
-                <img src="{{ asset('logo_facebook.png','ressource_images') }}" alt="test" style="width: 1.5rem">
-                <img src="{{ asset('logo_linkedin.png','ressource_images') }}" alt="test" style="width: 1.5rem">
-            </div>
-
-            <span class="col text-end">
-                <img style="width: 1.5rem" src="{{ asset('logo_facebook.png','ressource_images') }}" alt="test" > <span style="color: white">0558457292</span>
-            </span>
-        </div>
-
-    </div>
-
-    <nav id="navigationBar" class=" navbar navbar-expand-lg navbar-light" >
-        <div class="container-fluid">
-            <a id="brand" class="navbar-brand" href="{{ path('home') }}"  >
-                <img class="me-0" src="{{ asset('logo_cie.png','ressource_images') }}" alt="" width="80rem">
-            </a>
-
-            <a style="color: #091753;text-decoration: none;font-weight: bold" href="{{ path('home') }}" > CENTRE INTERNATIONAL </br> DES SERVICES EDUCATIFS </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarScroll">
-                        <ul class="navbar-nav ms-auto my-2 my-lg-0" >
-                            <li class="nav-item"><a  class="nav-link" href="{{ path('home') }}#about">About</a></li>
-                            <li class="nav-item"><a  class="nav-link" href="{{ path('home') }}#services">Nos Services</a></li>
-                            <li class="nav-item"><a  class="nav-link" href="{{ path('home') }}#contact">Contact</a></li>
-                            <li class="nav-item"><a  class="nav-link" href="{{ path('user.login') }}">Login</a></li>
-                        </ul>
-            </div>
-        </div>
-    </nav>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/5cc306fe6a.js" crossorigin="anonymous"></script>
 
 
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset("bootstrap.css",'css') }}" />
+    <link rel="stylesheet" href="{{ asset("all.css",'css') }}" />
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <link rel="stylesheet" href="{{ asset("styles.css",'css') }}" />
 
 
-    <!--<nav class="  navbar navbar-expand-lg  " style="background-color: #E5EFFE">
-        <div class="container-fluid">
-
-            <a class="navbar-brand" href="{{ path('home') }}"> {{ 'navbar.brand.name'|trans }}</a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-
-
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-
-
-
-                <div class="navbar-nav" >
-                    <a  class="nav-link active" aria-current="page" href="{{ path('home') }}">{% trans %} navbar.home {% endtrans %} </a>
-                    <a  class="nav-link" href="{{ path('contact') }}">{% trans %}navbar.contact {% endtrans %}</a>
-                    <a  class="nav-link" href="{{ path('aboutus') }}">{% trans %} navbar.aboutus {% endtrans %}</a>
-                        <div class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {% trans  %} navbar.language {% endtrans %}
-                            </a>
-
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="{{ path('home',{'_locale' : 'fr'}) }}">{% trans %} navbar.fr {% endtrans %}</a></li>
-                                <li><a class="dropdown-item" href="{{ path('home',{'_locale' : 'ar'}) }}">{% trans %} navbar.ar {% endtrans %}</a></li>
-                                <li><a class="dropdown-item" href="{{ path('home',{'_locale' : 'en'}) }}">{% trans %} navbar.en {% endtrans %}</a></li>
-                            </ul>
-                        </div>
-                    {% if is_granted('ROLE_MODERATOR') %}
-                        <div class="d-flex justify-content-end">
-                            <a class="nav-link active" href="{{ path('admin.events.show') }}"> {% trans %} admin.panel {% endtrans %}</a>
-                        </div>
-                    {% endif %}
-
-                    {% if app.user %}
-                        <div class="d-flex justify-content-end">
-                            <a class="nav-link active" href="{{ path('user.profile',{'slug' : app.user.slug}) }}"> {% trans %} user.profile {% endtrans %}</a>
-                            <a class="nav-link active" href="{{ path('user.logout') }}"> {% trans %} user.logout {% endtrans %}</a>
-                        </div>
-                    {% else  %}
-
-                        <div class="d-flex justify-content-end">
-                            <a class="nav-link active " href="{{ path('user.login') }}"> {% trans %} user.login {% endtrans %}</a>
-                            <a class="nav-link active" href="{{ path('user.register.choice') }}"> {% trans %} user.register {% endtrans %}</a>
-                        </div>
-
-                    {% endif %}
-
-                </div>
-            </div>
-
-
-        </div>
-    </nav>-->
-
-
-        {% block body %}
-
-        {% endblock %}
-
-    {% block footer %}
+    {% block stylesheets %}
 
     {% endblock %}
-    </body>
+
+    {% block javascripts %}
+    {% endblock %}
+
+</head>
+
+{% trans_default_domain 'index' %}
+
+<body>
+
+
+{% set route = app.request.attributes.get('_route') %}
+{% set route_params = app.request.attributes.get('_route_params') %}
+{% set params = route_params|merge(app.request.query.all) %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path("home") }}">
+            <img src="{{ asset("Logo CIE.png","ressource_images_index") }}" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navbar-items" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nb1 nav-link active" aria-current="page" href="{{ path('home') }}#home">{% trans %} home {% endtrans %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nb2 nav-link" href="{{ path('home') }}#about">{% trans %} about {% endtrans %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nb3 nav-link" href="{{ path('home') }}#service">{% trans %} services {% endtrans %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nb4 nav-link" href="{{ path('home') }}#contact">{% trans %} contact {% endtrans %}</a>
+                </li>
+            </ul>
+            <div class="navbar-text">
+                <ul class="icon-social">
+                    <li><i class="fab fa-facebook"></i></li>
+{#                    <li><i class="fab fa-twitter"></i></li>#}
+{#                    <li><i class="fab fa-instagram"></i></li>#}
+                </ul>
+                 <a href="{{ path("home",params|merge({ _locale: 'fr' })) }}"><span class="lang {% if app.request.locale == "fr" %} active {% endif %}">{% trans %} french {% endtrans %}</span></a>
+                <span class="lang lang-sp"> | </span>
+                <a href="{{ path("home",params|merge({ _locale: 'ar' })) }}"><span class="lang {% if app.request.locale == "ar" %} active {% endif %}">{% trans %} arabic {% endtrans %}</span></a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+
+
+{% block body %}
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
+</body>
 
 
 

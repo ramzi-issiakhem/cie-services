@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'index' %}
+
+{% block title %} Cie Services {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("all.css","css") }}" />
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <link rel="stylesheet" href="{{ asset("styles.css","css") }}" />
+{% endblock %}
+
+{% block body %}
+
+    <div class="side-bar">
+        <ul>
+            <li><p class="sb1 active">{% trans %} home {% endtrans %}</p></li>
+            <li><p class="sb2">{% trans %}  about {% endtrans %}</p></li>
+            <li><p class="sb3">{% trans %} services {% endtrans %}</p></li>
+            <li><p class="sb4">{% trans %} contact {% endtrans %}</p></li>
+        </ul>
+    </div>
+
+
+
+
+<button class="back-to-top-btn"><i class="fas fa-angle-double-up"></i></button>
+
+<!-- start slide presentation  -->
+<div class="slide-presentation home-sb" id="home">
+    <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        {# TODO Modify CSS AND EDIT THE INFORMATIONS #}
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{{ asset("slide2.jpg","ressource_images_index") }}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset("slide1.jpg","ressource_images_index") }}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset("slide3.jpg","ressource_images_index") }}" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <div class="text-box">
+        <h1 >{% trans %} slide.title {% endtrans %}</h1>
+        <h3>{% trans %} slide.subtitle {% endtrans %} </h3>
+        <span>{% trans %} slide.description {% endtrans %}</span>
+    </div>
+</div>
+<!-- end slide presentation  -->
+
+<!-- start about us  -->
+<div class="about-us container about-sb" id="about" >
+    <div class="title">
+        <h1>{% trans %} about {% endtrans %}</h1>
+        <p>{% trans %} about_description {% endtrans %}</p>
+    </div>
+    <div class="side">
+        <img src="{{ asset("Catalogue.png","ressource_images_index") }}" alt="">
+        <div class="details">
+            <div class="descp">
+                <div class="txt">
+                    <h5>{% trans %} description.first.title {% endtrans %}</h5>
+                    <p>{% trans %} description.first.content {% endtrans %}</p>
+                </div>
+            </div>
+            <div class="descp">
+                <div class="txt">
+                    <h5>{% trans %} description.second.title {% endtrans %}</h5>
+                    <p>{% trans %} description.second.content {% endtrans %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="descp">
+        <div class="txt">
+            <h5>{% trans %} description.third.title {% endtrans %}</h5>
+            <p>{% trans %} description.third.content {% endtrans %}</p>
+        </div>
+    </div>
+</div>
+<!-- end about us  -->
+
+<!-- start services  -->
+<div class="services container service-sb" id="service">
+    <div class="title">
+        <h1>{% trans %} services {% endtrans %}</h1>
+    </div>
+    <div class="main-carousel">
+
+        {% for product in products %}
+            <div class="cell">
+                <img src="{% if asset_exists('uploads/products/' ~ product.logo) %} {{ asset('uploads/products/' ~ product.logo) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" alt="">
+                <div class="txt">
+                    <p>{{ product.formattedDescription }}</p>
+                    <p>05/11/2021</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<!-- end services  -->
+
+<!-- start contact  -->
+<div class="contact contact-sb" id="contact">
+    <div class="title">
+        <h1>{% trans %} touch.get {% endtrans %}</h1>
+        <p>{% trans %} touch.description {% endtrans %}</p>
+    </div>
+    <div class="details container">
+        <div class="infos">
+            <h5>{% trans %} touch.get {% endtrans %}</h5>
+            <p>{% trans %} touch.info.mail {% endtrans %}<span> educationcenter.cie@gmail.com</span></p>
+            <div>
+                <div class="info">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h6>{% trans  %}touch.info.contact {% endtrans %}</h6>
+                        <p>educationcenter.cie@gmail.com</p>
+                    </div>
+                </div>
+                <div class="info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h6>{% trans %} touch.info.localisation.title {% endtrans %}</h6>
+                        <p>{% trans %} position {% endtrans %} <br> {% trans %} postal_code {% endtrans %}</p>
+                    </div>
+                </div>
+                <div class="info">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h6>{% trans %} touch.info.phone.title {% endtrans %}</h6>
+                        <p>0558 05 85 47 / 0548 96 52 10</p>
+                    </div>
+                </div>
+            </div>
+            <div class="circle"></div>
+            <div class="circle2"></div>
+        </div>
+        <div class="form">
+            <form action="">
+                <div class="info-personal">
+                    <div>
+                        <label for="name">{% trans %} touch.box.name {% endtrans %}</label><br>
+                        <input type="text" name="" id="name" placeholder="">
+                    </div>
+                    <div>
+                        <label for="email">{% trans %} touch.box.mail {% endtrans %}</label><br>
+                        <input type="email" name="" id="email" placeholder="">
+                    </div>
+                </div>
+                <label for="subject">{% trans %} touch.box.subject {% endtrans %}</label><br>
+                <input type="text" name="" id="subject" placeholder=''><br>
+
+                <label for="msg">{% trans %} touch.box.message {% endtrans %}</label><br>
+                <textarea name="" id="msg" cols="30" rows="10" placeholder=''></textarea><br>
+{#                <input type="checkbox" name="" id="agree">#}
+
+{#                <label for="agree">{% trans %} touch.box.name {% endtrans %}</label><br>#}
+                <input type="submit" value="{% trans %} touch.box.send {% endtrans %}">
+            </form>
+        </div>
+    </div>
+</div>
+<!-- end contact  -->
+
+    {%  include('footer.html.twig') %}
+
+{% endblock %}
+
+
+
+
+
+{% block script %}
+    <script src="{{ asset('jquery 3.3.1.min.js','js') }}"></script>
+    <script src="{{ asset('bootstrap.js','js') }}"></script>
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+    <script src="{{ asset('back.js','js') }}"></script>
+{% endblock %}

@@ -7,7 +7,7 @@
 
     <div class="container text-center mb-5">
     
-        <div> <img style="width: 250px; height: 300px;" src="{% if asset_exists('uploads/users/' ~ user.logo) %} {{ asset('uploads/users/' ~ user.logo) }} {% else %} {{ asset('uploads/users/sample_user.png') }} {% endif %}" alt="logo"> </div>
+{#        <div> <img style="width: 250px; height: 300px;" src="{% if asset_exists('uploads/users/' ~ user.logo) %} {{ asset('uploads/users/' ~ user.logo) }} {% else %} {{ asset('uploads/users/sample_user.png') }} {% endif %}" alt="logo"> </div>#}
         <div class="mt-4"> <h4>Nom</h4> </div>
         <div>{{ user.name }}</div>
 

@@ -22,9 +22,16 @@
         {{ include('pages/admin/navigation_box.html.twig') }}
 
         <div class="col col-md-8">
-            {% for product in products %}
-                {{ include('pages/admin/products/_card.html.twig',{product:product}) }}
-            {% endfor %}
+            <div class="row">
+                {% for product in products %}
+                    <div class="col col-md-4">
+                        {{ include('pages/admin/products/_card.html.twig',{product:product}) }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
         </div>
 
     </div>

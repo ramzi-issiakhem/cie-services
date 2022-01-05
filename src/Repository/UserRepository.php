@@ -99,7 +99,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         if ($search->getRoles()) {
             $role = $search->getRoles();
-            $role = '"' . $role .'"';
+            $role = '"' . $role . '"';
             $query->andWhere('JSON_CONTAINS (u.roles, :role) = 1')
                 ->setParameter('role',$role);
         }

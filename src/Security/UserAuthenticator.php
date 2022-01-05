@@ -97,6 +97,7 @@ class UserAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        $this->urlGenerator->generate('home');
         return null;
     }
 
@@ -106,36 +107,7 @@ class UserAuthenticator extends AbstractAuthenticator
          return null;
     }
 
-//    public function start(Request $request, AuthenticationException $authException = null)
-//    {
-//        return new RedirectResponse($this->);
-//    }
-//
-//    public function getCredentials(Request $request)
-//    {
-//        $credentials = [
-//            'email' => $request->request->get('_username'),
-//            'password' => $request->request->get('_password'),
-//            'csrf_token' => $request->request->get('_csrf_token'),
-//        ];
-//
-//        return $credentials;
-//    }
-//
-//    public function getUser($credentials, UserProviderInterface $userProvider)
-//    {
-//        // TODO: Implement getUser() method.
-//    }
-//
-//    public function checkCredentials($credentials, UserInterface $user)
-//    {
-//        // TODO: Implement checkCredentials() method.
-//    }
-//
-//    public function supportsRememberMe()
-//    {
-//        // TODO: Implement supportsRememberMe() method.
-//    }
+
 }
 
 

@@ -8,9 +8,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">{{ 'forms.buisenessName'|trans({},'forms') }}</th>
-                <th scope="col">{{ 'forms.firstName'|trans({},'forms') }}</th>
-                <th scope="col">{{ 'forms.familyName'|trans({},'forms') }}</th>
+                <th scope="col">{{ 'forms.name'|trans({},'forms') }}</th>
                 <th scope="col">{{ 'forms.email'|trans({},'forms') }}</th>
                 <th scope="col">{{ 'forms.mobilephone'|trans({},'forms') }}</th>
             </tr>
@@ -19,9 +17,7 @@
             {% for catalog in catalogs %}
                 {% if catalog is defined %}
                     <tr>
-                        <td>{{ catalog.buisenessName }}</td>
-                        <td>{{ catalog.firstName }}</td>
-                        <td>{{ catalog.familyName }}</td>
+                        <td>{{ catalog.name }}</td>
                         <td>{{ catalog.email }}</td>
                         <td>0{{ catalog.mobilePhone }}</td>
                     </tr>

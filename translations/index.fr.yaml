@@ -1,0 +1,47 @@
+home: Acceuil
+about: A propos
+services: Services
+contact: Contact
+french: Francais
+arabic: العربية
+
+
+
+description:
+  first:
+    title: Premiere Définition
+    content: Ceci est la description avec des expressions et des mots pour en connaitre plus sur - First -
+  second:
+    title: Seconde Définition
+    content:  Ceci est la description avec des expressions et des mots pour en connaitre plus sur - Second -
+  third:
+    title: Third Définition
+    content: Ceci est la description avec des expressions et des mots pour en connaitre plus sur - Third -
+
+about_description: Description sur qui nous Sommes
+touch:
+  box:
+    mail: Votre Email
+    subject: Sujet
+    name: Votre Nom
+    message: En Quoi Pouvons nous vous aider
+    send: Envoyer
+  info:
+    localisation:
+      title: Localisation
+    contact: Contactez-Nous Ici
+    phone:
+      title: Téléphone
+    mail: Nous Serons ravis de vous aider. Notre équipe se fera un plaisir de vous répondre ici
+  get: Restez Branchés
+  description: Nous créeons des Services éducatif pour les établissements pour les enfants !
+
+slide:
+  title: Cie-Services
+  subtitle: Centre International des Services éducatifs
+  description: Nous proposons tout types de services éducatifs aux école ainsi qu'établissements
+
+copyright: Logo, 2021 Tous-Droits Reservés
+social: Réseaux Sociaux
+position: Ouled Heddaj
+postal_code: Algiers Algeria 16000

@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Event
 {
+    
 
     const STATE = [
         0 => "En Cours",
