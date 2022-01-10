@@ -105,8 +105,8 @@
             <div class="cell">
                 <img src="{% if asset_exists('uploads/products/' ~ product.logo) %} {{ asset('uploads/products/' ~ product.logo) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" alt="">
                 <div class="txt">
+                    <p>{{ product.formattedName }}</p>
                     <p>{{ product.formattedDescription }}</p>
-                    <p>05/11/2021</p>
                 </div>
             </div>
         {% endfor %}

@@ -69,6 +69,20 @@
                 <li class="nav-item">
                     <a class="nb4 nav-link" href="{{ path('home') }}#contact">{% trans %} contact {% endtrans %}</a>
                 </li>
+
+                {% if not app.user  %}
+                    <li class="nav-item">
+                        <a class="nb4 nav-link" href="{{ path('login') }}">{% trans %} Login {% endtrans %}</a>
+                    </li>
+                 {% endif %}
+
+                {% if is_granted('ROLE_MODERATOR') %}
+
+                    <li class="nav-item">
+                        <a class="nb4 nav-link" href="{{ path('admin.products.show') }}">{% trans %} Admin {% endtrans %}</a>
+                    </li>
+                {% endif %}
+
             </ul>
             <div class="navbar-text">
                 <ul class="icon-social">

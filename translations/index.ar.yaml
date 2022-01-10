@@ -21,7 +21,7 @@ description:
 about_description: Description sur qui nous Sommes
 touch:
   box:
-    mail: Votre Email
+    mail: البريد الالكتروني
     subject: Sujet
     name: Votre Nom
     message: En Quoi Pouvons nous vous aider

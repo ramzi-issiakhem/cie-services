@@ -219,12 +219,8 @@ html {
   line-height: 160px;
   margin-left: -10px;
   font-weight: 900;
-  color: transparent;
-  -webkit-text-stroke: 1px #fff;
-  background: url('/public/ressources/index/back.png');
-  -webkit-background-clip: text;
-  background-clip: border-box;
-  animation: back 20s linear infinite;
+
+
 }
 @keyframes back {
   100%{
