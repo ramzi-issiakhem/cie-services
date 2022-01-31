@@ -1,47 +1,48 @@
-home: Acceuil
-about: Propos
-services: Services
-contact: Contact
+home: الصفحة الرئيسية
+about: من نحن
+services: خدمات
+contact: اتصل بنا
 french: Francais
 arabic: العربية
-
+login: تسجيل الدخول
 
 
 description:
   first:
-    title: Premiere Définition
-    content: Ceci est la description avec des expressions et des mots pour en connaitre plus sur - First -
+    title: فكر من أجلك
+    content: تم تصميم المركز الدولي للخدمات التعليمية Cie services بشكل أساسي بهدف دعم المؤسسات في القطاع التعليمي وكذلك الأشخاص المهتمين بالتعليم والتدريب ، من خلال تقديم خدمات تعليمية متميزة ومؤهلات عالية.
   second:
-    title: Seconde Définition
-    content:  Ceci est la description avec des expressions et des mots pour en connaitre plus sur - Second -
+    title: مجموعة واسعة من الخيارات
+    content:  تقدم خدمات Le Cie مجموعة كاملة تلبي احتياجات العملاء ، وذلك بهدف إنشاء استراتيجية تعليمية تلبي المتطلبات الحالية.
   third:
-    title: Third Définition
-    content: Ceci est la description avec des expressions et des mots pour en connaitre plus sur - Third -
+    title:
+    content: تبرز الخدمات التعليمية التي يقدمها المركز في ستة مجالات
 
-about_description: Description sur qui nous Sommes
+about_description:            من نحن
 touch:
   box:
-    mail: البريد الالكتروني
-    subject: Sujet
-    name: Votre Nom
-    message: En Quoi Pouvons nous vous aider
-    send: Envoyer
+    mail: بريدك الإلكتروني
+    subject: موضوع
+    name: اسمك
+    message: كيف يمكننا مساعدتك
+    send: بعث
+
   info:
     localisation:
-      title: Localisation
-    contact: Contactez-Nous Ici
+      title: موقع
+    contact: اتصل بنا هنا
     phone:
-      title: Téléphone
-    mail: Nous Serons ravis de vous aider. Notre équipe se fera un plaisir de vous répondre ici
-  get: Restez Branchés
-  description: Nous créeons des Services éducatif pour les établissements pour les enfants !
+      title: رقم الهاتف
+    mail: سنكون سعداء لمساعدتك. سيسعد فريقنا بالرد عليك هنا
+  get: ابق على اتصال
+  description: نحن ندعم المؤسسات في قطاع التعليم من خلال تقديم قائمة كاملة من الخدمات!
 
 slide:
   title: Cie-Services
-  subtitle: Centre International des Services éducatifs
-  description: Nous proposons tout types de services éducatifs aux école ainsi qu'établissements
+  subtitle: المركز الدولي للخدمات التعليمية
+  description: نحن ندعم المؤسسات في قطاع التعليم من خلال تقديم قائمة كاملة من الخدمات!
 
-copyright: Logo, 2021 Tous-Droits Reservés
-social: Réseaux Sociaux
-position: Ouled Heddaj
-postal_code: Algiers Algeria 16000
+copyright: 2022 جميع الحقوق محفوظة
+social: الشبكات الاجتماعية
+position: ولاد هداج
+postal_code: الجزائر الجزائر 16000

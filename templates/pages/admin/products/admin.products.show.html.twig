@@ -10,11 +10,11 @@
 
     {% set count = (products|length) %}
 
-    <div class="mt-4 mb-4 text-center">
+    <div class="mt-4 mb-4 text-center" style="padding-top: 8%">
         <div class="fs-bold">Nombre de produits : {{ count }}</div>
     </div>
 
-    <div class="mt-4 mb-4">
+    <div class="mt-4 mb-4" >
     <a href="{{ path('admin.product.create') }}" class="btn btn-primary">{% trans from 'admin' %} products.create {% endtrans %}</a>
     </div>
 

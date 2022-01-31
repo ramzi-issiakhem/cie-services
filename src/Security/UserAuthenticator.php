@@ -97,13 +97,12 @@ class UserAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        $this->urlGenerator->generate('home');
-        return null;
+        $url = $this->urlGenerator->generate('admin.users.show');
+        return new RedirectResponse($url);
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
-         $this->urlGenerator->generate('user.login');
          return null;
     }
 

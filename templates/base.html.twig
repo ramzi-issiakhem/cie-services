@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html {% if app.request.locale == "ar" %} dir="rtl" lang="ar" {% endif %}>
 
 
 <head>
@@ -40,7 +40,7 @@
 
 {% trans_default_domain 'index' %}
 
-<body>
+<body >
 
 
 {% set route = app.request.attributes.get('_route') %}
@@ -72,7 +72,7 @@
 
                 {% if not app.user  %}
                     <li class="nav-item">
-                        <a class="nb4 nav-link" href="{{ path('login') }}">{% trans %} Login {% endtrans %}</a>
+                        <a class="nb4 nav-link" href="{{ path('user.login') }}">{% trans %} login {% endtrans %}</a>
                     </li>
                  {% endif %}
 
@@ -81,14 +81,15 @@
                     <li class="nav-item">
                         <a class="nb4 nav-link" href="{{ path('admin.products.show') }}">{% trans %} Admin {% endtrans %}</a>
                     </li>
+
                 {% endif %}
 
             </ul>
             <div class="navbar-text">
                 <ul class="icon-social">
                     <li><i class="fab fa-facebook"></i></li>
-{#                    <li><i class="fab fa-twitter"></i></li>#}
-{#                    <li><i class="fab fa-instagram"></i></li>#}
+                    <li><i class="fab fa-twitter"></i></li>
+                    <li><i class="fab fa-instagram"></i></li>
                 </ul>
                  <a href="{{ path("home",params|merge({ _locale: 'fr' })) }}"><span class="lang {% if app.request.locale == "fr" %} active {% endif %}">{% trans %} french {% endtrans %}</span></a>
                 <span class="lang lang-sp"> | </span>
