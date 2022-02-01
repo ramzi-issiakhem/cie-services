@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'admin' %}
+
+{% block title %} Panel Admin - Event {% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+        <div class="container-fluid bg-light ">
+            <div class="container  ">
+            {{ form_start(search_form) }}
+            <div class="row ">
+                <div class="col mt-4">
+                    {{ form_row(search_form.product) }}
+                </div>
+                <div class="col mt-4">
+                    {{ form_row(search_form.school) }}
+                </div>
+                <div class="col mt-4">
+                    {{ form_row(search_form.state) }}
+                </div>
+                </div>
+
+
+            <div class="form-row align-items end">
+                <div class="col">
+                    {{ form_row(search_form.deadline_date) }}
+                </div>
+                <div class="col">
+                    {{ form_row(search_form.event_datetime) }}
+                </div>
+            </div>
+
+            <div class=" container mt-3  text-center">
+                <div class="col">
+                    <button class="mb-3 btn btn-primary">{{ 'messages.search'|trans({},'forms') }}</button>
+                </div>
+            </div>
+
+
+            {{ form_end(search_form) }}
+            </div>
+        </div>
+
+
+    <div class="mt-4 mb-4 text-center">
+{#        <div class="fs-bold">{% set count = (confirmed_events|length) +  (still_events|length)  + (waiting_events|length) %} Evenement actifs : {{ count }}</div>#}
+        <a href="{{ path('admin.event.create') }}" class="btn btn-primary">{% trans %} events.create {% endtrans %}</a>
+    </div>
+
+
+
+        <div class="row">
+            {{ include('pages/admin/navigation_box.html.twig') }}
+
+        <div class="col-md-10">
+            <div class="row">
+                {% for event in events %}
+
+                <div class="col-md-3 me-5">
+                        {{ include('pages/admin/_card.html.twig',{event:event}) }}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="pagination">
+                {{ knp_pagination_render(events) }}
+            </div>
+        </div>
+
+
+
+{% endblock %}

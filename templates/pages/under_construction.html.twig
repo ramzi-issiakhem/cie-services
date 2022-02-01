@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block  title %} Contact {% endblock %}
+
+{% block body %}
+
+    <h5 class="mt-4">Under Construction</h5>
+
+    <form method="post">
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
+        {% if error is defined %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security')  }}</div>
+        {% endif %}
+
+        <div class="container">
+            {{ form_start(form) }}
+
+            {{ form_row(form.email) }}
+            {{ form_row(form.firstName) }}
+            {{ form_row(form.familyName) }}
+            {{ form_row(form.mobilePhone) }}
+            {{ form_row(form.buisenessName) }}
+            <button class="btn-primary btn">
+                {{ 'message.catalog.download'|trans() }}
+            </button>
+            {{ form_end(form) }}
+        </div>
+
+
+
+    </form>
+
+{% endblock %}

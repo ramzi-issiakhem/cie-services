@@ -1,0 +1,307 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+facebook_auth:
+     path: /{_locale}/connect/facebook
+     controller: App\Controller\SecurityController::facebookConnect
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+
+oauth_check:
+     path: /oauth/check/facebook
+     controller: App\Controller\TestController::test
+
+admin.catalogs.show:
+     path: /{_locale}/admin/catalogs/form/show
+     controller: App\Controller\Admin\AdminCatalogController::show
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+
+admin.catalogs.download:
+     path: /{_locale}/admin/catalogs/form/download
+     controller: App\Controller\Admin\AdminCatalogController::downloadList
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+
+under_construction:
+     path: /{_locale}/under/construction
+     controller: App\Controller\HomeController::underConstruction
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+
+home:
+     path: /{_locale}/home{section}
+     controller: App\Controller\HomeController::home
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          section: head
+          _locale: fr
+
+aboutus:
+     path: /{_locale}/about-us
+     controller: App\Controller\HomeController::aboutUs
+     requirements:
+          _locale: en|fr|ar
+          default: fr
+
+contact:
+     path: /{_locale}/contact
+     controller: App\Controller\HomeController::contact
+     requirements:
+          _locale: en|fr|ar
+          default: fr
+
+
+
+school.child.remove:
+     path: /{_locale}/profile/school/event/{id_event}/child/remove/{id}
+     controller: App\Controller\SecurityController::removeChildEvent
+     methods: DELETE
+     requirements:
+          _locale: en|fr|ar
+          default: fr
+
+download.school.event.list:
+     path: /{_locale}/profile/event/{id}/list/download
+     controller: App\Controller\SecurityController::downloadReservationList
+     requirements:
+          _locale: en|fr|ar
+
+
+
+school.event.list:
+     path: /{_locale}/profile/event/{id}/list
+     controller: App\Controller\SecurityController::reservationList
+     requirements:
+          _locale: en|fr|ar
+
+     defaults:
+          _locale: fr
+user.profile:
+     path: /{_locale}/profile/{slug}
+     controller: App\Controller\SecurityController::profilePage
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+
+user.child.edit:
+     path: /{_locale}/profile/child/edit/{id}/{slug}
+     controller: App\Controller\SecurityController::editChild
+     requirements:
+          _locale: en|fr|ar
+          default: fr
+
+user.child.remove:
+     path: /{_locale}/profile/child/remove/{id}
+     controller: App\Controller\SecurityController::removeChild
+     methods: DELETE
+     requirements:
+          _locale: en|fr|ar
+          default: fr
+
+user.child.create:
+     path: /{_locale}/profile/child/create
+     controller: App\Controller\SecurityController::createChild
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+
+user.register:
+     path: /{_locale}/register/{type}
+     controller: App\Controller\SecurityController::register
+     requirements:
+          _locale: en|fr|ar
+          type: 0|1
+     defaults:
+          _locale: fr
+          type: 0
+
+user.register.choice:
+     path: /{_locale}/register/choice
+     controller: App\Controller\SecurityController::registerChoice
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+
+user.login:
+     path: /{_locale}/login
+     controller: App\Controller\SecurityController::login
+     requirements:
+          _locale: en|fr|ar
+          default: fr
+     methods: GET|POST
+
+
+user.password.edit:
+     path: /{_locale}/profile/{slug}/{id}/edit/password
+     controller: App\Controller\SecurityController::editPassword
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+
+user.edit:
+     path: /{_locale}/profile/{slug}/{id}/edit
+     controller: App\Controller\SecurityController::edit
+     requirements:
+          _locale: en|fr|ar
+     defaults:
+          _locale: fr
+
+
+
+admin.events.show:
+     path: /{_locale}/admin/events
+     controller: App\Controller\Admin\AdminEventsController::show
+     requirements:
+          _locale: en|fr|ar
+
+admin.download.children.list.event:
+     path: /{_locale}/admin/event/{id}/download/children/list
+     controller: App\Controller\Admin\AdminEventsController::downloadChildrenList
+     requirements:
+          _locale: en|fr|ar
+
+admin.event.edit:
+     path: /{_locale}/admin/event/{id}
+     controller: App\Controller\Admin\AdminEventsController::edit
+     methods:  GET|POST
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
+user.password.forgot.check_email:
+     path: /{_locale}/reset-password/check-email
+     controller: App\Controller\ResetPasswordController::checkEmail
+     methods:  GET|POST
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
+app_forgot_password_request:
+     path: /{_locale}/reset-password/request
+     controller: App\Controller\ResetPasswordController::request
+     methods:  GET|POST
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
+
+user.password.forgot:
+     path: /{_locale}/reset-password
+     controller: App\Controller\ResetPasswordController::request
+     methods:  GET|POST
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
+
+
+admin.event.remove:
+     path: /{_locale}/admin/event/{id}
+     controller: App\Controller\Admin\AdminEventsController::remove
+     methods: DELETE
+     requirements:
+          _locale: en|fr|ar
+          id : '\d+'
+
+
+admin.event.create:
+     path: /{_locale}/admin/event/create
+     controller: App\Controller\Admin\AdminEventsController::create
+     requirements:
+          _locale: en|fr|ar
+
+
+admin.users.show:
+     path: /{_locale}/admin/users/show
+     controller: App\Controller\Admin\AdminUsersController::show
+     requirements:
+          _locale: en|fr|ar
+
+admin.user.edit:
+     path: /{_locale}/admin/user/{id}/{slug}
+     controller: App\Controller\Admin\AdminUsersController::edit
+     methods:  GET|POST
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+admin.user.edit.password:
+     path: /{_locale}/admin/user/{id}/{slug}/password
+     controller: App\Controller\Admin\AdminUsersController::editPassword
+     methods:  GET|POST
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
+user.product:
+     path: /{_locale}/product/show/{id}
+     controller: App\Controller\HomeController::showProduct
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
+admin.user.remove:
+     path: /{_locale}/admin/user/{id}
+     controller: App\Controller\Admin\AdminUsersController::remove
+     methods: DELETE
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
+admin.products.show:
+     path: /{_locale}/admin/products/show
+     controller: App\Controller\Admin\AdminProductsController::show
+     requirements:
+          _locale: en|fr|ar
+
+admin.product.edit:
+     path: /{_locale}/admin/product/{id}/{slug}
+     controller: App\Controller\Admin\AdminProductsController::edit
+     methods:  GET|POST
+     requirements:
+          _locale: en|fr|ar
+          id: '\d+'
+
+
+admin.product.remove:
+     path: /{_locale}/admin/product/{id}
+     controller: App\Controller\Admin\AdminProductsController::remove
+     methods: DELETE
+     requirements:
+          _locale: en|fr|ar
+          id : '\d+'
+
+
+admin.product.create:
+     path: /{_locale}/admin/product/create
+     controller: App\Controller\Admin\AdminProductsController::create
+     requirements:
+          _locale: en|fr|ar
+
+admin.analytics:
+     path: /{_locale}/admin/analytics
+     controller: App\Controller\Admin\AdminAnalyticsController::index
+     requirements:
+          _locale: en|fr|ar
+
+admin.users.create:
+     path: /{_locale}/admin/users/create
+     controller: App\Controller\Admin\AdminUsersController::create
+     requirements:
+          _locale: en|fr|ar
+
+

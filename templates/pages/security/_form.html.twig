@@ -1,0 +1,25 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-6">{{ form_row(form.name) }}</div>
+    <div class="col-md-6">{{ form_row(form.email) }}</div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-6">{{ form_row(form.mobile_phone) }}</div>
+    {% if user.type == 1 %}
+        <div class="col-md-4">{{ form_row(form.birthday_date) }}</div>
+    {% endif %}
+</div>
+
+<div class="row">
+    <div class="col-md-6">{{ form_row(form.logo) }}</div>
+</div>
+
+
+
+
+<button class="btn btn-primary"> {{ button|default('user.edit')|trans }} </button>
+{{ form_end(form) }}
+
+<a class="btn btn-primary" href="{{ path('user.password.edit',{'id':user.id,'slug':user.slug}) }}">{{ 'password.change'|trans({},'messages') }}</a>

@@ -1,0 +1,278 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    <script src="{{ asset('scripts.js','js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+{% endblock %}
+
+{% block title %} Acceuil {% endblock %}
+
+{% block body %}
+
+
+    <div id="aboutUsContainer" class="container-fluid" >
+
+
+    <div class="container " style="background-color: rgba(0,0,0,0)">
+        <div class="card mb-3 " style="border: none;background-color: rgba(0,0,0,0)">
+            <div class="row d-flex align-items-center ">
+
+                <div class="col-md-8">
+                    <div class="card-body ">
+                        <h5 class="card-title mb-4"> <b> Qui Sommes-Nous </b> </h5>
+                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
+
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <img  src="{{  asset('Catalogue.png','ressource_images') }}" class="w-100 card-img" alt="...">
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row d-flex align-items-center  text-start" >
+                            <div class="col-sm-12  text-center"><b>Pour plus d'informations : </b></div>
+                            <div class="col-sm-12 "><button style="background-color: #0d6efd;border-radius: 2rem;width: 100%;color: white" class="btn" data-bs-toggle="modal" data-bs-target="#catalogModel">{{ 'message.catalog.download'|trans() }}</button></div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="container-fluid" id="services">
+        <div class="container-md ">
+            <div class="col-md-8">
+                <h5 id="servicesTitle"><b> Nos Services </b></h5>
+                <p >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. <br><br><br> It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
+                <p id="services_text_2"></p>
+
+            </div>
+        </div>
+        <div id="services_row" class="row text-center">
+        <div class="col">
+            <img style="width: 20rem" alt="logo" src="{{ asset('logo_cie_coaching.png','ressource_images') }}">
+            <img style="width: 20rem" alt="logo" src="{{ asset('logo_cie_tours.png','ressource_images') }}">
+            <img style="width: 20rem" alt="logo" src="{{ asset('logo_cie_store.png','ressource_images') }}">
+            <img style="width: 20rem" alt="logo" src="{{ asset('logo_cie_school.png','ressource_images') }}">
+            <img style="width: 20rem"  alt="logo" src="{{ asset('logo_cie_event.png','ressource_images') }}">
+            <img style="width: 20rem" alt="logo" src="{{ asset('logo_cie_digital.png','ressource_images') }}">
+        </div>
+    </div>
+    </div>
+
+
+
+    <!-- <header class="masthead" style=" background-image:  url('{{ asset("bg-masthead.png","ressource_images") }}')"></header>
+   !-->
+
+    <div class="container-fluid" style="padding-bottom: 3rem;padding-top: 3rem;background-color: #e5e5e5">
+        <div class="container" >
+            <div class="row gx-4 gx-lg-5 justify-content-center mb-5" >
+                <div class="col-lg-6" style="background-color: white;padding-bottom: 1rem;padding-top: 1.5rem;border-radius: 1rem">
+                    <h4> Contact Us </h4>
+
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">{{ message }}</div>
+                    {% endfor %}
+
+                    {% for message in app.flashes('error') %}
+                        <div class="alert alert-danger">{{ message }}</div>
+                    {% endfor %}
+                    {{ form_start(form_contact) }}
+                    <!-- Name input-->
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form_contact.email,{'attr': {'placeholder': form_label(form_contact.email) }}) }}
+                        <label for="name">{{ form_label(form_contact.email) }}</label>
+                        <div class="invalid-feedback" >{{ form_errors(form_contact.email) }}</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form_contact.object,{'attr': {'placeholder': form_label(form_contact.object) }}) }}
+                        <label for="name">{{ form_label(form_contact.object) }}</label>
+                        <div class="invalid-feedback" >{{ form_errors(form_contact.object) }}</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form_contact.motif,{'attr': {'placeholder': form_label(form_contact.motif) }}) }}
+                        <label for="name">{{ form_label(form_contact.motif) }}</label>
+                        <div class="invalid-feedback" >{{ form_errors(form_contact.motif) }}</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form_contact.function,{'attr': {'placeholder': form_label(form_contact.function) }}) }}
+                        <label for="name">{{ form_label(form_contact.function) }}</label>
+                        <div class="invalid-feedback" >{{ form_errors(form_contact.function) }}</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form_contact.message) }}
+                        <label for="name">{{ form_label(form_contact.message) }}</label>
+                    </div>
+
+                    <div class="d-grid"><button  class="btn btn-light btn-xl " >{{ 'contact.us'|trans() }}</button></div>
+                    {{ form_end(form_contact) }}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Catalog Modal !-->
+
+                <div class="modal  fade modal-dialog-scrollable" id="catalogModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">{{ 'message.catalog.download'|trans() }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+
+                            <div class="card mb-3 " style="max-width: 100%;">
+                                <div class="row d-flex  ">
+
+                                    <div class="col-md-8" style="margin-top: 3rem;padding-left: 3rem">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Brochure Cie Services</h5>
+                                            <p class="card-text">Afin de telecharger notre Brchure , nous aurons besoin de quelques informations supplémentaire </p>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img src="{{  asset('catalogue_popup.png','ressource_images') }}" class="card-img" alt="...">
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="modal-body container-fluid">
+                                {{ form_start(form_catalog) }}
+
+
+                                <div class="container-fluid gx-4 gx-lg-5 justify-content-center mb-5">
+
+                                        <h4>Tell Us About Yourself</h4>
+
+                                        <!-- Name input-->
+                                        <div class="form-floating mb-3" >
+                                            {{ form_widget(form_catalog.email,{'attr': {'placeholder': form_label(form_catalog.email) }}) }}
+                                            <label for="name">{{ form_label(form_catalog.email) }}</label>
+                                            <div class="invalid-feedback" >{{ form_errors(form_catalog.email) }}</div>
+                                        </div>
+
+
+
+
+                                        <div class="form-floating mb-3">
+                                            {{ form_widget(form_catalog.name,{'attr': {'placeholder': form_label(form_catalog.name) }}) }}
+                                            <label for="name">{{ form_label(form_catalog.name) }}</label>
+                                            <div class="invalid-feedback" >{{ form_errors(form_catalog.name) }}</div>
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            {{ form_widget(form_catalog.function,{'attr': {'placeholder': form_label(form_catalog.function) }}) }}
+                                            <label for="name">{{ form_label(form_catalog.function) }}</label>
+                                            <div class="invalid-feedback" >{{ form_errors(form_catalog.function) }}</div>
+                                        </div>
+
+
+
+                                        <div class="form-floating mb-3">
+                                            {{ form_widget(form_catalog.mobilePhone,{'attr': {'placeholder': form_label(form_catalog.mobilePhone) }}) }}
+                                            <label for="name">{{ form_label(form_catalog.mobilePhone) }}</label>
+                                            <div class="invalid-feedback" >{{ form_errors(form_catalog.mobilePhone) }}</div>
+                                        </div>
+
+
+
+
+                                    <button  class="btn btn-primary btn-xxl " >{{ 'message.catalog.download'|trans() }}</button>
+
+                                    </div>
+                                </div>
+
+
+
+
+                                {{ form_end(form_catalog) }}
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block footer %}
+
+        <footer class="  py-2">
+            <div class="container-fluid" style="background-image: url( {{ asset('maps.png','ressource_images') }} );background-position: center center;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;"></div>
+
+            <div class="container mt-2 mb-2 px-4 px-lg-5">
+                <div class="card mb-3" style="max-width: 540px;border:none">
+                    <div class="row g-0">
+
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Coordonnées</h5>
+                                <span class="row mb-2"  style="padding-bottom: 0.3rem">
+                                    <span class="col-12">
+                                        <img style="margin-right: 0.5rem" alt="test" width="10%" src="{{ asset('logo_phone.png','ressource_images') }}">
+                                    0558058547/548965210
+                                    </span>
+                                </span>
+
+                                <span class="row mb-2" style="padding-bottom: 0.3rem">
+                                    <span class="col-12">
+                                        <img style="margin-right: 0.5rem" alt="test" width="10%" src="{{ asset('logo_mail.png','ressource_images') }}">
+                                    education-center@gmail.com
+                                    </span>
+                                </span>
+
+                                <span class="row mb-2" style="padding-bottom: 0.3rem">
+                                    <span class="col-12">
+                                        <img  style="margin-right: 0.5rem" alt="test" width="10%" src="{{ asset('logo_pos.png','ressource_images') }}">
+                                     11 Decembre , Cheraga
+                                    </span>
+                                </span>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+
+{% endblock %}
+
+

@@ -1,0 +1,107 @@
+
+
+
+{#{% block stylesheets %}#}
+{#    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@400;700&display=swap" rel="stylesheet">#}
+{#    <link rel="stylesheet" href="{{ asset("style-with-prefix.css",'css') }}">#}
+{#{% endblock %}#}
+{#{% block body %}#}
+
+
+
+{#{% for message in app.flashes('success') %}#}
+{#    <div class="alert alert-success">{{ message }}</div>#}
+{#{% endfor %}#}
+
+{#{% if error %}#}
+{#    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security')  }}</div>#}
+{#{% endif %}#}
+
+
+{#<div class="main-container">#}
+{#    <div class="form-container">#}
+
+{#        <div class="form-body">#}
+{#            <h2 class="title">{{ 'forms.users.login'| trans}}</h2>#}
+
+
+{#            <form method="post">#}
+
+{#                <label for="">Email</label>#}
+{#                <input  value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>#}
+
+{#                <label for="password">Password</label>#}
+{#                <input type="password" name="password" id="password" placeholder="Enter your password">#}
+
+{#                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >#}
+
+{#                <div class="checkbox mb-3">#}
+{#                    <label>#}
+{#                        <input type="checkbox" name="_remember_me"> {{ 'forms.users.remember'| trans }}#}
+{#                    </label>#}
+{#                </div>#}
+
+{#                <input type="submit" value="Log In">#}
+
+
+{#            </form>#}
+
+{#        </div>#}
+
+{#        <div class="form-footer">#}
+{#            <div>#}
+{#                <span>Forgot Your Password ?</span> #}
+
+{#            </div>#}
+{#        </div>#}
+
+{#    </div><!-- FORM CONTAINER -->#}
+{#</div>#}
+{#{% endblock %}#}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+{% trans_default_domain 'forms' %}
+
+{% block stylesheets %}
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset("style-with-prefix.css","css") }}">
+{% endblock %}
+
+
+{% block body %}
+<div class="main-container" style="padding-top: 5%">
+    <div class="form-container">
+
+        <div class="form-body">
+            <h2 class="title">{{  "forms.users.login"| trans }}</h2>
+
+
+
+
+            <form method="post" class="the-form">
+
+                <label for="username">Username</label>
+                <input value="{{ last_username }}" type="text" name="_username" id="username" placeholder="Enter your Username">
+
+                <label for="password">Password</label>
+                <input type="password" name="_password" id="password" placeholder="Enter your password">
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
+                <input type="submit" value="Log In">
+
+            </form>
+
+        </div><!-- FORM BODY-->
+
+        <div class="form-footer">
+            <div>
+               <a href="{{ path('user.password.forgot') }}">{{ 'forms.password_forgotten'| trans }}</a>
+            </div>
+        </div><!-- FORM FOOTER -->
+
+    </div><!-- FORM CONTAINER -->
+</div>
+{% endblock %}
+

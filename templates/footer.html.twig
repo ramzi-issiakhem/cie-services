@@ -1,0 +1,43 @@
+{% trans_default_domain 'index' %}
+
+<div class="foot">
+    <div class="footer container">
+        <div class='logo'>
+            <img src="{{ asset("logo.png","ressource_images_index") }}" alt="">
+            <img src="{{ asset("logo text.png","ressource_images_index") }}" alt="">
+            <p>{% trans %} copyright {% endtrans %}</p>
+        </div>
+
+        <div class="menu">
+            <ul>
+                <li><?php echo lang('menu') ?></li>
+                <li><a href="{{ path('home') }}#home">{% trans %} home {% endtrans %}</a></li>
+                <li><a href="{{ path('home') }}#about">{% trans %} about {% endtrans %}</a></li>
+                <li><a href="{{ path('home') }}#contact"> {% trans %} contact {% endtrans %}</a></li>
+                <li><a href="{{ path('home') }}#service">{% trans %} services {% endtrans %}</a></li>
+
+            </ul>
+        </div>
+
+
+        <div class="contact-footer">
+            <ul>
+                <li>{% trans %} contact {% endtrans %}</li>
+                <li>{% trans %} position {% endtrans %}</li>
+                <li>(+213) 0558 05 85 47 / 0548 96 52 10</li>
+                <li>{% trans %} postal_code {% endtrans %}</li>
+            </ul>
+        </div>
+
+        <div class="social">
+            <ul>
+                <li>{% trans %} social {% endtrans %}</li>
+                <ul>
+                    <li><a style="pointer-events: inherit" href="https://www.facebook.com/%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%B2-%D8%A7%D9%84%D8%AF%D9%88%D9%84%D9%8A-%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA-%D8%A7%D9%84%D8%AA%D8%B9%D9%84%D9%8A%D9%85-CiE-services-112443470591567/"><i class="fab fa-facebook"></i></a></li>
+{#                    <li><a href=""><i class="fab fa-twitter"></i></a></li>#}
+{#                    <li><i class="fab fa-instagram"></i></a></li>#}
+                </ul>
+            </ul>
+        </div>
+    </div>
+</div>

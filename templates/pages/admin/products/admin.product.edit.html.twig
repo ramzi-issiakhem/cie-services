@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Admin - Product Edition {% endblock %}
+
+{% block body %}
+    {{ include('pages/admin/products/_form.html.twig',{form:form,button: 'products.edit'}) }}
+{% endblock %}

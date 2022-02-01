@@ -1,0 +1,19 @@
+{% trans_default_domain 'admin' %}
+
+<div class="container lt-4">
+
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-4">{{ form_row(form.name) }}</div>
+        <div class="col-md-4">{{ form_row(form.email) }}</div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">{{ form_row(form.mobile_phone) }}</div>
+    </div>
+    {{ form_rest(form) }}
+    <button class="btn btn-primary"> {{ button|default('users.edit')|trans }} </button>
+    {{ form_end(form ) }}
+
+</div>

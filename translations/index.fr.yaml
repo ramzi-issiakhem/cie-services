@@ -1,0 +1,47 @@
+home: Acceuil
+about: Propos
+services: Services
+contact: Contact
+french: Francais
+arabic: العربية
+login: Se Connecter
+
+
+description:
+  first:
+    title: Pensé pour Vous
+    content: Le centre international des services éducatifs, Cie services a été conçu essentiellement dans le but d’accompagner les établissements du secteur éducatifs ainsi que les personnes qui s’intéressent à l’éducation et à la formation, en fournissant des services éducatifs hautement qualifiés et distinctifs.
+  second:
+    title: Large Choix de Gamme
+    content:  Le Cie services offre une gamme complète qui répond aux besoins de la clientèle, et ceci dans le but de créer une stratégie éducative conforme aux exigences actuelles.
+  third:
+    title:
+    content: Les services éducatifs fournis par le centre se distinguent sur six volets
+
+about_description:            Qui Sommes-Nous
+touch:
+  box:
+    mail: Votre Email
+    subject: Sujet
+    name: Votre Nom
+    message: En Quoi Pouvons nous vous aider
+    send: Envoyer
+  info:
+    localisation:
+      title: Localisation
+    contact: Contactez-Nous Ici
+    phone:
+      title: Téléphone
+    mail: Nous Serons ravis de vous aider. Notre équipe se fera un plaisir de vous répondre ici
+  get: Restez Branchés
+  description: Nous  accompagnons les établissements du Secteur Educatif en proposant tout un catalogue de services !
+
+slide:
+  title: Cie-Services
+  subtitle: Centre International des Services éducatifs
+  description: Nous  accompagnons les établissements du Secteur Educatif en proposant tout un catalogue de services !
+
+copyright: Logo, 2022 Tous-Droits Reservés
+social: Réseaux Sociaux
+position: Ouled Heddaj
+postal_code: Algiers Algeria 16000

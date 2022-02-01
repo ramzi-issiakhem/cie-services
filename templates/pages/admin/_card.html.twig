@@ -1,0 +1,38 @@
+
+{% trans_default_domain 'admin' %}
+<div class="card" style="width: 18rem;">
+{#    <img src="{% if asset_exists('uploads/products/' ~ event.product.logo) %} {{ asset('uploads/products/' ~ event.product.logo) }} {% else %} {{ asset('uploads/products/sample_product.png') }} {% endif %}" class="card-img-top" alt="logo">#}
+        <img src="{{ asset('uploads/products/sample_product.png') }}" class="card-img-top" alt="logo">
+
+    <div class="card-body">
+        <h5 class="card-title">  {% trans %} events.school.name {% endtrans %} :  {{ event.school.name }}</h5>
+{#        <h5 class="card-title">  {% trans %} events.name {% endtrans %} :  {{ event.formattedName }}</h5>#}
+        <p class="card-text"> {{ (event.formattedDescription |length > 50 ? event.formattedDescription|slice(0, 140) ~ '...' : event.formattedDescription )|nl2br }}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            {% trans %} events.limit.event_date {% endtrans %} : {{ event.eventDateTime |date("d/m/Y") }}
+        </li>
+        <li class="list-group-item">
+            {% trans %} events.limit.deadline_date {% endtrans %} : {{ event.DeadLineDate  |date("d/m/Y") }}
+        </li>
+
+        <li class="list-group-item">
+            <small class="text-muted">{% trans %} events.reservations {% endtrans %} : {{ event.reservationsNumber }} </small>
+        </li>
+
+        <li class="list-group-item">
+            <a href="{{ path('admin.event.edit',{'id': event.id}) }}" class="btn btn-warning container-fluid mb-2">{% trans %} events.edit {% endtrans %}</a>
+            <form method="post" action="{{ path('admin.event.remove',{id: event.id}) }}" onsubmit="return confirm('Are you sure ?')">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ event.id) }}">
+                <button class="btn btn-danger container-fluid">{{ 'events.remove'|trans }}</button>
+            </form>
+
+        </li>
+
+    </ul>
+</div>
+
+
+

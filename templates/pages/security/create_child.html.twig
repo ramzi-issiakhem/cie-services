@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Admin - Product creation {% endblock %}
+
+{% block body %}
+    <div class="container">
+        {{ include('pages/security/_form_child.html.twig',{form:form}) }}
+    </div>
+{% endblock %}

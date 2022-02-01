@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Admin - Product creation {% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'admin' %}
+
+    <div class="container lt-4" style="padding-top: 5%">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-4">{{ form_row(form.nameAr) }}</div>
+            <div class="col-md-4">{{ form_row(form.name) }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">{{ form_row(form.logo) }}</div>
+            <div class="col-md-4">{{ form_row(form.cover_image) }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">{{ form_row(form.images) }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">{{ form_row(form.descriptionAr) }}</div>
+            <div class="col-md-4">{{ form_row(form.descriptionFr) }}</div>
+            <div class="col-md-4">{{ form_row(form.descriptionEn) }}</div>
+        </div>
+
+
+        <button class="btn btn-primary"> {{ button|default('products.create')|trans }} </button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

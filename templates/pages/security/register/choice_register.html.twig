@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+{% trans_default_domain 'forms' %}
+
+{% block body %}
+
+    <div class="container mt-4">
+
+
+            <a href="{{ path('user.register',{type: 0}) }}" class="btn btn-lg btn-primary" type="submit">
+                {% trans %}  forms.users.type.professional  {% endtrans %}
+            </a>
+
+        <a href="{{ path('user.register',{type: 1}) }}" class="btn btn-lg btn-primary" type="submit">
+            {% trans %}  forms.users.type.personnal   {% endtrans %}
+        </a>
+
+    </div>
+
+{% endblock %}

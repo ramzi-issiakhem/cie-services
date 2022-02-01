@@ -1,0 +1,58 @@
+
+{% trans_default_domain 'admin' %}
+<div class="col-md-3">
+
+
+<div class="card " style="width: 18rem;">
+    {% if  user.email is defined %}
+            <img src=" {{ asset('uploads/users/' ~ user.logo) }} " class="card-img-top" alt="logo">
+    {% else %}
+             <img src=" {{ asset('uploads/users/' ~ user.parent.logo) }}" class="card-img-top" alt="logo">
+    {% endif %}
+    <div class="card-body">
+        <h5 class="card-title">    {{ user.name }} </h5>
+        {% if  user.email is defined %}
+            <span class="card-title">  {{ user.email }}</span>
+        {% else %}
+            <span class="card-title">  {{ user.formattedSchoolarLevel|trans({},'types') }}</span>
+            <span class="card-title">  {{ user.parent.name }}</span>
+        {% endif %}
+    </div>
+
+    <ul class="list-group list-group-flush">
+
+        {% if ( ( user.type is defined) and( user.type == 1) ) or ( user.email is not defined ) %}
+            <li class="list-group-item">
+                <p class="card-text"> <span class="fw-bold"> {{ 'users.birthday_date'|trans }} : </span> {{ user.birthdayDate |date("d/m/Y") }} </p>
+            </li>
+        {% endif %}
+        {% if user.email is not defined %}
+
+            <li class="list-group-item">
+                <p class="card-text"> <span class="fw-bold"> {{ 'school.name'|trans({},'messages') }} : </span>{% if user.school.name is defined %} {{ user.school.name }} {% else %} {{ 'users.school.notfound'|trans({},'admin') }}  {% endif %}</p>
+            </li>
+        {% endif %}
+
+
+
+
+        {% if user.email is defined %}
+        <li class="list-group-item">
+
+            <a href="{{ path('admin.user.edit',{'id': user.id, 'slug': user.slug }) }}" class="btn btn-warning container-fluid mb-2">{% trans %} users.edit {% endtrans %}</a>
+
+
+            <form method="post" action="{{ path('admin.user.remove',{id: user.id}) }}" onsubmit="return confirm('Are you sure ?')">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ user.id) }}">
+            <button class="btn container-fluid btn-danger">{{ 'users.remove'|trans }}</button>
+            </form>
+
+        </li>
+        {% endif %}
+
+    </ul>
+</div>
+
+</div>
+

@@ -1,0 +1,77 @@
+user:
+    edit: Editer
+    login: Connexion
+    register: Enregistrement
+    logout: Se Déconnecter
+    profile: Profil
+    product: En Savoir Plus
+    filter: Filtrer
+admin:
+    panel: Panel Admin
+
+navbar:
+    home: Acceuil
+    contact: Nous-Contacter
+    aboutus: Qui Sommes-Nous
+    en: Anglais
+    fr: Francais
+    ar: Arabe
+    language: Langue
+    brand:
+        name: Cie-Services
+mail:
+  send: Email Envoyé avec succès
+  not:
+    send: Email non envoye
+
+event:
+    already_joined: Evenement Déja reservé pour %names% , Réessayez
+    reserve: Reserver
+    title: Listes des Evenements
+    name: Nom de l'evenement
+    date:
+        event: Date de l'evenement
+        deadline: Date de Fin D'inscription
+    number:
+        reservations: Nombre d'inscrits
+    list:
+        edit: Editer la Liste
+        download: Telecharger La Liste
+
+child:
+    download: Telecharger la liste
+    create: Ajouter un enfant
+    name: Nom et Prénom
+    school: Ecole
+    actions: Actions
+    title: Vos Enfants
+    edit: Modifier
+    success:
+        remove: Enfant Supprimé avec succès
+        created: Enfant Ajouté
+        edited: Enfant Edité
+        exists: Vous avez un enfant avec le meme nom
+    school_level: Niveau Scolaire
+    notfound: Enfant Non-Trouvé
+    shool_level:
+        notfound: Niveau Scolaire Introuvable
+    remove: Supprimer l'Enfant
+    mobilephone: Numero de Telephone
+    parent: Parent
+message:
+  know_more: En Savoir plus
+  reserve: Réserver
+  catalog:
+      download: Télécharger catalogue
+      downloaded: Catalogue Telechargé
+school:
+    notfound: Ecole Non-Trouvé
+    list:
+        title: Liste des Enfants
+    name: Nom de l'Ecole
+product:
+    name: Produit
+password:
+    change: Changer le mot de passe
+contact:
+  us: Nous Contacter
